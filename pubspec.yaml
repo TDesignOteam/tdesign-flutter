@@ -22,7 +22,7 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - lib/assets/
+    - lib/fonts/
   # To add assets to your package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -42,4 +42,4 @@ flutter:
   fonts:
     - family: TDIcons
       fonts:
-        - asset: lib/assets/fonts/td_icons.ttf
+        - asset: lib/fonts/td_icons.ttf
