@@ -1,8 +1,8 @@
 name: tdesign_flutter
 description: TDesign Flutter Component.
 version: 0.0.1
-author:
-homepage:
+author: Tencent
+homepage: http://tdesign.oa.com/
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
