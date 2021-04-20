@@ -1,4 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+/// TDIcons
+/// TDesign图标库
 
 import 'package:flutter/widgets.dart';
 
@@ -11,6 +12,17 @@ class _TDIconsData extends IconData {
         );
 }
 
+/// TDIcons
+/// 要使用资源图标，请在工程`pubspec.yaml`中添加如下配置：
+/// ``` json
+///   fonts:
+///    - family: TDIcons
+///      fonts:
+///        - asset: packages/tdesign_flutter/fonts/td_icons.ttf
+/// ```
+/// 
+/// 通过TDIcons来引用相应图标资源即可：`TDIcons.arrowUp`
+/// 
 @immutable
 class TDIcons {
   TDIcons._();

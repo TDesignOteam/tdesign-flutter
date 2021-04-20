@@ -45,4 +45,8 @@ git提交日志，使用[commitizen](https://github.com/commitizen/cz-cli)工具
 
 #### icon_font_generator
 
-td_icons.dart由[icon_font_generator](https://pub.dev/packages/icon_font_generator)工具自动生成，指令命令为：`icon_font_generator --from=tdesign-icon --class-name=TDIcons --out-font=td_icons.ttf --out-flutter=td_icons.dart`
+td_icons.dart由[icon_font_generator](https://pub.dev/packages/icon_font_generator)工具自动生成，命令为：`icon_font_generator --from=tdesign-icon --class-name=TDIcons --out-font=td_icons.ttf --out-flutter=td_icons.dart`
+
+生成的ttf文件，替换掉`lib/fonts/td_icons.ttf`
+
+生成的`td_icons.dart`，将其`class TDIcons`的内容替换掉，前面的注释不要删除了。
