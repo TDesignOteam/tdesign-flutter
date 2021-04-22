@@ -1,5 +1,7 @@
 /// TDIcons
 /// TDesign图标库
+/// 由icon_font_generator工具自动生成的文件
+/// 生成命令：`icon_font_generator --from=tdesign-icon --class-name=TDIcons --out-font=td_icons.ttf --out-flutter=td_icons.dart`
 
 import 'package:flutter/widgets.dart';
 
@@ -27,7 +29,6 @@ class _TDIconsData extends IconData {
 class TDIcons {
   TDIcons._();
 
-  
   static const IconData add = _TDIconsData(0xe000);
   static const IconData arrowDown = _TDIconsData(0xe001);
   static const IconData arrowUp = _TDIconsData(0xe002);

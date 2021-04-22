@@ -34,11 +34,14 @@ git提交日志，使用[commitizen](https://github.com/commitizen/cz-cli)工具
 
 [TDesign-for-web](https://www.figma.com/file/UghlEiQXZogyPvx1XDMMyx/TDesign-for-web?node-id=729%3A9)
 
+#### 资源
+
+[TDesign-Mobile图标库](http://bkicon.oa.com/resource/project/95/detail)
 
 
 ### 支持组件列表
 
-- [Button](http://tdesign.oa.com/vue-mobile/components/button)
+- [Rate](http://tdesign.woa.com/vue-mobile/components/rate)
 
 
 ### 三方工具
