@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('tdesign_flutter', () {
+  test('tdesign', () {
   });
 }

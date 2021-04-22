@@ -20,7 +20,7 @@ class _TDIconsData extends IconData {
 ///   fonts:
 ///    - family: TDIcons
 ///      fonts:
-///        - asset: packages/tdesign_flutter/fonts/td_icons.ttf
+///        - asset: packages/tdesign/fonts/td_icons.ttf
 /// ```
 /// 
 /// 通过TDIcons来引用相应图标资源即可：`TDIcons.arrowUp`

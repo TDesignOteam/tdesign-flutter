@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tdesign_flutter/tdesign_flutter.dart';
+import 'package:tdesign/tdesign.dart';
 
 void main() {
   group('td_icons', () {

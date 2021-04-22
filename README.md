@@ -1,6 +1,24 @@
-# tdesign_flutter
+# tdesign
 
 TDesign Flutter组件
+
+### 使用
+
+可以通过在`pubspec.yaml`中作如下配置使用：
+
+``` json
+tdesign:
+  git: http://git.woa.com/TDesign/tdesign-mobile-flutter.git
+```
+
+要使用图标资源的话，需要在`pubspec.yaml`中添加如下配置：
+
+``` json
+  fonts:
+   - family: TDIcons
+     fonts:
+       - asset: packages/tdesign/fonts/td_icons.ttf
+```
 
 ### 工程开发
 
