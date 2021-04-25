@@ -1,5 +1,7 @@
 /// TDIcons
 /// TDesign图标库
+/// 由icon_font_generator工具自动生成的文件
+/// 生成命令：`icon_font_generator --from=tdesign-icon --class-name=TDIcons --out-font=td_icons.ttf --out-flutter=td_icons.dart`
 
 import 'package:flutter/widgets.dart';
 
@@ -18,7 +20,7 @@ class _TDIconsData extends IconData {
 ///   fonts:
 ///    - family: TDIcons
 ///      fonts:
-///        - asset: packages/tdesign_flutter/fonts/td_icons.ttf
+///        - asset: packages/tdesign/fonts/td_icons.ttf
 /// ```
 /// 
 /// 通过TDIcons来引用相应图标资源即可：`TDIcons.arrowUp`
@@ -27,7 +29,6 @@ class _TDIconsData extends IconData {
 class TDIcons {
   TDIcons._();
 
-  
   static const IconData add = _TDIconsData(0xe000);
   static const IconData arrowDown = _TDIconsData(0xe001);
   static const IconData arrowUp = _TDIconsData(0xe002);

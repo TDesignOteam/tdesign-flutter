@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  tdesign_flutter:
+  tdesign:
     path: ../
 
   # The following adds the Cupertino Icons font to your application.
@@ -65,4 +65,4 @@ flutter:
   fonts:
     - family: TDIcons
       fonts:
-        - asset: packages/tdesign_flutter/fonts/td_icons.ttf
+        - asset: packages/tdesign/fonts/td_icons.ttf
