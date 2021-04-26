@@ -7,8 +7,7 @@ class RatePage extends StatefulWidget {
 }
 
 class _RatePageState extends State<RatePage> {
-  // ignore: unused_field
-  double _rating;
+  late double _rating;
 
   @override
   void initState() {
@@ -26,21 +25,20 @@ class _RatePageState extends State<RatePage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        RatingBar(
+        Rate(
           value: 3,
           allowHalf: true,
           count: 5,
-          ratingWidget: RatingWidget(
+          rateIcon: RateIcon(
             full: Icon(Icons.ac_unit),
             half: Icon(Icons.access_alarm),
-            empty: Icon(Icons.access_time),
+            empty: Icon(Icons.accessibility_outlined),
           ),
           onRatingUpdate: (rating) {
             setState(() {
               _rating = rating;
             });
           },
-          updateOnDrag: true,
         )
       ],
     );
