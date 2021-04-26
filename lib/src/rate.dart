@@ -1,6 +1,6 @@
 /// 评星控件
 /// 
-/// 能力参考：http://tdesign.woa.com/vue-mobile/components/rate
+/// 提供的接口参考：http://tdesign.woa.com/vue-mobile/components/rate
 /// 
 /// 实现参考了 [flutter_rating_bar](https://pub.dev/packages/flutter_rating_bar)
 
@@ -117,37 +117,31 @@ class Rate extends StatefulWidget {
   /// Default is [ThemeData.accentColor].
   final Color? color;
 
-  /// Defines color for the unrated portion.
-  ///
-  /// Default is [ThemeData.disabledColor].
+  // Defines color for the unrated portion.
+  // Default is [ThemeData.disabledColor].
   final Color _unratedColor;
 
-  /// Direction of rating bar.
-  ///
-  /// Default = Axis.horizontal
+  // Direction of rating bar.
+  // Default = Axis.horizontal
   final Axis _direction;
 
-  /// if set to true, Rating Bar item will glow when being touched.
-  ///
-  /// Default is true.
+  // if set to true, Rating Bar item will glow when being touched.
+  // Default is true.
   final bool _glow;
 
-  /// Defines the radius of glow.
-  ///
-  /// Default is 2.
+  // Defines the radius of glow.
+  // Default is 2.
   final double _glowRadius;
 
-  /// if set to true, will disable any gestures over the rating bar.
-  ///
-  /// Default is false.
+  // if set to true, will disable any gestures over the rating bar.
+  // Default is false.
   final bool _ignoreGestures;
 
-  /// The amount of space by which to inset each rating item.
+  // The amount of space by which to inset each rating item.
   final EdgeInsetsGeometry _itemPadding;
 
-  /// Sets minimum rating
-  ///
-  /// Default is 0.
+  // Sets minimum rating
+  // Default is 0.
   final double _minRating;
 
   // if set to true will disable drag to rate feature. Note: Enabling this mode will disable half rating capability.
