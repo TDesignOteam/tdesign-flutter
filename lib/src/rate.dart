@@ -15,8 +15,8 @@ import 'package:flutter/material.dart';
 // 代码架构整理
 
 /// Defines widgets which are to used as rating bar items.
-class RateIcons {
-  RateIcons({
+class RatingIconConfig {
+  RatingIconConfig({
     required this.full,
     required this.half,
     required this.empty,
@@ -36,10 +36,10 @@ class RateIcons {
 ///
 /// [Rate] can also be used to display rating
 class Rate extends StatefulWidget {
-  /// Creates [Rate] using the [rateIcons].
+  /// Creates [Rate] using the [ratingIcons].
   const Rate({
     /// Customizes the Rating Bar item with [RatingWidget].
-    required RateIcons rateIcons,
+    required RatingIconConfig ratingIcons,
     required this.onRatingUpdate,
     this.color,
     this.allowHalf = false,
@@ -51,7 +51,7 @@ class Rate extends StatefulWidget {
     this.textColor = Colors.black54, 
     this.readOnly = false,
   })  : _itemBuilder = null,
-        _rateIcons = rateIcons,
+        _ratingIcons = ratingIcons,
         _unratedColor = const Color(0xFFCCCCCC),  // lightGray
         _minRating = 0,
         _itemPadding = EdgeInsets.zero,
@@ -75,7 +75,7 @@ class Rate extends StatefulWidget {
     this.textColor = Colors.black54,
     this.readOnly = false,
   })  : _itemBuilder = itemBuilder,
-        _rateIcons = null,
+        _ratingIcons = null,
         _unratedColor = const Color(0xFFCCCCCC),
         _minRating = 0,
         _itemPadding = EdgeInsets.zero,
@@ -155,7 +155,7 @@ class Rate extends StatefulWidget {
   final bool _updateOnDrag;
 
   final IndexedWidgetBuilder? _itemBuilder;
-  final RateIcons? _rateIcons;
+  final RatingIconConfig? _ratingIcons;
 
   @override
   _RateState createState() => _RateState();
@@ -215,30 +215,30 @@ class _RateState extends State<Rate> {
   }
 
   Widget _buildRating(BuildContext context, int index) {
-    final ratingWidget = widget._rateIcons;
+    final ratingIcons = widget._ratingIcons;
     final item = widget._itemBuilder?.call(context, index);
     final ratingOffset = widget.allowHalf ? 0.5 : 1.0;
 
-    Widget _ratingWidget;
+    Widget ratingIcon;
 
     if (index >= _rating) {
-      _ratingWidget = _NoRatingWidget(
+      ratingIcon = _NoRatingIcon(
         size: widget.size,
-        child: ratingWidget?.empty ?? item!,
-        enableMask: ratingWidget == null,
+        child: ratingIcons?.empty ?? item!,
+        enableMask: ratingIcons == null,
         unratedColor: widget._unratedColor,
       );
     } else if (index >= _rating - ratingOffset && widget.allowHalf) {
-      if (ratingWidget?.half == null) {
-        _ratingWidget = _HalfRatingWidget(
+      if (ratingIcons?.half == null) {
+        ratingIcon = _HalfRatingIcon(
           size: widget.size,
           child: item!,
-          enableMask: ratingWidget == null,
+          enableMask: ratingIcons == null,
           rtlMode: _isRTL,
           unratedColor: widget._unratedColor,
         );
       } else {
-        _ratingWidget = SizedBox(
+        ratingIcon = SizedBox(
           width: widget.size,
           height: widget.size,
           child: FittedBox(
@@ -248,20 +248,20 @@ class _RateState extends State<Rate> {
                     transform: Matrix4.identity()..scale(-1.0, 1.0, 1.0),
                     alignment: Alignment.center,
                     transformHitTests: false,
-                    child: ratingWidget!.half,
+                    child: ratingIcons!.half,
                   )
-                : ratingWidget!.half,
+                : ratingIcons!.half,
           ),
         );
       }
       iconRating += 0.5;
     } else {
-      _ratingWidget = SizedBox(
+      ratingIcon = SizedBox(
         width: widget.size,
         height: widget.size,
         child: FittedBox(
           fit: BoxFit.contain,
-          child: ratingWidget?.full ?? item,
+          child: ratingIcons?.full ?? item,
         ),
       );
       iconRating += 1.0;
@@ -269,7 +269,7 @@ class _RateState extends State<Rate> {
 
     return IgnorePointer(
       ignoring: widget.readOnly,
-      child: _gestureDetector(index, _ratingWidget),
+      child: _gestureDetector(index, ratingIcon),
     );
   }
 
@@ -315,7 +315,7 @@ class _RateState extends State<Rate> {
   }
 
   // 手势事件处理
-  Widget _gestureDetector(int index, Widget rateWidget) {
+  Widget _gestureDetector(int index, Widget ratingIcon) {
     return GestureDetector(
         onTapDown: (details) {
           double value;
@@ -368,15 +368,15 @@ class _RateState extends State<Rate> {
               }
               return child!;
             },
-            child: rateWidget,
+            child: ratingIcon,
           ),
         ),
       );
   }
 }
 
-class _HalfRatingWidget extends StatelessWidget {
-  _HalfRatingWidget({
+class _HalfRatingIcon extends StatelessWidget {
+  _HalfRatingIcon({
     required this.size,
     required this.child,
     required this.enableMask,
@@ -401,7 +401,7 @@ class _HalfRatingWidget extends StatelessWidget {
               children: [
                 FittedBox(
                   fit: BoxFit.contain,
-                  child: _NoRatingWidget(
+                  child: _NoRatingIcon(
                     child: child,
                     size: size,
                     unratedColor: unratedColor,
@@ -451,8 +451,8 @@ class _HalfClipper extends CustomClipper<Rect> {
   bool shouldReclip(CustomClipper<Rect> oldClipper) => true;
 }
 
-class _NoRatingWidget extends StatelessWidget {
-  _NoRatingWidget({
+class _NoRatingIcon extends StatelessWidget {
+  _NoRatingIcon({
     required this.size,
     required this.child,
     required this.enableMask,
