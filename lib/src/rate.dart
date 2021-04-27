@@ -15,8 +15,8 @@ import 'package:flutter/material.dart';
 // 代码架构整理
 
 /// Defines widgets which are to used as rating bar items.
-class RateIcon {
-  RateIcon({
+class RateIcons {
+  RateIcons({
     required this.full,
     required this.half,
     required this.empty,
@@ -36,10 +36,10 @@ class RateIcon {
 ///
 /// [Rate] can also be used to display rating
 class Rate extends StatefulWidget {
-  /// Creates [Rate] using the [rateIcon].
+  /// Creates [Rate] using the [rateIcons].
   const Rate({
     /// Customizes the Rating Bar item with [RatingWidget].
-    required RateIcon rateIcon,
+    required RateIcons rateIcons,
     required this.onRatingUpdate,
     this.color,
     this.allowHalf = false,
@@ -51,8 +51,8 @@ class Rate extends StatefulWidget {
     this.textColor = Colors.black54, 
     this.readOnly = false,
   })  : _itemBuilder = null,
-        _rateIcon = rateIcon,
-        _unratedColor = const Color.fromRGBO(204, 204, 204, 1),
+        _rateIcons = rateIcons,
+        _unratedColor = const Color(0xFFCCCCCC),  // lightGray
         _minRating = 0,
         _itemPadding = EdgeInsets.zero,
         _glow = false,
@@ -75,8 +75,8 @@ class Rate extends StatefulWidget {
     this.textColor = Colors.black54,
     this.readOnly = false,
   })  : _itemBuilder = itemBuilder,
-        _rateIcon = null,
-        _unratedColor = const Color.fromRGBO(204, 204, 204, 1),
+        _rateIcons = null,
+        _unratedColor = const Color(0xFFCCCCCC),
         _minRating = 0,
         _itemPadding = EdgeInsets.zero,
         _glow = false,
@@ -155,7 +155,7 @@ class Rate extends StatefulWidget {
   final bool _updateOnDrag;
 
   final IndexedWidgetBuilder? _itemBuilder;
-  final RateIcon? _rateIcon;
+  final RateIcons? _rateIcons;
 
   @override
   _RateState createState() => _RateState();
@@ -215,7 +215,7 @@ class _RateState extends State<Rate> {
   }
 
   Widget _buildRating(BuildContext context, int index) {
-    final ratingWidget = widget._rateIcon;
+    final ratingWidget = widget._rateIcons;
     final item = widget._itemBuilder?.call(context, index);
     final ratingOffset = widget.allowHalf ? 0.5 : 1.0;
 
@@ -269,7 +269,54 @@ class _RateState extends State<Rate> {
 
     return IgnorePointer(
       ignoring: widget.readOnly,
-      child: GestureDetector(
+      child: _gestureDetector(index, _ratingWidget),
+    );
+  }
+
+  bool get _isHorizontal => widget._direction == Axis.horizontal;
+
+  void _onDragUpdate(DragUpdateDetails dragDetails) {
+    if (!widget._tapOnlyMode) {
+      final box = context.findRenderObject() as RenderBox?;
+      if (box == null) return;
+
+      final _pos = box.globalToLocal(dragDetails.globalPosition);
+      double i;
+      if (widget._direction == Axis.horizontal) {
+        i = _pos.dx / (widget.size + widget._itemPadding.horizontal);
+      } else {
+        i = _pos.dy / (widget.size + widget._itemPadding.vertical);
+      }
+      var currentRating = widget.allowHalf ? i : i.round().toDouble();
+      if (currentRating > widget.count) {
+        currentRating = widget.count.toDouble();
+      }
+      if (currentRating < 0) {
+        currentRating = 0.0;
+      }
+      if (_isRTL && widget._direction == Axis.horizontal) {
+        currentRating = widget.count - currentRating;
+      }
+
+      _rating = currentRating.clamp(_minRating, _maxRating);
+      if (widget._updateOnDrag) widget.onRatingUpdate(iconRating);
+      setState(() {});
+    }
+  }
+
+  void _onDragStart(DragStartDetails details) {
+    _glow.value = true;
+  }
+
+  void _onDragEnd(DragEndDetails details) {
+    _glow.value = false;
+    widget.onRatingUpdate(iconRating);
+    iconRating = 0.0;
+  }
+
+  // 手势事件处理
+  Widget _gestureDetector(int index, Widget rateWidget) {
+    return GestureDetector(
         onTapDown: (details) {
           double value;
           if (index == 0 && (_rating == 1 || _rating == 0.5)) {
@@ -321,52 +368,10 @@ class _RateState extends State<Rate> {
               }
               return child!;
             },
-            child: _ratingWidget,
+            child: rateWidget,
           ),
         ),
-      ),
-    );
-  }
-
-  bool get _isHorizontal => widget._direction == Axis.horizontal;
-
-  void _onDragUpdate(DragUpdateDetails dragDetails) {
-    if (!widget._tapOnlyMode) {
-      final box = context.findRenderObject() as RenderBox?;
-      if (box == null) return;
-
-      final _pos = box.globalToLocal(dragDetails.globalPosition);
-      double i;
-      if (widget._direction == Axis.horizontal) {
-        i = _pos.dx / (widget.size + widget._itemPadding.horizontal);
-      } else {
-        i = _pos.dy / (widget.size + widget._itemPadding.vertical);
-      }
-      var currentRating = widget.allowHalf ? i : i.round().toDouble();
-      if (currentRating > widget.count) {
-        currentRating = widget.count.toDouble();
-      }
-      if (currentRating < 0) {
-        currentRating = 0.0;
-      }
-      if (_isRTL && widget._direction == Axis.horizontal) {
-        currentRating = widget.count - currentRating;
-      }
-
-      _rating = currentRating.clamp(_minRating, _maxRating);
-      if (widget._updateOnDrag) widget.onRatingUpdate(iconRating);
-      setState(() {});
-    }
-  }
-
-  void _onDragStart(DragStartDetails details) {
-    _glow.value = true;
-  }
-
-  void _onDragEnd(DragEndDetails details) {
-    _glow.value = false;
-    widget.onRatingUpdate(iconRating);
-    iconRating = 0.0;
+      );
   }
 }
 
