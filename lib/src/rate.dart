@@ -1,7 +1,5 @@
 /// 评星控件
 /// 
-/// 提供的接口参考：http://tdesign.woa.com/vue-mobile/components/rate
-/// 
 /// 实现参考了 [flutter_rating_bar](https://pub.dev/packages/flutter_rating_bar)
 
 import 'dart:math' as math;
@@ -9,7 +7,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
 
-/// Defines widgets which are to used as rating bar items.
+/// 配置Rate项的图标 (支持图片)
 class RatingIconConfig {
   RatingIconConfig({
     required this.full,
@@ -17,21 +15,33 @@ class RatingIconConfig {
     required this.empty,
   });
 
-  /// Defines widget to be used as rating bar item when the item is completely rated.
+  /// 选中某项时所使用的图标
   final Widget full;
 
-  /// Defines widget to be used as rating bar item when only the half portion of item is rated.
+  /// 当支持的粒度为半星时，选择了半颗星时所使用的图标
   final Widget half;
 
-  /// Defines widget to be used as rating bar item when the item is unrated.
+  /// 未选时使用的图标
   final Widget empty;
 }
 
-/// A widget to receive rating input from users.
+/// 评分组件
 ///
-/// [Rate] can also be used to display rating
+/// 能力及接口参考：[TDesign Mobile Rate](http://tdesign.woa.com/vue-mobile/components/rate)
+/// 
+/// 使用示例：
+/// ``` dart
+/// Rate(
+///   value: 2,
+///   count: 5,
+/// )
+/// ```
 class Rate extends StatefulWidget {
-  /// 使用 [ratingIcons] 配置 [Rate]
+  /// 构造 [Rate]
+  /// 
+  /// 图标配置方式有两种：(当这两个参数都不设置时，使用默认的)
+  /// - 在创建 [Rate] 时就通过 [ratingIcons] 来配置
+  /// - 在运行时，通过设置的 [itemBuilder] 来获取
   const Rate({
     RatingIconConfig? ratingIcons,
     IndexedWidgetBuilder? itemBuilder,
@@ -43,7 +53,7 @@ class Rate extends StatefulWidget {
     this.size = 40.0,
     this.showText = false,
     this.texts = const <String>[],
-    this.textColor = Colors.black54, 
+    this.textColor = const Color(0xffe8e8e8), 
     this.readOnly = false, 
     this.textSize = 14,
   })  : _itemBuilder = itemBuilder,
@@ -53,33 +63,41 @@ class Rate extends StatefulWidget {
   final bool allowHalf;
 
   /// 是否显示辅助文字
+  /// 
+  /// 默认值为 `false`
   final bool showText;
 
   /// 评分等级对应的辅助文字
   final List<String> texts;
 
   /// 辅助文字颜色
+  /// 
+  /// 默认值为 `Color(0xffe8e8e8)`
   final Color textColor;
 
   /// 辅助文字大小
+  /// 
+  /// 默认值为 `14`
   final double textSize;
 
   /// 是否只用来显示，不可操作
   /// 
-  /// 默认为 `false`
+  /// 默认值为 `false`
   final bool readOnly;
 
   /// 当前评分值
+  /// 
+  /// 默认值为 `0`
   final double value;
 
   /// 评分组件中有几个Item
   ///
-  /// 默认 `5`
+  /// 默认值为 `5`
   final int count;
 
   /// 评分项的尺寸大小
   ///
-  /// 默认 `40.0`
+  /// 默认值为 `40.0`
   final double size;
 
   /// 获取评分结果，每次变化时都会通知出去
@@ -89,7 +107,7 @@ class Rate extends StatefulWidget {
 
   /// 评分图标的颜色
   ///
-  /// 默认值 Color(0xfff1ad3d).
+  /// 默认值为 `Color(0xfff1ad3d)`
   final Color color;
 
   final IndexedWidgetBuilder? _itemBuilder;
@@ -112,6 +130,9 @@ abstract class _Default {
 
   // 评分item之间的间距
   static const itemPadding = EdgeInsets.zero;
+
+  // 评星与描述之间的间距
+  static const descPadding = 20.0;
 
   // 传入color，返回默认构造Rate Item的构造器
   static final IndexedWidgetBuilder Function(Color color) itemBuilder = (color) => (_, __) => Icon(TDIcons.starFilled, color: color);
@@ -169,7 +190,7 @@ class _RateState extends State<Rate> {
     }
 
     // 评星跟描述之间添加一个间距
-    widgets.add(SizedBox(width: 20)); 
+    widgets.add(SizedBox(width: _Default.descPadding)); 
 
     widgets.add(_buildDesc(context));
     return widgets;
@@ -281,9 +302,6 @@ class _RateState extends State<Rate> {
     }
   }
 
-  void _onDragStart(DragStartDetails details) {
-  }
-
   void _onDragEnd(DragEndDetails details) {
     widget.onRatingUpdate?.call(iconRating);
     iconRating = 0.0;
@@ -309,10 +327,8 @@ class _RateState extends State<Rate> {
           _rating = value;
           setState(() {});
         },
-        onHorizontalDragStart: _isHorizontal ? _onDragStart : null,
         onHorizontalDragEnd: _isHorizontal ? _onDragEnd : null,
         onHorizontalDragUpdate: _isHorizontal ? _onDragUpdate : null,
-        onVerticalDragStart: _isHorizontal ? null : _onDragStart,
         onVerticalDragEnd: _isHorizontal ? null : _onDragEnd,
         onVerticalDragUpdate: _isHorizontal ? null : _onDragUpdate,
         child: Padding(
