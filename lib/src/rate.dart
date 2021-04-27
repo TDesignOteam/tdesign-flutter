@@ -9,7 +9,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 // TODO
-// 支持辅助文字能力
 // 删除多余的代码
 // Rate字段精简
 // 代码架构整理
@@ -38,7 +37,7 @@ class RatingIconConfig {
 class Rate extends StatefulWidget {
   /// 使用 [ratingIcons] 配置 [Rate]
   const Rate({
-    required RatingIconConfig ratingIcons,
+    RatingIconConfig? ratingIcons,
     this.onRatingUpdate,
     this.color,
     this.allowHalf = false,
@@ -63,7 +62,7 @@ class Rate extends StatefulWidget {
 
   /// 使用 [itemBuilder] 构建 [Rate]
   const Rate.builder({
-    required IndexedWidgetBuilder itemBuilder,
+    IndexedWidgetBuilder? itemBuilder,
     this.onRatingUpdate,
     this.color,
     this.allowHalf = false,
@@ -229,33 +228,8 @@ class _RateState extends State<Rate> {
     // 评星跟描述之间添加一个间距
     widgets.add(SizedBox(width: 20)); 
 
-    widgets.add(_buildTextDesc(context));
+    widgets.add(_buildDesc(context));
     return widgets;
-  }
-
-  Widget _buildTextDesc(BuildContext context) {
-    // 计算出要显示的文案内容
-    var title = '';
-    final index = (_rating * (widget.allowHalf ? 2 : 1)).ceil();
-    if (widget.texts.length > index) {
-      title = widget.texts[index];
-    } else if (widget.texts.length > 0) {
-      title = widget.texts.last;
-    }
-
-    return SizedBox(
-      height: widget.size,
-      child: FittedBox(
-        fit: BoxFit.none,
-        child: Text(
-          title,
-          style: TextStyle(
-            color: widget.textColor,
-            fontSize: widget.textSize
-          ),
-        )
-      ),
-    );
   }
 
   Widget _buildRating(BuildContext context, int index) {
@@ -268,7 +242,7 @@ class _RateState extends State<Rate> {
     if (index >= _rating) {
       ratingIcon = _NoRatingIcon(
         size: widget.size,
-        child: ratingIcons?.empty ?? item!,
+        child: ratingIcons?.empty ?? item ?? _defaultIcon(),
         enableMask: ratingIcons == null,
         unratedColor: widget._unratedColor,
       );
@@ -276,7 +250,7 @@ class _RateState extends State<Rate> {
       if (ratingIcons?.half == null) {
         ratingIcon = _HalfRatingIcon(
           size: widget.size,
-          child: item!,
+          child: item ?? _defaultIcon(),
           enableMask: ratingIcons == null,
           rtlMode: _isRTL,
           unratedColor: widget._unratedColor,
@@ -305,7 +279,7 @@ class _RateState extends State<Rate> {
         height: widget.size,
         child: FittedBox(
           fit: BoxFit.contain,
-          child: ratingIcons?.full ?? item,
+          child: ratingIcons?.full ?? item ?? _defaultIcon(),
         ),
       );
       iconRating += 1.0;
@@ -314,6 +288,22 @@ class _RateState extends State<Rate> {
     return IgnorePointer(
       ignoring: widget.readOnly,
       child: _gestureDetector(index, ratingIcon),
+    );
+  }
+
+  Widget _buildDesc(BuildContext context) {
+    return SizedBox(
+      height: widget.size,
+      child: FittedBox(
+        fit: BoxFit.none,
+        child: Text(
+          _descTitle(),
+          style: TextStyle(
+            color: widget.textColor,
+            fontSize: widget.textSize
+          ),
+        )
+      ),
     );
   }
 
@@ -416,6 +406,28 @@ class _RateState extends State<Rate> {
             child: ratingIcon,
           ),
         ),
+      );
+  }
+}
+
+extension _RateStatePrivate on _RateState {
+  // 获取要显示的文案内容
+  String _descTitle() {
+    // 如果支持半星粒度，则每增加半颗星，就获取下一个详情
+    // 但详情描述不够时，就一直返回最后一个
+    final index = (_rating * (widget.allowHalf ? 2 : 1)).ceil();
+    if (widget.texts.length > index) {
+      return widget.texts[index];
+    } else if (widget.texts.length > 0) {
+      return widget.texts.last;
+    }
+    return '';
+  }
+
+  Widget _defaultIcon() {
+    return Icon(
+        Icons.star,
+        color: Color(0xfff1ad3d),
       );
   }
 }

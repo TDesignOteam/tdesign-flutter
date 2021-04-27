@@ -48,6 +48,12 @@ class _RatePageState extends State<RatePage> {
             Icons.star,
             color: Colors.cyan,
           )
+        ),
+        SizedBox(height: 20),
+        Rate.builder(
+          value: 2,
+          count: 5,
+          allowHalf: true,
         )
       ],
     );
