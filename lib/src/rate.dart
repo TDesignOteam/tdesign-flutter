@@ -1,5 +1,5 @@
 /// 评星控件
-/// 
+///
 /// 实现参考了 [flutter_rating_bar](https://pub.dev/packages/flutter_rating_bar)
 
 import 'dart:math' as math;
@@ -28,7 +28,7 @@ class RatingIconConfig {
 /// 评分组件
 ///
 /// 能力及接口参考：[TDesign Mobile Rate](http://tdesign.woa.com/vue-mobile/components/rate)
-/// 
+///
 /// 使用示例：
 /// ``` dart
 /// Rate(
@@ -38,7 +38,7 @@ class RatingIconConfig {
 /// ```
 class Rate extends StatefulWidget {
   /// 构造 [Rate]
-  /// 
+  ///
   /// 图标配置方式有两种：(当这两个参数都不设置时，使用默认的)
   /// - 在创建 [Rate] 时就通过 [ratingIcons] 来配置
   /// - 在运行时，通过设置的 [itemBuilder] 来获取
@@ -53,8 +53,8 @@ class Rate extends StatefulWidget {
     this.size = 40.0,
     this.showText = false,
     this.texts = const <String>[],
-    this.textColor = const Color(0xffe8e8e8), 
-    this.readOnly = false, 
+    this.textColor = const Color(0xffe8e8e8),
+    this.readOnly = false,
     this.textSize = 14,
   })  : _itemBuilder = itemBuilder,
         _ratingIcons = ratingIcons;
@@ -63,7 +63,7 @@ class Rate extends StatefulWidget {
   final bool allowHalf;
 
   /// 是否显示辅助文字
-  /// 
+  ///
   /// 默认值为 `false`
   final bool showText;
 
@@ -71,22 +71,22 @@ class Rate extends StatefulWidget {
   final List<String> texts;
 
   /// 辅助文字颜色
-  /// 
+  ///
   /// 默认值为 `Color(0xffe8e8e8)`
   final Color textColor;
 
   /// 辅助文字大小
-  /// 
+  ///
   /// 默认值为 `14`
   final double textSize;
 
   /// 是否只用来显示，不可操作
-  /// 
+  ///
   /// 默认值为 `false`
   final bool readOnly;
 
   /// 当前评分值
-  /// 
+  ///
   /// 默认值为 `0`
   final double value;
 
@@ -101,7 +101,7 @@ class Rate extends StatefulWidget {
   final double size;
 
   /// 获取评分结果，每次变化时都会通知出去
-  /// 
+  ///
   /// 可选的，当组件仅用来展示数据时，外部就没必要设置该回调
   final ValueChanged<double>? onRatingUpdate;
 
@@ -120,7 +120,7 @@ class Rate extends StatefulWidget {
 // 几处默认配置项
 abstract class _Default {
   // 未选择的评分组件颜色
-  static const unratedColor = const Color(0xFFCCCCCC);  // lightGray
+  static const unratedColor = const Color(0xFFCCCCCC); // lightGray
 
   // 评分组件的方向，配置为水平
   static const direction = Axis.horizontal;
@@ -135,7 +135,8 @@ abstract class _Default {
   static const descPadding = 20.0;
 
   // 传入color，返回默认构造Rate Item的构造器
-  static final IndexedWidgetBuilder Function(Color color) itemBuilder = (color) => (_, __) => Icon(TDIcons.starFilled, color: color);
+  static final IndexedWidgetBuilder Function(Color color) itemBuilder =
+      (color) => (_, __) => Icon(TDIcons.starFilled, color: color);
 }
 
 class _RateState extends State<Rate> {
@@ -190,7 +191,7 @@ class _RateState extends State<Rate> {
     }
 
     // 评星跟描述之间添加一个间距
-    widgets.add(SizedBox(width: _Default.descPadding)); 
+    widgets.add(SizedBox(width: _Default.descPadding));
 
     widgets.add(_buildDesc(context));
     return widgets;
@@ -198,7 +199,8 @@ class _RateState extends State<Rate> {
 
   Widget _buildRating(BuildContext context, int index) {
     final ratingIcons = widget._ratingIcons;
-    final itemBuilder = widget._itemBuilder ?? _Default.itemBuilder(widget.color);
+    final itemBuilder =
+        widget._itemBuilder ?? _Default.itemBuilder(widget.color);
     final item = itemBuilder(context, index);
     final ratingOffset = widget.allowHalf ? 0.5 : 1.0;
 
@@ -221,18 +223,23 @@ class _RateState extends State<Rate> {
           unratedColor: _Default.unratedColor,
         );
       } else {
+        // 水平翻转组件
+        Widget _horizontalReverseWidget(Widget widget) {
+          return Transform(
+            transform: Matrix4.identity()..scale(-1.0, 1.0, 1.0),
+            alignment: Alignment.center,
+            transformHitTests: false,
+            child: widget,
+          );
+        }
+
         ratingIcon = SizedBox(
           width: widget.size,
           height: widget.size,
           child: FittedBox(
             fit: BoxFit.contain,
             child: _isRTL
-                ? Transform(
-                    transform: Matrix4.identity()..scale(-1.0, 1.0, 1.0),
-                    alignment: Alignment.center,
-                    transformHitTests: false,
-                    child: ratingIcons!.half,
-                  )
+                ? _horizontalReverseWidget(ratingIcons!.half)
                 : ratingIcons!.half,
           ),
         );
@@ -257,18 +264,28 @@ class _RateState extends State<Rate> {
   }
 
   Widget _buildDesc(BuildContext context) {
+    // 获取要显示的文案内容
+    String _descTitle() {
+      // 如果支持半星粒度，则每增加半颗星，就获取下一个详情
+      // 但详情描述不够时，就一直返回最后一个
+      final index = (_rating * (widget.allowHalf ? 2 : 1)).ceil();
+      if (widget.texts.length > index) {
+        return widget.texts[index];
+      } else if (widget.texts.length > 0) {
+        return widget.texts.last;
+      }
+      return '';
+    }
+
     return SizedBox(
       height: widget.size,
       child: FittedBox(
-        fit: BoxFit.none,
-        child: Text(
-          _descTitle(),
-          style: TextStyle(
-            color: widget.textColor,
-            fontSize: widget.textSize
-          ),
-        )
-      ),
+          fit: BoxFit.none,
+          child: Text(
+            _descTitle(),
+            style:
+                TextStyle(color: widget.textColor, fontSize: widget.textSize),
+          )),
     );
   }
 
@@ -310,47 +327,28 @@ class _RateState extends State<Rate> {
   // 手势事件处理
   Widget _gestureDetector(int index, Widget ratingIcon) {
     return GestureDetector(
-        onTapDown: (details) {
-          double value;
-          // 当点击第一个icon时，就表示打1分或取消打1分（或0.5分）的逻辑
-          if (index == 0 && (_rating == 1 || _rating == 0.5)) {
-            value = 0;
-          } else {
-            final tappedPosition = details.localPosition.dx;
-            final tappedOnFirstHalf = tappedPosition <= widget.size / 2;
-            value = index +
-                (tappedOnFirstHalf && widget.allowHalf ? 0.5 : 1.0);
-          }
+      onTapDown: (details) {
+        double value;
+        // 当点击第一个icon时，就表示打1分或取消打1分（或0.5分）的逻辑
+        if (index == 0 && (_rating == 1 || _rating == 0.5)) {
+          value = 0;
+        } else {
+          final tappedPosition = details.localPosition.dx;
+          final tappedOnFirstHalf = tappedPosition <= widget.size / 2;
+          value = index + (tappedOnFirstHalf && widget.allowHalf ? 0.5 : 1.0);
+        }
 
-          value = math.max(value, _minRating);
-          widget.onRatingUpdate?.call(value);
-          _rating = value;
-          setState(() {});
-        },
-        onHorizontalDragEnd: _isHorizontal ? _onDragEnd : null,
-        onHorizontalDragUpdate: _isHorizontal ? _onDragUpdate : null,
-        onVerticalDragEnd: _isHorizontal ? null : _onDragEnd,
-        onVerticalDragUpdate: _isHorizontal ? null : _onDragUpdate,
-        child: Padding(
-          padding: _Default.itemPadding,
-          child: ratingIcon
-        ),
-      );
-  }
-}
-
-extension _RateStatePrivate on _RateState {
-  // 获取要显示的文案内容
-  String _descTitle() {
-    // 如果支持半星粒度，则每增加半颗星，就获取下一个详情
-    // 但详情描述不够时，就一直返回最后一个
-    final index = (_rating * (widget.allowHalf ? 2 : 1)).ceil();
-    if (widget.texts.length > index) {
-      return widget.texts[index];
-    } else if (widget.texts.length > 0) {
-      return widget.texts.last;
-    }
-    return '';
+        value = math.max(value, _minRating);
+        widget.onRatingUpdate?.call(value);
+        _rating = value;
+        setState(() {});
+      },
+      onHorizontalDragEnd: _isHorizontal ? _onDragEnd : null,
+      onHorizontalDragUpdate: _isHorizontal ? _onDragUpdate : null,
+      onVerticalDragEnd: _isHorizontal ? null : _onDragEnd,
+      onVerticalDragUpdate: _isHorizontal ? null : _onDragUpdate,
+      child: Padding(padding: _Default.itemPadding, child: ratingIcon),
+    );
   }
 }
 
@@ -379,24 +377,9 @@ class _HalfRatingIcon extends StatelessWidget {
           ? Stack(
               fit: StackFit.expand,
               children: [
-                FittedBox(
-                  fit: BoxFit.contain,
-                  child: _NoRatingIcon(
-                    child: child,
-                    size: size,
-                    unratedColor: unratedColor,
-                    enableMask: enableMask,
-                  ),
-                ),
-                FittedBox(
-                  fit: BoxFit.contain,
-                  child: ClipRect(
-                    clipper: _HalfClipper(
-                      rtlMode: rtlMode,
-                    ),
-                    child: child,
-                  ),
-                ),
+                // 先放置未打星图标，再将打星的一半覆盖上去
+                _fittedNoRatingIcon(),
+                _fittedHalfRatingIcon(),
               ],
             )
           : FittedBox(
@@ -405,8 +388,33 @@ class _HalfRatingIcon extends StatelessWidget {
             ),
     );
   }
+
+  Widget _fittedNoRatingIcon() {
+    return FittedBox(
+      fit: BoxFit.contain,
+      child: _NoRatingIcon(
+        child: child,
+        size: size,
+        unratedColor: unratedColor,
+        enableMask: enableMask,
+      ),
+    );
+  }
+
+  Widget _fittedHalfRatingIcon() {
+    return FittedBox(
+      fit: BoxFit.contain,
+      child: ClipRect(
+        clipper: _HalfClipper(
+          rtlMode: rtlMode,
+        ),
+        child: child,
+      ),
+    );
+  }
 }
 
+// 配置切除一半矩形区域的clipper
 class _HalfClipper extends CustomClipper<Rect> {
   _HalfClipper({required this.rtlMode});
 
@@ -453,16 +461,18 @@ class _NoRatingIcon extends StatelessWidget {
       width: size,
       child: FittedBox(
         fit: BoxFit.contain,
-        child: enableMask
-            ? ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                  unratedColor,
-                  BlendMode.srcIn,
-                ),
-                child: child,
-              )
-            : child,
+        child: enableMask ? _maskWidget(child) : child,
       ),
+    );
+  }
+
+  Widget _maskWidget(Widget widget) {
+    return ColorFiltered(
+      colorFilter: ColorFilter.mode(
+        unratedColor,
+        BlendMode.srcIn,
+      ),
+      child: widget,
     );
   }
 }
