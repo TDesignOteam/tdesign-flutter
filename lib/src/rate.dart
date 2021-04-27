@@ -212,14 +212,14 @@ class _RateState extends State<Rate> {
 
     Widget ratingIcon;
 
-    if (index >= _rating) {
+    if (index >= _rating) { // 当前index的item没有被选中，则显示为NoRating的状态
       ratingIcon = _NoRatingIcon(
         size: widget.size,
         child: ratingIcons?.empty ?? item,
         enableMask: ratingIcons == null,
         unratedColor: _Default.unratedColor,
       );
-    } else if (index >= _rating - ratingOffset && widget.allowHalf) {
+    } else if (index >= _rating - ratingOffset && widget.allowHalf) { // 显示半个item的状态
       if (ratingIcons?.half == null) {
         ratingIcon = _HalfRatingIcon(
           size: widget.size,
@@ -229,23 +229,13 @@ class _RateState extends State<Rate> {
           unratedColor: _Default.unratedColor,
         );
       } else {
-        // 水平翻转组件
-        Widget _horizontalReverseWidget(Widget widget) {
-          return Transform(
-            transform: Matrix4.identity()..scale(-1.0, 1.0, 1.0),
-            alignment: Alignment.center,
-            transformHitTests: false,
-            child: widget,
-          );
-        }
-
         ratingIcon = SizedBox(
           width: widget.size,
           height: widget.size,
           child: FittedBox(
             fit: BoxFit.contain,
             child: _isRTL
-                ? _horizontalReverseWidget(ratingIcons!.half)
+                ? _horizontalReverse(ratingIcons!.half)
                 : ratingIcons!.half,
           ),
         );
@@ -269,15 +259,26 @@ class _RateState extends State<Rate> {
     );
   }
 
+  // 水平翻转组件
+  Widget _horizontalReverse(Widget widget) {
+    return Transform(
+      transform: Matrix4.identity()..scale(-1.0, 1.0, 1.0),
+      alignment: Alignment.center,
+      transformHitTests: false,
+      child: widget,
+    );
+  }
+
   Widget _buildDesc(BuildContext context) {
     // 获取要显示的文案内容
     String _descTitle() {
-      // 如果支持半星粒度，则每增加半颗星，就获取下一个详情
-      // 但详情描述不够时，就一直返回最后一个
+      // 如果支持半星粒度，则每增加半颗星，就获取下一个辅助描述
+      // 当辅助描述内容不够时，就返回最后一个
       final index = (_rating * (widget.allowHalf ? 2 : 1)).ceil();
       if (widget.texts.length > index) {
         return widget.texts[index];
-      } else if (widget.texts.length > 0) {
+      } 
+      if (widget.texts.length > 0) {
         return widget.texts.last;
       }
       return '';
