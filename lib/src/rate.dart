@@ -8,6 +8,12 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+// TODO
+// 支持辅助文字能力
+// 删除多余的代码
+// Rate字段精简
+// 代码架构整理
+
 /// Defines widgets which are to used as rating bar items.
 class RateIcon {
   RateIcon({
@@ -48,7 +54,6 @@ class Rate extends StatefulWidget {
         _rateIcon = rateIcon,
         _unratedColor = const Color.fromRGBO(204, 204, 204, 1),
         _minRating = 0,
-        _ignoreGestures = false,
         _itemPadding = EdgeInsets.zero,
         _glow = false,
         _glowRadius = 2,
@@ -73,7 +78,6 @@ class Rate extends StatefulWidget {
         _rateIcon = null,
         _unratedColor = const Color.fromRGBO(204, 204, 204, 1),
         _minRating = 0,
-        _ignoreGestures = false,
         _itemPadding = EdgeInsets.zero,
         _glow = false,
         _glowRadius = 2,
@@ -94,6 +98,8 @@ class Rate extends StatefulWidget {
   final Color textColor;
 
   /// 是否只用来显示，不可操作
+  /// 
+  /// 默认为 `false`
   final bool readOnly;
 
   /// Defines the initial rating to be set to the rating bar.
@@ -118,7 +124,7 @@ class Rate extends StatefulWidget {
   final Color? color;
 
   // Defines color for the unrated portion.
-  // Default is [ThemeData.disabledColor].
+  // Default is lightGray(0xcccccc).
   final Color _unratedColor;
 
   // Direction of rating bar.
@@ -132,10 +138,6 @@ class Rate extends StatefulWidget {
   // Defines the radius of glow.
   // Default is 2.
   final double _glowRadius;
-
-  // if set to true, will disable any gestures over the rating bar.
-  // Default is false.
-  final bool _ignoreGestures;
 
   // The amount of space by which to inset each rating item.
   final EdgeInsetsGeometry _itemPadding;
@@ -266,7 +268,7 @@ class _RateState extends State<Rate> {
     }
 
     return IgnorePointer(
-      ignoring: widget._ignoreGestures,
+      ignoring: widget.readOnly,
       child: GestureDetector(
         onTapDown: (details) {
           double value;
