@@ -40,7 +40,7 @@ class _RatePageState extends State<RatePage> {
           ),
         ),
         SizedBox(height: 20),
-        Rate.builder(
+        Rate(
           value: 2,
           count: 5,
           allowHalf: true,
@@ -50,7 +50,7 @@ class _RatePageState extends State<RatePage> {
           )
         ),
         SizedBox(height: 20),
-        Rate.builder(
+        Rate(
           value: 2,
           count: 5,
           allowHalf: true,

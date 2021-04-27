@@ -38,6 +38,7 @@ class Rate extends StatefulWidget {
   /// 使用 [ratingIcons] 配置 [Rate]
   const Rate({
     RatingIconConfig? ratingIcons,
+    IndexedWidgetBuilder? itemBuilder,
     this.onRatingUpdate,
     this.color,
     this.allowHalf = false,
@@ -49,34 +50,9 @@ class Rate extends StatefulWidget {
     this.textColor = Colors.black54, 
     this.readOnly = false, 
     this.textSize = 14,
-  })  : _itemBuilder = null,
+  })  : _itemBuilder = itemBuilder,
         _ratingIcons = ratingIcons,
         _unratedColor = const Color(0xFFCCCCCC),  // lightGray
-        _minRating = 0,
-        _itemPadding = EdgeInsets.zero,
-        _glow = false,
-        _glowRadius = 2,
-        _direction = Axis.horizontal,
-        _updateOnDrag = false,
-        _tapOnlyMode = false;
-
-  /// 使用 [itemBuilder] 构建 [Rate]
-  const Rate.builder({
-    IndexedWidgetBuilder? itemBuilder,
-    this.onRatingUpdate,
-    this.color,
-    this.allowHalf = false,
-    this.value = 0.0,
-    this.count = 5,
-    this.size = 40.0,
-    this.showText = false,
-    this.texts = const <String>[],
-    this.textColor = Colors.black54,
-    this.readOnly = false,
-    this.textSize = 14,
-  })  : _itemBuilder = itemBuilder,
-        _ratingIcons = null,
-        _unratedColor = const Color(0xFFCCCCCC),
         _minRating = 0,
         _itemPadding = EdgeInsets.zero,
         _glow = false,
