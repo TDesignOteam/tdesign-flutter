@@ -218,53 +218,63 @@ extension _RateStateRating on _RateState {
     final ratingOffset = widget.allowHalf ? 0.5 : 1.0;
 
     Widget ratingIcon;
-
     if (index >= _rating) {
       // 当前index的item没有被选中，则显示为NoRating的状态
-      ratingIcon = _NoRatingIcon(
-        size: widget.size,
-        child: ratingIcons?.empty ?? item,
-        enableMask: ratingIcons == null,
-        unratedColor: _Default.unratedColor,
-      );
+      ratingIcon = _emptyWidget(ratingIcons, item);
     } else if (index >= _rating - ratingOffset && widget.allowHalf) {
       // 显示半个item的状态
-      if (ratingIcons?.half == null) {
-        ratingIcon = _HalfRatingIcon(
-          size: widget.size,
-          child: item,
-          enableMask: ratingIcons == null,
-          rtlMode: _isRTL,
-          unratedColor: _Default.unratedColor,
-        );
-      } else {
-        ratingIcon = SizedBox(
-          width: widget.size,
-          height: widget.size,
-          child: FittedBox(
-            fit: BoxFit.contain,
-            child: _isRTL
-                ? _horizontalReverse(ratingIcons!.half)
-                : ratingIcons!.half,
-          ),
-        );
-      }
+      ratingIcon = _halfWidget(ratingIcons, item);
       iconRating += 0.5;
     } else {
-      ratingIcon = SizedBox(
-        width: widget.size,
-        height: widget.size,
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: ratingIcons?.full ?? item,
-        ),
-      );
+      ratingIcon = _fullWidget(ratingIcons, item);
       iconRating += 1.0;
     }
 
     return IgnorePointer(
       ignoring: widget.readOnly,
       child: _gestureDetector(index, ratingIcon),
+    );
+  }
+
+  Widget _emptyWidget(RatingIconConfig? icons, Widget item) {
+    return _NoRatingIcon(
+      size: widget.size,
+      child: icons?.empty ?? item,
+      enableMask: icons == null,
+      unratedColor: _Default.unratedColor,
+    );
+  }
+
+  Widget _fullWidget(RatingIconConfig? icons, Widget item) {
+    return SizedBox(
+      width: widget.size,
+      height: widget.size,
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: icons?.full ?? item,
+      ),
+    );
+  }
+
+  Widget _halfWidget(RatingIconConfig? icons, Widget item) {
+    if (icons?.half != null) {
+      // 有icons配置时，优先使用icons中的内容进行显示
+      return SizedBox(
+        width: widget.size,
+        height: widget.size,
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: _isRTL ? _horizontalReverse(icons!.half) : icons!.half,
+        ),
+      );
+    }
+
+    return _HalfRatingIcon(
+      size: widget.size,
+      child: item,
+      enableMask: icons == null,
+      rtlMode: _isRTL,
+      unratedColor: _Default.unratedColor,
     );
   }
 
