@@ -7,11 +7,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-
-// TODO
-// 删除多余的代码
-// Rate字段精简
-// 代码架构整理
+import 'package:tdesign/tdesign.dart';
 
 /// Defines widgets which are to used as rating bar items.
 class RatingIconConfig {
@@ -40,7 +36,7 @@ class Rate extends StatefulWidget {
     RatingIconConfig? ratingIcons,
     IndexedWidgetBuilder? itemBuilder,
     this.onRatingUpdate,
-    this.color,
+    this.color = const Color(0xfff1ad3d),
     this.allowHalf = false,
     this.value = 0.0,
     this.count = 5,
@@ -51,15 +47,7 @@ class Rate extends StatefulWidget {
     this.readOnly = false, 
     this.textSize = 14,
   })  : _itemBuilder = itemBuilder,
-        _ratingIcons = ratingIcons,
-        _unratedColor = const Color(0xFFCCCCCC),  // lightGray
-        _minRating = 0,
-        _itemPadding = EdgeInsets.zero,
-        _glow = false,
-        _glowRadius = 2,
-        _direction = Axis.horizontal,
-        _updateOnDrag = false,
-        _tapOnlyMode = false;
+        _ratingIcons = ratingIcons;
 
   /// 打星粒度是否支持半星 (如：1.5星、2.5星)
   final bool allowHalf;
@@ -81,17 +69,17 @@ class Rate extends StatefulWidget {
   /// 默认为 `false`
   final bool readOnly;
 
-  /// Defines the initial rating to be set to the rating bar.
+  /// 当前评分值
   final double value;
 
-  /// Defines total number of rating bar items.
+  /// 评分组件中有几个Item
   ///
-  /// Default is 5.
+  /// 默认 `5`
   final int count;
 
-  /// Defines width and height of each rating item in the bar.
+  /// 评分项的尺寸大小
   ///
-  /// Default is 40.0
+  /// 默认 `40.0`
   final double size;
 
   /// 获取评分结果，每次变化时都会通知出去
@@ -99,41 +87,10 @@ class Rate extends StatefulWidget {
   /// 可选的，当组件仅用来展示数据时，外部就没必要设置该回调
   final ValueChanged<double>? onRatingUpdate;
 
-  /// Defines color for glow.
+  /// 评分图标的颜色
   ///
-  /// Default is [ThemeData.accentColor].
-  final Color? color;
-
-  // Defines color for the unrated portion.
-  // Default is lightGray(0xcccccc).
-  final Color _unratedColor;
-
-  // Direction of rating bar.
-  // Default = Axis.horizontal
-  final Axis _direction;
-
-  // if set to true, Rating Bar item will glow when being touched.
-  // Default is true.
-  final bool _glow;
-
-  // Defines the radius of glow.
-  // Default is 2.
-  final double _glowRadius;
-
-  // The amount of space by which to inset each rating item.
-  final EdgeInsetsGeometry _itemPadding;
-
-  // Sets minimum rating
-  // Default is 0.
-  final double _minRating;
-
-  // if set to true will disable drag to rate feature. Note: Enabling this mode will disable half rating capability.
-  // Default is false.
-  final bool _tapOnlyMode;
-
-  // Defines whether or not the `onRatingUpdate` updates while dragging.
-  // Default is false.
-  final bool _updateOnDrag;
+  /// 默认值 Color(0xfff1ad3d).
+  final Color color;
 
   final IndexedWidgetBuilder? _itemBuilder;
   final RatingIconConfig? _ratingIcons;
@@ -142,19 +99,35 @@ class Rate extends StatefulWidget {
   _RateState createState() => _RateState();
 }
 
+// 几处默认配置项
+abstract class _Default {
+  // 未选择的评分组件颜色
+  static const unratedColor = const Color(0xFFCCCCCC);  // lightGray
+
+  // 评分组件的方向，配置为水平
+  static const direction = Axis.horizontal;
+
+  // 是否支持拖拽评分
+  static const supportDrag = true;
+
+  // 评分item之间的间距
+  static const itemPadding = EdgeInsets.zero;
+
+  // 传入color，返回默认构造Rate Item的构造器
+  static final IndexedWidgetBuilder Function(Color color) itemBuilder = (color) => (_, __) => Icon(TDIcons.starFilled, color: color);
+}
+
 class _RateState extends State<Rate> {
   double _rating = 0.0;
   bool _isRTL = false;
   double iconRating = 0.0;
 
   late double _minRating, _maxRating;
-  late final ValueNotifier<bool> _glow;
 
   @override
   void initState() {
     super.initState();
-    _glow = ValueNotifier(false);
-    _minRating = widget._minRating;
+    _minRating = 0;
     _maxRating = widget.count.toDouble();
     _rating = widget.value;
   }
@@ -165,14 +138,8 @@ class _RateState extends State<Rate> {
     if (oldWidget.value != widget.value) {
       _rating = widget.value;
     }
-    _minRating = widget._minRating;
+    _minRating = 0;
     _maxRating = widget.count.toDouble();
-  }
-
-  @override
-  void dispose() {
-    _glow.dispose();
-    super.dispose();
   }
 
   @override
@@ -186,7 +153,7 @@ class _RateState extends State<Rate> {
       child: Wrap(
         alignment: WrapAlignment.start,
         textDirection: textDirection,
-        direction: widget._direction,
+        direction: _Default.direction,
         children: _buildAll(context),
       ),
     );
@@ -210,7 +177,8 @@ class _RateState extends State<Rate> {
 
   Widget _buildRating(BuildContext context, int index) {
     final ratingIcons = widget._ratingIcons;
-    final item = widget._itemBuilder?.call(context, index);
+    final itemBuilder = widget._itemBuilder ?? _Default.itemBuilder(widget.color);
+    final item = itemBuilder(context, index);
     final ratingOffset = widget.allowHalf ? 0.5 : 1.0;
 
     Widget ratingIcon;
@@ -218,18 +186,18 @@ class _RateState extends State<Rate> {
     if (index >= _rating) {
       ratingIcon = _NoRatingIcon(
         size: widget.size,
-        child: ratingIcons?.empty ?? item ?? _defaultIcon(),
+        child: ratingIcons?.empty ?? item,
         enableMask: ratingIcons == null,
-        unratedColor: widget._unratedColor,
+        unratedColor: _Default.unratedColor,
       );
     } else if (index >= _rating - ratingOffset && widget.allowHalf) {
       if (ratingIcons?.half == null) {
         ratingIcon = _HalfRatingIcon(
           size: widget.size,
-          child: item ?? _defaultIcon(),
+          child: item,
           enableMask: ratingIcons == null,
           rtlMode: _isRTL,
-          unratedColor: widget._unratedColor,
+          unratedColor: _Default.unratedColor,
         );
       } else {
         ratingIcon = SizedBox(
@@ -255,7 +223,7 @@ class _RateState extends State<Rate> {
         height: widget.size,
         child: FittedBox(
           fit: BoxFit.contain,
-          child: ratingIcons?.full ?? item ?? _defaultIcon(),
+          child: ratingIcons?.full ?? item,
         ),
       );
       iconRating += 1.0;
@@ -283,19 +251,19 @@ class _RateState extends State<Rate> {
     );
   }
 
-  bool get _isHorizontal => widget._direction == Axis.horizontal;
+  bool get _isHorizontal => _Default.direction == Axis.horizontal;
 
   void _onDragUpdate(DragUpdateDetails dragDetails) {
-    if (!widget._tapOnlyMode) {
+    if (_Default.supportDrag) {
       final box = context.findRenderObject() as RenderBox?;
       if (box == null) return;
 
       final _pos = box.globalToLocal(dragDetails.globalPosition);
       double i;
-      if (widget._direction == Axis.horizontal) {
-        i = _pos.dx / (widget.size + widget._itemPadding.horizontal);
+      if (_isHorizontal) {
+        i = _pos.dx / (widget.size + _Default.itemPadding.horizontal);
       } else {
-        i = _pos.dy / (widget.size + widget._itemPadding.vertical);
+        i = _pos.dy / (widget.size + _Default.itemPadding.vertical);
       }
       var currentRating = widget.allowHalf ? i : i.round().toDouble();
       if (currentRating > widget.count) {
@@ -304,22 +272,19 @@ class _RateState extends State<Rate> {
       if (currentRating < 0) {
         currentRating = 0.0;
       }
-      if (_isRTL && widget._direction == Axis.horizontal) {
+      if (_isRTL && _isHorizontal) {
         currentRating = widget.count - currentRating;
       }
 
       _rating = currentRating.clamp(_minRating, _maxRating);
-      if (widget._updateOnDrag) widget.onRatingUpdate?.call(iconRating);
       setState(() {});
     }
   }
 
   void _onDragStart(DragStartDetails details) {
-    _glow.value = true;
   }
 
   void _onDragEnd(DragEndDetails details) {
-    _glow.value = false;
     widget.onRatingUpdate?.call(iconRating);
     iconRating = 0.0;
   }
@@ -339,7 +304,7 @@ class _RateState extends State<Rate> {
                 (tappedOnFirstHalf && widget.allowHalf ? 0.5 : 1.0);
           }
 
-          value = math.max(value, widget._minRating);
+          value = math.max(value, _minRating);
           widget.onRatingUpdate?.call(value);
           _rating = value;
           setState(() {});
@@ -351,36 +316,8 @@ class _RateState extends State<Rate> {
         onVerticalDragEnd: _isHorizontal ? null : _onDragEnd,
         onVerticalDragUpdate: _isHorizontal ? null : _onDragUpdate,
         child: Padding(
-          padding: widget._itemPadding,
-          child: ValueListenableBuilder<bool>(
-            valueListenable: _glow,
-            builder: (context, glow, child) {
-              if (glow && widget._glow) {
-                final glowColor =
-                    widget.color ?? Theme.of(context).accentColor;
-                return DecoratedBox(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: glowColor.withAlpha(30),
-                        blurRadius: 10,
-                        spreadRadius: widget._glowRadius,
-                      ),
-                      BoxShadow(
-                        color: glowColor.withAlpha(20),
-                        blurRadius: 10,
-                        spreadRadius: widget._glowRadius,
-                      ),
-                    ],
-                  ),
-                  child: child,
-                );
-              }
-              return child!;
-            },
-            child: ratingIcon,
-          ),
+          padding: _Default.itemPadding,
+          child: ratingIcon
         ),
       );
   }
@@ -398,13 +335,6 @@ extension _RateStatePrivate on _RateState {
       return widget.texts.last;
     }
     return '';
-  }
-
-  Widget _defaultIcon() {
-    return Icon(
-        Icons.star,
-        color: Color(0xfff1ad3d),
-      );
   }
 }
 

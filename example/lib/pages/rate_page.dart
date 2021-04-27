@@ -54,6 +54,9 @@ class _RatePageState extends State<RatePage> {
           value: 2,
           count: 5,
           allowHalf: true,
+          onRatingUpdate: (value) {
+            print('value:$value');
+          },
         )
       ],
     );
