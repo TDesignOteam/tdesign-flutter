@@ -36,11 +36,10 @@ class RatingIconConfig {
 ///
 /// [Rate] can also be used to display rating
 class Rate extends StatefulWidget {
-  /// Creates [Rate] using the [ratingIcons].
+  /// 使用 [ratingIcons] 配置 [Rate]
   const Rate({
-    /// Customizes the Rating Bar item with [RatingWidget].
     required RatingIconConfig ratingIcons,
-    required this.onRatingUpdate,
+    this.onRatingUpdate,
     this.color,
     this.allowHalf = false,
     this.value = 0.0,
@@ -61,10 +60,10 @@ class Rate extends StatefulWidget {
         _updateOnDrag = false,
         _tapOnlyMode = false;
 
-  /// Creates [Rate] using the [itemBuilder].
+  /// 使用 [itemBuilder] 构建 [Rate]
   const Rate.builder({
     required IndexedWidgetBuilder itemBuilder,
-    required this.onRatingUpdate,
+    this.onRatingUpdate,
     this.color,
     this.allowHalf = false,
     this.value = 0.0,
@@ -115,8 +114,10 @@ class Rate extends StatefulWidget {
   /// Default is 40.0
   final double size;
 
-  /// Return current rating whenever rating is updated.
-  final ValueChanged<double> onRatingUpdate;
+  /// 获取评分结果，每次变化时都会通知出去
+  /// 
+  /// 可选的，当组件仅用来展示数据时，外部就没必要设置该回调
+  final ValueChanged<double>? onRatingUpdate;
 
   /// Defines color for glow.
   ///
@@ -299,7 +300,7 @@ class _RateState extends State<Rate> {
       }
 
       _rating = currentRating.clamp(_minRating, _maxRating);
-      if (widget._updateOnDrag) widget.onRatingUpdate(iconRating);
+      if (widget._updateOnDrag) widget.onRatingUpdate?.call(iconRating);
       setState(() {});
     }
   }
@@ -310,7 +311,7 @@ class _RateState extends State<Rate> {
 
   void _onDragEnd(DragEndDetails details) {
     _glow.value = false;
-    widget.onRatingUpdate(iconRating);
+    widget.onRatingUpdate?.call(iconRating);
     iconRating = 0.0;
   }
 
@@ -330,7 +331,7 @@ class _RateState extends State<Rate> {
           }
 
           value = math.max(value, widget._minRating);
-          widget.onRatingUpdate(value);
+          widget.onRatingUpdate?.call(value);
           _rating = value;
           setState(() {});
         },

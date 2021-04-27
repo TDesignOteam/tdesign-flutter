@@ -25,6 +25,7 @@ class _RatePageState extends State<RatePage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
+        Text('Rate1'),
         Rate(
           value: 3,
           allowHalf: true,
@@ -34,11 +35,15 @@ class _RatePageState extends State<RatePage> {
             half: Icon(Icons.access_alarm),
             empty: Icon(Icons.accessibility_outlined),
           ),
-          onRatingUpdate: (rating) {
-            setState(() {
-              _rating = rating;
-            });
-          },
+        ),
+        Text('Rate2'),
+        Rate.builder(
+          value: 2,
+          count: 5,
+          itemBuilder: (context, _) => Icon(
+            Icons.star,
+            color: Colors.cyan,
+          )
         )
       ],
     );
