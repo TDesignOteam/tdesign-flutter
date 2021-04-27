@@ -29,7 +29,7 @@ class _RatePageState extends State<RatePage> {
           value: 3,
           allowHalf: true,
           count: 5,
-          rateIcon: RateIcon(
+          ratingIcons: RatingIconConfig(
             full: Icon(Icons.ac_unit),
             half: Icon(Icons.access_alarm),
             empty: Icon(Icons.accessibility_outlined),

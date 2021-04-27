@@ -319,6 +319,7 @@ class _RateState extends State<Rate> {
     return GestureDetector(
         onTapDown: (details) {
           double value;
+          // 当点击第一个icon时，就表示打1分或取消打1分（或0.5分）的逻辑
           if (index == 0 && (_rating == 1 || _rating == 0.5)) {
             value = 0;
           } else {
@@ -375,6 +376,7 @@ class _RateState extends State<Rate> {
   }
 }
 
+// 在打星的图标上面加一半的蒙层，加蒙层的部分看起来就像未打星一样
 class _HalfRatingIcon extends StatelessWidget {
   _HalfRatingIcon({
     required this.size,
@@ -451,6 +453,8 @@ class _HalfClipper extends CustomClipper<Rect> {
   bool shouldReclip(CustomClipper<Rect> oldClipper) => true;
 }
 
+// 支持在未打星的Icon上面加蒙层，这样就可以不提供NoRating的Icon
+// 通过与未打星的颜色混合得到
 class _NoRatingIcon extends StatelessWidget {
   _NoRatingIcon({
     required this.size,
