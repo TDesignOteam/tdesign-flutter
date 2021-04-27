@@ -46,14 +46,14 @@ class Rate extends StatefulWidget {
     RatingIconConfig? ratingIcons,
     IndexedWidgetBuilder? itemBuilder,
     this.onRatingUpdate,
-    this.color = const Color(0xfff1ad3d),
+    this.color = _Default.color,
     this.allowHalf = false,
     this.value = 0.0,
     this.count = 5,
     this.size = 40.0,
     this.showText = false,
     this.texts = const <String>[],
-    this.textColor = const Color(0xffe8e8e8),
+    this.textColor = _Default.textColor,
     this.readOnly = false,
     this.textSize = 14,
   })  : _itemBuilder = itemBuilder,
@@ -119,8 +119,14 @@ class Rate extends StatefulWidget {
 
 // 几处默认配置项
 abstract class _Default {
+  // 选择的评分组件颜色
+  static const color = const Color(0xfff1ad3d);
+
   // 未选择的评分组件颜色
   static const unratedColor = const Color(0xFFCCCCCC); // lightGray
+
+  // 辅助文字的默认颜色
+  static const textColor = const Color(0xffe8e8e8);
 
   // 评分组件的方向，配置为水平
   static const direction = Axis.horizontal;
