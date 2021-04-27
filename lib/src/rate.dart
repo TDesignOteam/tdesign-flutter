@@ -170,6 +170,10 @@ class _RateState extends State<Rate> {
     _maxRating = widget.count.toDouble();
   }
 
+  void _updateState() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final textDirection = Directionality.of(context);
@@ -202,7 +206,10 @@ class _RateState extends State<Rate> {
     widgets.add(_buildDesc(context));
     return widgets;
   }
+}
 
+// 评分item相关创建接口
+extension _RateStateRating on _RateState {
   Widget _buildRating(BuildContext context, int index) {
     final ratingIcons = widget._ratingIcons;
     final itemBuilder =
@@ -212,14 +219,16 @@ class _RateState extends State<Rate> {
 
     Widget ratingIcon;
 
-    if (index >= _rating) { // 当前index的item没有被选中，则显示为NoRating的状态
+    if (index >= _rating) {
+      // 当前index的item没有被选中，则显示为NoRating的状态
       ratingIcon = _NoRatingIcon(
         size: widget.size,
         child: ratingIcons?.empty ?? item,
         enableMask: ratingIcons == null,
         unratedColor: _Default.unratedColor,
       );
-    } else if (index >= _rating - ratingOffset && widget.allowHalf) { // 显示半个item的状态
+    } else if (index >= _rating - ratingOffset && widget.allowHalf) {
+      // 显示半个item的状态
       if (ratingIcons?.half == null) {
         ratingIcon = _HalfRatingIcon(
           size: widget.size,
@@ -268,22 +277,11 @@ class _RateState extends State<Rate> {
       child: widget,
     );
   }
+}
 
+// 辅助方案相关创建接口
+extension _RateStateDesc on _RateState {
   Widget _buildDesc(BuildContext context) {
-    // 获取要显示的文案内容
-    String _descTitle() {
-      // 如果支持半星粒度，则每增加半颗星，就获取下一个辅助描述
-      // 当辅助描述内容不够时，就返回最后一个
-      final index = (_rating * (widget.allowHalf ? 2 : 1)).ceil();
-      if (widget.texts.length > index) {
-        return widget.texts[index];
-      } 
-      if (widget.texts.length > 0) {
-        return widget.texts.last;
-      }
-      return '';
-    }
-
     return SizedBox(
       height: widget.size,
       child: FittedBox(
@@ -296,6 +294,23 @@ class _RateState extends State<Rate> {
     );
   }
 
+  // 获取要显示的文案内容
+  String _descTitle() {
+    // 如果支持半星粒度，则每增加半颗星，就获取下一个辅助描述
+    // 当辅助描述内容不够时，就返回最后一个
+    final index = (_rating * (widget.allowHalf ? 2 : 1)).ceil();
+    if (widget.texts.length > index) {
+      return widget.texts[index];
+    }
+    if (widget.texts.length > 0) {
+      return widget.texts.last;
+    }
+    return '';
+  }
+}
+
+// 手势相关接口
+extension _RateStateGesture on _RateState {
   bool get _isHorizontal => _Default.direction == Axis.horizontal;
 
   void _onDragUpdate(DragUpdateDetails dragDetails) {
@@ -322,7 +337,7 @@ class _RateState extends State<Rate> {
       }
 
       _rating = currentRating.clamp(_minRating, _maxRating);
-      setState(() {});
+      _updateState();
     }
   }
 
@@ -348,7 +363,7 @@ class _RateState extends State<Rate> {
         value = math.max(value, _minRating);
         widget.onRatingUpdate?.call(value);
         _rating = value;
-        setState(() {});
+        _updateState();
       },
       onHorizontalDragEnd: _isHorizontal ? _onDragEnd : null,
       onHorizontalDragUpdate: _isHorizontal ? _onDragUpdate : null,
