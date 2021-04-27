@@ -25,21 +25,25 @@ class _RatePageState extends State<RatePage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('Rate1'),
+        SizedBox(height: 20),
         Rate(
           value: 3,
-          allowHalf: true,
+          allowHalf: false,
           count: 5,
+          showText: true,
+          textSize: 20,
+          texts: ['差评', '差评', '一般', '一般', '好评', '好评'],
           ratingIcons: RatingIconConfig(
             full: Icon(Icons.ac_unit),
             half: Icon(Icons.access_alarm),
             empty: Icon(Icons.accessibility_outlined),
           ),
         ),
-        Text('Rate2'),
+        SizedBox(height: 20),
         Rate.builder(
           value: 2,
           count: 5,
+          allowHalf: true,
           itemBuilder: (context, _) => Icon(
             Icons.star,
             color: Colors.cyan,

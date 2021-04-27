@@ -48,7 +48,8 @@ class Rate extends StatefulWidget {
     this.showText = false,
     this.texts = const <String>[],
     this.textColor = Colors.black54, 
-    this.readOnly = false,
+    this.readOnly = false, 
+    this.textSize = 14,
   })  : _itemBuilder = null,
         _ratingIcons = ratingIcons,
         _unratedColor = const Color(0xFFCCCCCC),  // lightGray
@@ -73,6 +74,7 @@ class Rate extends StatefulWidget {
     this.texts = const <String>[],
     this.textColor = Colors.black54,
     this.readOnly = false,
+    this.textSize = 14,
   })  : _itemBuilder = itemBuilder,
         _ratingIcons = null,
         _unratedColor = const Color(0xFFCCCCCC),
@@ -95,6 +97,9 @@ class Rate extends StatefulWidget {
 
   /// 辅助文字颜色
   final Color textColor;
+
+  /// 辅助文字大小
+  final double textSize;
 
   /// 是否只用来显示，不可操作
   /// 
@@ -207,10 +212,48 @@ class _RateState extends State<Rate> {
         alignment: WrapAlignment.start,
         textDirection: textDirection,
         direction: widget._direction,
-        children: List.generate(
-          widget.count,
-          (index) => _buildRating(context, index),
-        ),
+        children: _buildAll(context),
+      ),
+    );
+  }
+
+  List<Widget> _buildAll(BuildContext context) {
+    var widgets = List.generate(
+      widget.count,
+      (index) => _buildRating(context, index),
+    );
+    if (!widget.showText) {
+      return widgets;
+    }
+
+    // 评星跟描述之间添加一个间距
+    widgets.add(SizedBox(width: 20)); 
+
+    widgets.add(_buildTextDesc(context));
+    return widgets;
+  }
+
+  Widget _buildTextDesc(BuildContext context) {
+    // 计算出要显示的文案内容
+    var title = '';
+    final index = (_rating * (widget.allowHalf ? 2 : 1)).ceil();
+    if (widget.texts.length > index) {
+      title = widget.texts[index];
+    } else if (widget.texts.length > 0) {
+      title = widget.texts.last;
+    }
+
+    return SizedBox(
+      height: widget.size,
+      child: FittedBox(
+        fit: BoxFit.none,
+        child: Text(
+          title,
+          style: TextStyle(
+            color: widget.textColor,
+            fontSize: widget.textSize
+          ),
+        )
       ),
     );
   }
