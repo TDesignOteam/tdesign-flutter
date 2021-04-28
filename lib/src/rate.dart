@@ -1,4 +1,4 @@
-/// 评星控件
+/// 评分控件
 ///
 /// 实现参考了 [flutter_rating_bar](https://pub.dev/packages/flutter_rating_bar)
 
@@ -27,7 +27,7 @@ abstract class _Default {
   // 评分item之间的间距
   static const itemPadding = EdgeInsets.zero;
 
-  // 评星与描述之间的间距
+  // 评分与描述之间的间距
   static const descPadding = 20.0;
 
   // 传入color，返回默认构造Rate Item的构造器
@@ -46,7 +46,7 @@ class RatingIconConfig {
   /// 选中某项时所使用的图标
   final Widget full;
 
-  /// 当支持的粒度为半星时，选择了半颗星时所使用的图标
+  /// 当支持的粒度为半分时，选择了半分时所使用的图标
   final Widget half;
 
   /// 未选时使用的图标
@@ -87,7 +87,7 @@ class Rate extends StatefulWidget {
   })  : _itemBuilder = itemBuilder,
         _ratingIcons = ratingIcons;
 
-  /// 打星粒度是否支持半星 (如：1.5星、2.5星)
+  /// 打分粒度是否支持半分 (如：1.5星、2.5星)
   final bool allowHalf;
 
   /// 是否显示辅助文字
@@ -200,7 +200,7 @@ class _RateState extends State<Rate> {
       return widgets;
     }
 
-    // 评星跟描述之间添加一个间距
+    // 评分跟描述之间添加一个间距
     widgets.add(SizedBox(width: _Default.descPadding));
 
     widgets.add(_buildText(context));
@@ -269,7 +269,7 @@ extension _RateStateRating on _RateState {
   }
 
   // half评分图标的生成有些不同
-  // 在评分图标上面加一半的蒙层，加蒙层的部分看起来就像未评分部分一样
+  // 通过itemBuilder获得的图标或默认图标的半星图标采用该接口实现
   Widget _halfRatingItemWidget(Widget item) {
     return SizedBox(
       width: widget.size,
@@ -277,7 +277,7 @@ extension _RateStateRating on _RateState {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          // 先放置未评分图标，再将评分图标裁切一半再覆盖上去
+          // 先放置一个未评分图标，再将评分图标裁切一半覆盖上去
           _ratingItemWidget(_unratedWidget(item)),
           _clipedHalfRatingIcon(item),
         ],
@@ -337,7 +337,7 @@ extension _RateStateText on _RateState {
 
   // 获取要显示的文案内容
   String _descTitle() {
-    // 如果支持半星粒度，则每增加半颗星，就获取下一个辅助描述
+    // 如果支持半分粒度，则每增加半颗星，就获取下一个辅助描述
     // 当辅助描述内容不够时，就返回最后一个
     final index = (_rating * (widget.allowHalf ? 2 : 1)).ceil();
     if (widget.texts.length > index) {
