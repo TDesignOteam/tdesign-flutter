@@ -46,7 +46,7 @@ class _RatePageState extends State<RatePage> {
           allowHalf: true,
           itemBuilder: (context, _) => Icon(
             Icons.star,
-            color: Colors.cyan,
+            color: TDColors.blue[3],
           )
         ),
         SizedBox(height: 20),

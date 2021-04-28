@@ -1,3 +1,6 @@
+//  Created by matthewyan on 2021/4/26.
+//  Copyright © 2021年 Tencent Inc. All rights reserved.
+
 /// 评分控件
 ///
 /// 实现参考了 [flutter_rating_bar](https://pub.dev/packages/flutter_rating_bar)

@@ -1,3 +1,6 @@
+//  Created by matthewyan on 2021/4/26.
+//  Copyright © 2021年 Tencent Inc. All rights reserved.
+
 /// TDIcons
 /// TDesign图标库
 /// 由icon_font_generator工具自动生成的文件
