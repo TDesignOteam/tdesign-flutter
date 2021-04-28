@@ -35,11 +35,14 @@ git提交日志，使用[commitizen](https://github.com/commitizen/cz-cli)工具
 通过：`git cz`来提交代码
 
 
-
 #### 注释
 
 注释采用官方推荐注释写法，最终支持`dartdoc`来生成文档
 
+
+#### 分支
+
+开发组件时，创建自己的`个人分支`或`feature`分支，开发完之后通过MR方式合入`master`
 
 
 #### 接口设计

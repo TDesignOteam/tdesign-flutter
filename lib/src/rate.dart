@@ -1,4 +1,4 @@
-/// 评星控件
+/// 评分控件
 ///
 /// 实现参考了 [flutter_rating_bar](https://pub.dev/packages/flutter_rating_bar)
 
@@ -6,6 +6,34 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
+
+// 默认配置项
+abstract class _Default {
+  // 选择的评分组件颜色
+  static const color = const Color(0xfff1ad3d);
+
+  // 未选择的评分组件颜色
+  static const unratedColor = const Color(0xFFCCCCCC); // lightGray
+
+  // 辅助文字的默认颜色
+  static const textColor = const Color(0xffe8e8e8);
+
+  // 评分组件的方向，配置为水平
+  static const direction = Axis.horizontal;
+
+  // 是否支持拖拽评分
+  static const supportDrag = true;
+
+  // 评分item之间的间距
+  static const itemPadding = EdgeInsets.zero;
+
+  // 评分与描述之间的间距
+  static const descPadding = 20.0;
+
+  // 传入color，返回默认构造Rate Item的构造器
+  static final IndexedWidgetBuilder Function(Color color) itemBuilder =
+      (color) => (_, __) => Icon(TDIcons.starFilled, color: color);
+}
 
 /// 配置Rate项的图标 (支持图片)
 class RatingIconConfig {
@@ -18,7 +46,7 @@ class RatingIconConfig {
   /// 选中某项时所使用的图标
   final Widget full;
 
-  /// 当支持的粒度为半星时，选择了半颗星时所使用的图标
+  /// 当支持的粒度为半分时，选择了半分时所使用的图标
   final Widget half;
 
   /// 未选时使用的图标
@@ -59,7 +87,7 @@ class Rate extends StatefulWidget {
   })  : _itemBuilder = itemBuilder,
         _ratingIcons = ratingIcons;
 
-  /// 打星粒度是否支持半星 (如：1.5星、2.5星)
+  /// 打分粒度是否支持半分 (如：1.5星、2.5星)
   final bool allowHalf;
 
   /// 是否显示辅助文字
@@ -117,34 +145,6 @@ class Rate extends StatefulWidget {
   _RateState createState() => _RateState();
 }
 
-// 几处默认配置项
-abstract class _Default {
-  // 选择的评分组件颜色
-  static const color = const Color(0xfff1ad3d);
-
-  // 未选择的评分组件颜色
-  static const unratedColor = const Color(0xFFCCCCCC); // lightGray
-
-  // 辅助文字的默认颜色
-  static const textColor = const Color(0xffe8e8e8);
-
-  // 评分组件的方向，配置为水平
-  static const direction = Axis.horizontal;
-
-  // 是否支持拖拽评分
-  static const supportDrag = true;
-
-  // 评分item之间的间距
-  static const itemPadding = EdgeInsets.zero;
-
-  // 评星与描述之间的间距
-  static const descPadding = 20.0;
-
-  // 传入color，返回默认构造Rate Item的构造器
-  static final IndexedWidgetBuilder Function(Color color) itemBuilder =
-      (color) => (_, __) => Icon(TDIcons.starFilled, color: color);
-}
-
 class _RateState extends State<Rate> {
   double _rating = 0.0;
   bool _isRTL = false;
@@ -200,10 +200,10 @@ class _RateState extends State<Rate> {
       return widgets;
     }
 
-    // 评星跟描述之间添加一个间距
+    // 评分跟描述之间添加一个间距
     widgets.add(SizedBox(width: _Default.descPadding));
 
-    widgets.add(_buildDesc(context));
+    widgets.add(_buildText(context));
     return widgets;
   }
 }
@@ -237,61 +237,92 @@ extension _RateStateRating on _RateState {
   }
 
   Widget _emptyWidget(RatingIconConfig? icons, Widget item) {
-    return _NoRatingIcon(
-      size: widget.size,
-      child: icons?.empty ?? item,
-      enableMask: icons == null,
-      unratedColor: _Default.unratedColor,
-    );
+    // 未评分图标，要么是外部配置的，要么是通过在评分icon上添加蒙层来实现的
+    final empty = icons?.empty ?? _unratedWidget(item);
+    return _ratingItemWidget(empty);
   }
 
   Widget _fullWidget(RatingIconConfig? icons, Widget item) {
-    return SizedBox(
-      width: widget.size,
-      height: widget.size,
-      child: FittedBox(
-        fit: BoxFit.contain,
-        child: icons?.full ?? item,
-      ),
-    );
+    final full = icons?.full ?? item;
+    return _ratingItemWidget(full);
   }
 
   Widget _halfWidget(RatingIconConfig? icons, Widget item) {
-    if (icons?.half != null) {
+    if (icons != null) {
       // 有icons配置时，优先使用icons中的内容进行显示
-      return SizedBox(
+      final half = _isRTL ? _horizontalReverse(icons.half) : icons.half;
+      return _ratingItemWidget(half);
+    } else {
+      return _halfRatingItemWidget(item);
+    }
+  }
+
+  // 生成固定大小的评分图标，评分/未评分/配置的半分图标，都通过该接口来生成
+  Widget _ratingItemWidget(Widget item) {
+    return SizedBox(
         width: widget.size,
         height: widget.size,
         child: FittedBox(
           fit: BoxFit.contain,
-          child: _isRTL ? _horizontalReverse(icons!.half) : icons!.half,
-        ),
-      );
-    }
+          child: item,
+        ));
+  }
 
-    return _HalfRatingIcon(
-      size: widget.size,
+  // half评分图标的生成有些不同
+  // 通过itemBuilder获得的图标或默认图标的半星图标采用该接口实现
+  Widget _halfRatingItemWidget(Widget item) {
+    return SizedBox(
+      width: widget.size,
+      height: widget.size,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          // 先放置一个未评分图标，再将评分图标裁切一半覆盖上去
+          _ratingItemWidget(_unratedWidget(item)),
+          _clipedHalfRatingIcon(item),
+        ],
+      ),
+    );
+  }
+
+  // 用来将评分Icon加上蒙层颜色来生成未评分图标
+  Widget _unratedWidget(Widget item) {
+    return ColorFiltered(
+      colorFilter: ColorFilter.mode(
+        _Default.unratedColor,
+        BlendMode.srcIn,
+      ),
       child: item,
-      enableMask: icons == null,
-      rtlMode: _isRTL,
-      unratedColor: _Default.unratedColor,
+    );
+  }
+
+  // 将图标裁切掉一半
+  Widget _clipedHalfRatingIcon(Widget item) {
+    return FittedBox(
+      fit: BoxFit.contain,
+      child: ClipRect(
+        clipper: _HalfClipper(
+          rtlMode: _isRTL,
+        ),
+        child: item,
+      ),
     );
   }
 
   // 水平翻转组件
-  Widget _horizontalReverse(Widget widget) {
+  Widget _horizontalReverse(Widget item) {
     return Transform(
       transform: Matrix4.identity()..scale(-1.0, 1.0, 1.0),
       alignment: Alignment.center,
       transformHitTests: false,
-      child: widget,
+      child: item,
     );
   }
 }
 
 // 辅助方案相关创建接口
-extension _RateStateDesc on _RateState {
-  Widget _buildDesc(BuildContext context) {
+extension _RateStateText on _RateState {
+  Widget _buildText(BuildContext context) {
     return SizedBox(
       height: widget.size,
       child: FittedBox(
@@ -306,7 +337,7 @@ extension _RateStateDesc on _RateState {
 
   // 获取要显示的文案内容
   String _descTitle() {
-    // 如果支持半星粒度，则每增加半颗星，就获取下一个辅助描述
+    // 如果支持半分粒度，则每增加半颗星，就获取下一个辅助描述
     // 当辅助描述内容不够时，就返回最后一个
     final index = (_rating * (widget.allowHalf ? 2 : 1)).ceil();
     if (widget.texts.length > index) {
@@ -384,68 +415,6 @@ extension _RateStateGesture on _RateState {
   }
 }
 
-// 在打星的图标上面加一半的蒙层，加蒙层的部分看起来就像未打星一样
-class _HalfRatingIcon extends StatelessWidget {
-  _HalfRatingIcon({
-    required this.size,
-    required this.child,
-    required this.enableMask,
-    required this.rtlMode,
-    required this.unratedColor,
-  });
-
-  final Widget child;
-  final double size;
-  final bool enableMask;
-  final bool rtlMode;
-  final Color unratedColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: size,
-      width: size,
-      child: enableMask
-          ? Stack(
-              fit: StackFit.expand,
-              children: [
-                // 先放置未打星图标，再将打星的一半覆盖上去
-                _fittedNoRatingIcon(),
-                _fittedHalfRatingIcon(),
-              ],
-            )
-          : FittedBox(
-              child: child,
-              fit: BoxFit.contain,
-            ),
-    );
-  }
-
-  Widget _fittedNoRatingIcon() {
-    return FittedBox(
-      fit: BoxFit.contain,
-      child: _NoRatingIcon(
-        child: child,
-        size: size,
-        unratedColor: unratedColor,
-        enableMask: enableMask,
-      ),
-    );
-  }
-
-  Widget _fittedHalfRatingIcon() {
-    return FittedBox(
-      fit: BoxFit.contain,
-      child: ClipRect(
-        clipper: _HalfClipper(
-          rtlMode: rtlMode,
-        ),
-        child: child,
-      ),
-    );
-  }
-}
-
 // 配置切除一半矩形区域的clipper
 class _HalfClipper extends CustomClipper<Rect> {
   _HalfClipper({required this.rtlMode});
@@ -469,42 +438,4 @@ class _HalfClipper extends CustomClipper<Rect> {
 
   @override
   bool shouldReclip(CustomClipper<Rect> oldClipper) => true;
-}
-
-// 支持在未打星的Icon上面加蒙层，这样就可以不提供NoRating的Icon
-// 通过与未打星的颜色混合得到
-class _NoRatingIcon extends StatelessWidget {
-  _NoRatingIcon({
-    required this.size,
-    required this.child,
-    required this.enableMask,
-    required this.unratedColor,
-  });
-
-  final double size;
-  final Widget child;
-  final bool enableMask;
-  final Color unratedColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: size,
-      width: size,
-      child: FittedBox(
-        fit: BoxFit.contain,
-        child: enableMask ? _maskWidget(child) : child,
-      ),
-    );
-  }
-
-  Widget _maskWidget(Widget widget) {
-    return ColorFiltered(
-      colorFilter: ColorFilter.mode(
-        unratedColor,
-        BlendMode.srcIn,
-      ),
-      child: widget,
-    );
-  }
 }
