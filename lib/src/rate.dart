@@ -10,13 +10,13 @@ import 'package:tdesign/tdesign.dart';
 // 默认配置项
 abstract class _Default {
   // 选择的评分组件颜色
-  static const color = const Color(0xfff1ad3d);
+  static const color = Color(0xfff1ad3d);
 
   // 未选择的评分组件颜色
-  static const unratedColor = const Color(0xFFCCCCCC); // lightGray
+  static const unratedColor = Color(0xFFCCCCCC); // lightGray
 
   // 辅助文字的默认颜色
-  static const textColor = const Color(0xffe8e8e8);
+  static const textColor = Color(0xffe8e8e8);
 
   // 评分组件的方向，配置为水平
   static const direction = Axis.horizontal;

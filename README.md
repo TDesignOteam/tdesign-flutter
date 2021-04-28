@@ -20,6 +20,8 @@ tdesign:
        - asset: packages/tdesign/fonts/td_icons.ttf
 ```
 
+
+
 ### 工程开发
 
 #### 工程结构
@@ -28,21 +30,24 @@ tdesign:
 
 
 
-#### 日志提交
+#### 提交日志
 
 git提交日志，使用[commitizen](https://github.com/commitizen/cz-cli)工具
 
 通过：`git cz`来提交代码
 
 
-#### 注释
 
-注释采用官方推荐注释写法，最终支持`dartdoc`来生成文档
+#### 示例
+
+在示例中完整展示组件的使用效果
+
 
 
 #### 分支
 
 开发组件时，创建自己的`个人分支`或`feature`分支，开发完之后通过MR方式合入`master`
+
 
 
 #### 接口设计
@@ -55,14 +60,34 @@ git提交日志，使用[commitizen](https://github.com/commitizen/cz-cli)工具
 
 [TDesign-for-web](https://www.figma.com/file/UghlEiQXZogyPvx1XDMMyx/TDesign-for-web?node-id=729%3A9)
 
+
+
 #### 资源
 
 [TDesign-Mobile图标库](http://bkicon.oa.com/resource/project/95/detail)
 
 
+
+### 工程/代码规范
+
+主要遵守 [腾讯Dart规范](https://git.code.oa.com/standards/dart)
+
+#### 名称
+
+变量名与前端定义尽量一致，当属性名中含有`-`时，去掉连接线，连接线后面的字符大写，如：`allow-half` 使用 `allowHalf`。
+
+#### 逻辑分块
+
+当类接口过多时，使用extension来分组不同功能的接口。
+
+
+
+
+
 ### 支持组件列表
 
 - [Rate](http://tdesign.woa.com/vue-mobile/components/rate)
+
 
 
 ### 三方工具
