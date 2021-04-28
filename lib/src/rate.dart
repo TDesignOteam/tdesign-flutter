@@ -8,18 +8,17 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:tdesign/tdesign.dart';
 
 // 默认配置项
 abstract class _Default {
   // 选择的评分组件颜色
-  static const color = Color(0xfff1ad3d);
+  static const color = Color(0xFFF1AD3D);
 
   // 未选择的评分组件颜色
   static const unratedColor = Color(0xFFCCCCCC); // lightGray
 
   // 辅助文字的默认颜色
-  static const textColor = Color(0xffe8e8e8);
+  static const textColor = Color(0xFFAAAAAA);
 
   // 评分组件的方向，配置为水平
   static const direction = Axis.horizontal;
@@ -35,7 +34,7 @@ abstract class _Default {
 
   // 传入color，返回默认构造Rate Item的构造器
   static final IndexedWidgetBuilder Function(Color color) itemBuilder =
-      (color) => (_, __) => Icon(TDIcons.starFilled, color: color);
+      (color) => (_, __) => Icon(Icons.star, color: color);
 }
 
 /// 配置Rate项的图标 (支持图片)
@@ -103,7 +102,7 @@ class Rate extends StatefulWidget {
 
   /// 辅助文字颜色
   ///
-  /// 默认值为 `Color(0xffe8e8e8)`
+  /// 默认值为 `Color(0xFFAAAAAA)`
   final Color textColor;
 
   /// 辅助文字大小
@@ -138,7 +137,7 @@ class Rate extends StatefulWidget {
 
   /// 评分图标的颜色
   ///
-  /// 默认值为 `Color(0xfff1ad3d)`
+  /// 默认值为 `Color(0xFFF1AD3D)`
   final Color color;
 
   final IndexedWidgetBuilder? _itemBuilder;
@@ -263,12 +262,13 @@ extension _RateStateRating on _RateState {
   // 生成固定大小的评分图标，评分/未评分/配置的半分图标，都通过该接口来生成
   Widget _ratingItemWidget(Widget item) {
     return SizedBox(
-        width: widget.size,
-        height: widget.size,
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: item,
-        ));
+      width: widget.size,
+      height: widget.size,
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: item,
+      ),
+    );
   }
 
   // half评分图标的生成有些不同
@@ -329,12 +329,12 @@ extension _RateStateText on _RateState {
     return SizedBox(
       height: widget.size,
       child: FittedBox(
-          fit: BoxFit.none,
-          child: Text(
-            _descTitle(),
-            style:
-                TextStyle(color: widget.textColor, fontSize: widget.textSize),
-          )),
+        fit: BoxFit.none,
+        child: Text(
+          _descTitle(),
+          style: TextStyle(color: widget.textColor, fontSize: widget.textSize),
+        ),
+      ),
     );
   }
 
