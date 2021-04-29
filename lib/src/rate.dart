@@ -148,9 +148,8 @@ class Rate extends StatefulWidget {
 }
 
 class _RateState extends State<Rate> {
-  double _rating = 0.0;
+  double _rating = 0.0;   // 用来记录分值
   bool _isRTL = false;
-  double iconRating = 0.0;
 
   late double _minRating, _maxRating;
 
@@ -180,7 +179,6 @@ class _RateState extends State<Rate> {
   Widget build(BuildContext context) {
     final textDirection = Directionality.of(context);
     _isRTL = textDirection == TextDirection.rtl;
-    iconRating = 0.0;
 
     return Material(
       color: Colors.transparent,
@@ -226,10 +224,8 @@ extension _RateStateRating on _RateState {
     } else if (index >= _rating - ratingOffset && widget.allowHalf) {
       // 显示半个item的状态
       ratingIcon = _halfWidget(ratingIcons, item);
-      iconRating += 0.5;
     } else {
       ratingIcon = _fullWidget(ratingIcons, item);
-      iconRating += 1.0;
     }
 
     return IgnorePointer(
@@ -386,8 +382,7 @@ extension _RateStateGesture on _RateState {
   }
 
   void _onDragEnd(DragEndDetails details) {
-    widget.onRatingUpdate?.call(iconRating);
-    iconRating = 0.0;
+    widget.onRatingUpdate?.call(_rating);
   }
 
   // 手势事件处理
