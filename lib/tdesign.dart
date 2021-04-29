@@ -4,4 +4,5 @@ library tdesign;
 
 export 'src/td_icons.dart';
 export 'src/rate.dart';
+export 'src/badge.dart';
 export 'theme/td_colors.dart';

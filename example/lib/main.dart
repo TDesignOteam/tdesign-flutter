@@ -1,4 +1,6 @@
+import 'package:example/pages/badge_page.dart';
 import 'package:flutter/material.dart';
+import 'package:tdesign/tdesign.dart';
 import 'pages/icons_page.dart';
 import 'pages/rate_page.dart';
 
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'TDesign Example',
       darkTheme: ThemeData.dark(),
-      home: Scaffold(appBar: AppBar(title: Text('TDesign Example')), body: SafeArea(bottom: false, child: MyHomePage()))
+      home: Scaffold(appBar: AppBar(backgroundColor: TDColors.blue, title: Text('TDesign Example')), body: SafeArea(bottom: false, child: MyHomePage()))
     );
   }
 }
@@ -34,8 +36,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<ListItem<dynamic>> list = [
-    ListItem('图标', (context) => _push(context, IconsPage())),
+    ListItem('Icon', (context) => _push(context, IconsPage())),
     ListItem('Rate', (context) => _push(context, RatePage())),
+    ListItem('Badge', (context) => _push(context, BadgePage())),
   ];
 
   Widget build(BuildContext context) {
