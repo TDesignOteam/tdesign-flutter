@@ -6,35 +6,53 @@ import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
 import 'dart:math' as math;
 
+/// Badge支持的预设尺寸
 enum BadgeSize { medium, small }
+
+/// Badge的形状
 enum BadgeShape { circle, rounded, ribbon }
 
 class _BadgeSizeConfig {
+  /// Badge类型为`BadgeShape.circle`或`BadgeShape.rounded`时，Badge的高度
   final double height;
+
+  /// Badge类型为`BadgeShape.rounded`时，Badge的圆角半径
   final double roundedBorderRadius;
+
+  /// Badge上文字的字体大小
   final double textSize;
-  final double sideEdgeInsets;
+
+  /// 文字两侧的边距，用于略微加宽Badge
+  final double sidePadding;
+
+  /// Badge为圆点时圆点大小
   final double dotSize;
+
+  /// Badge类型为`BadgeShape.Rib`时，较短侧边的长度
   final double ribbonIn;
+
+  /// Badge类型为`BadgeShape.Rib`时，较长侧边的长度
   final double ribbonOut;
   const _BadgeSizeConfig({
     required this.height,
     required this.roundedBorderRadius,
     required this.textSize,
-    required this.sideEdgeInsets,
+    required this.sidePadding,
     required this.dotSize,
     required this.ribbonIn,
     required this.ribbonOut,
   });
 }
 
+/// 默认配置
 abstract class _Default {
+  /// 不同`size`的Badge所对应的默认配置
   static const Map<BadgeSize, _BadgeSizeConfig> _sizeSpecConfig = {
     BadgeSize.medium: _BadgeSizeConfig(
       height: 17,
       roundedBorderRadius: 4,
       textSize: 13.5,
-      sideEdgeInsets: 3,
+      sidePadding: 3,
       dotSize: 8,
       ribbonIn: 18,
       ribbonOut: 45,
@@ -43,20 +61,25 @@ abstract class _Default {
         height: 14,
         roundedBorderRadius: 2,
         textSize: 10.5,
-        sideEdgeInsets: 2,
+        sidePadding: 2,
         dotSize: 6,
         ribbonIn: 11,
         ribbonOut: 30),
   };
+
+  /// 文字颜色
   static const textColor = Colors.white;
+
+  /// Badge主体颜色
+  static const color = TDColors.red;
 }
 
 class Badge extends StatefulWidget {
   const Badge({
     this.child,
     this.dot = false,
-    this.color = TDColors.red,
-    this.textColor = Colors.white,
+    this.color = _Default.color,
+    this.textColor = _Default.textColor,
     this.count,
     this.maxCount = 99,
     this.content,
@@ -188,7 +211,7 @@ class _BadgeState extends State<Badge> {
               color: widget.color,
               child: Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: _config.sideEdgeInsets),
+                      EdgeInsets.symmetric(horizontal: _config.sidePadding),
                   child: Text(
                     _getText(),
                     style: TextStyle(
@@ -222,6 +245,7 @@ class _BadgeState extends State<Badge> {
   }
 }
 
+/// 缎带型Badge`BadgeShape.ribbon`的绘制器
 class _RibbonPainter extends CustomPainter {
   double _inLength;
   double _outLength;
@@ -246,7 +270,7 @@ class _RibbonPainter extends CustomPainter {
         _outLength = config.ribbonOut;
   @override
   void paint(Canvas canvas, Size size) {
-    _initializ(size);
+    _init(size);
     canvas
       ..drawPath(pathRibbon!, paintRibbon!)
       ..translate(offsetRibbon!.dx, offsetRibbon!.dy)
@@ -259,7 +283,7 @@ class _RibbonPainter extends CustomPainter {
     return title != oldDelegate.title || color != oldDelegate.color;
   }
 
-  void _initializ(Size size) {
+  void _init(Size size) {
     if (_inLength > _outLength) {
       double temp = _outLength;
       _outLength = _inLength;
