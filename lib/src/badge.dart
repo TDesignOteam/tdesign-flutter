@@ -284,12 +284,9 @@ class _RibbonPainter extends CustomPainter {
   }
 
   void _init(Size size) {
-    if (_inLength > _outLength) {
-      double temp = _outLength;
-      _outLength = _inLength;
-      _inLength = temp;
+    if (_outLength > size.width) {
+      _outLength = size.width;
     }
-    if (_outLength > size.width) _outLength = size.width;
     TextSpan span = TextSpan(
         text: title,
         style: TextStyle(color: _Default.textColor, fontSize: config.textSize));

@@ -121,7 +121,9 @@ class _BadgePageState extends State<BadgePage> {
           child: _exampleButton('max:99'),
           count: 100,
           maxCount: 99,
-          size: size),
+          size: size,
+          offset: Offset(0, size == BadgeSize.small ? 2.5 : 5),
+          ),
     ];
   }
 
