@@ -186,12 +186,12 @@ class _RateState extends State<Rate> {
         alignment: WrapAlignment.start,
         textDirection: textDirection,
         direction: _Default.direction,
-        children: _buildAll(context),
+        children: _buildWidgets(context),
       ),
     );
   }
 
-  List<Widget> _buildAll(BuildContext context) {
+  List<Widget> _buildWidgets(BuildContext context) {
     var widgets = List.generate(
       widget.count,
       (index) => _buildRating(context, index),
@@ -210,66 +210,68 @@ class _RateState extends State<Rate> {
 
 // 评分item相关创建接口
 extension _RateStateRating on _RateState {
+  // 创建指定位置的RateIcon
   Widget _buildRating(BuildContext context, int index) {
-    final ratingIcons = widget._ratingIcons;
     final itemBuilder =
         widget._itemBuilder ?? _Default.itemBuilder(widget.color);
-    final item = itemBuilder(context, index);
-    final ratingOffset = widget.allowHalf ? 0.5 : 1.0;
+    final builderIcon = itemBuilder(context, index);
 
-    Widget ratingIcon;
-    if (index >= _rating) {
-      // 当前index的item没有被选中，则显示为NoRating的状态
-      ratingIcon = _emptyWidget(ratingIcons, item);
-    } else if (index >= _rating - ratingOffset && widget.allowHalf) {
-      // 显示半个item的状态
-      ratingIcon = _halfWidget(ratingIcons, item);
-    } else {
-      ratingIcon = _fullWidget(ratingIcons, item);
-    }
-
+    Widget ratingIcon = _buildRatingIcon(widget._ratingIcons, builderIcon, index);
     return IgnorePointer(
       ignoring: widget.readOnly,
       child: _gestureDetector(index, ratingIcon),
     );
   }
 
-  Widget _emptyWidget(RatingIconConfig? icons, Widget item) {
+  Widget _buildRatingIcon(RatingIconConfig? icons, Widget builderIcon, int index) {
+    final ratingOffset = widget.allowHalf ? 0.5 : 1.0;
+    if (index >= _rating) {
+      // 当前index的item没有被选中，则显示为NoRating的状态
+      return _emptyWidget(icons, builderIcon);
+    }
+    if (index >= _rating - ratingOffset && widget.allowHalf) {
+      // 显示半个item的状态
+      return _halfWidget(icons, builderIcon);
+    }
+    return _fullWidget(icons, builderIcon);
+  }
+
+  Widget _emptyWidget(RatingIconConfig? icons, Widget builderIcon) {
     // 未评分图标，要么是外部配置的，要么是通过在评分icon上添加蒙层来实现的
-    final empty = icons?.empty ?? _unratedWidget(item);
+    final empty = icons?.empty ?? _unratedWidget(builderIcon);
     return _ratingItemWidget(empty);
   }
 
-  Widget _fullWidget(RatingIconConfig? icons, Widget item) {
-    final full = icons?.full ?? item;
+  Widget _fullWidget(RatingIconConfig? icons, Widget builderIcon) {
+    final full = icons?.full ?? builderIcon;
     return _ratingItemWidget(full);
   }
 
-  Widget _halfWidget(RatingIconConfig? icons, Widget item) {
+  Widget _halfWidget(RatingIconConfig? icons, Widget builderIcon) {
     if (icons != null) {
       // 有icons配置时，优先使用icons中的内容进行显示
       final half = _isRTL ? _horizontalReverse(icons.half) : icons.half;
       return _ratingItemWidget(half);
     } else {
-      return _halfRatingItemWidget(item);
+      return _halfRatingItemWidget(builderIcon);
     }
   }
 
   // 生成固定大小的评分图标，评分/未评分/配置的半分图标，都通过该接口来生成
-  Widget _ratingItemWidget(Widget item) {
+  Widget _ratingItemWidget(Widget icon) {
     return SizedBox(
       width: widget.size,
       height: widget.size,
       child: FittedBox(
         fit: BoxFit.contain,
-        child: item,
+        child: icon,
       ),
     );
   }
 
   // half评分图标的生成有些不同
   // 通过itemBuilder获得的图标或默认图标的半星图标采用该接口实现
-  Widget _halfRatingItemWidget(Widget item) {
+  Widget _halfRatingItemWidget(Widget icon) {
     return SizedBox(
       width: widget.size,
       height: widget.size,
@@ -277,44 +279,44 @@ extension _RateStateRating on _RateState {
         fit: StackFit.expand,
         children: [
           // 先放置一个未评分图标，再将评分图标裁切一半覆盖上去
-          _ratingItemWidget(_unratedWidget(item)),
-          _clipedHalfRatingIcon(item),
+          _ratingItemWidget(_unratedWidget(icon)),
+          _clipedHalfRatingIcon(icon),
         ],
       ),
     );
   }
 
   // 用来将评分Icon加上蒙层颜色来生成未评分图标
-  Widget _unratedWidget(Widget item) {
+  Widget _unratedWidget(Widget icon) {
     return ColorFiltered(
       colorFilter: ColorFilter.mode(
         _Default.unratedColor,
         BlendMode.srcIn,
       ),
-      child: item,
+      child: icon,
     );
   }
 
   // 将图标裁切掉一半
-  Widget _clipedHalfRatingIcon(Widget item) {
+  Widget _clipedHalfRatingIcon(Widget icon) {
     return FittedBox(
       fit: BoxFit.contain,
       child: ClipRect(
         clipper: _HalfClipper(
           rtlMode: _isRTL,
         ),
-        child: item,
+        child: icon,
       ),
     );
   }
 
   // 水平翻转组件
-  Widget _horizontalReverse(Widget item) {
+  Widget _horizontalReverse(Widget icon) {
     return Transform(
       transform: Matrix4.identity()..scale(-1.0, 1.0, 1.0),
       alignment: Alignment.center,
       transformHitTests: false,
-      child: item,
+      child: icon,
     );
   }
 }
