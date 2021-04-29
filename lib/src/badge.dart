@@ -28,10 +28,10 @@ class _BadgeSizeConfig {
   /// Badge为圆点时圆点大小
   final double dotSize;
 
-  /// Badge类型为`BadgeShape.Rib`时，较短侧边的长度
+  /// Badge类型为`BadgeShape.Rib`时，缎带靠近角落的侧边的与右侧边缘的距离
   final double ribbonIn;
 
-  /// Badge类型为`BadgeShape.Rib`时，较长侧边的长度
+  /// Badge类型为`BadgeShape.Rib`时，缎带远离角落的侧边的与右侧边缘的距离
   final double ribbonOut;
   const _BadgeSizeConfig({
     required this.height,
@@ -63,8 +63,8 @@ abstract class _Default {
         textSize: 10.5,
         sidePadding: 2,
         dotSize: 6,
-        ribbonIn: 11,
-        ribbonOut: 30),
+        ribbonIn: 15,
+        ribbonOut: 35),
   };
 
   /// 文字颜色
@@ -247,19 +247,21 @@ class _BadgeState extends State<Badge> {
 
 /// 缎带型Badge`BadgeShape.ribbon`的绘制器
 class _RibbonPainter extends CustomPainter {
+  /// 缎带靠近角落的侧边的与右侧边缘的距离
   double _inLength;
+
+  /// 缎带远离角落的侧边的与右侧边缘的距离
   double _outLength;
 
+  /// 传入的Badge配置数据
   final _BadgeSizeConfig config;
 
+  /// 展示的文字内容
   final String title;
+
+  /// 缎带Badge主体颜色
   final Color color;
 
-  TextPainter? textPainter;
-  Paint? paintRibbon;
-  Path? pathRibbon;
-  double? rotateRibbon;
-  Offset? offsetRibbon;
   Offset? offsetTitle;
   Paint? paintShadow;
   _RibbonPainter({
@@ -270,78 +272,40 @@ class _RibbonPainter extends CustomPainter {
         _outLength = config.ribbonOut;
   @override
   void paint(Canvas canvas, Size size) {
-    _init(size);
+    final textPainter = TextPainter(
+        text: TextSpan(
+            text: title,
+            style: TextStyle(
+                color: _Default.textColor, fontSize: config.textSize)),
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.ltr);
+    textPainter.layout();
+    // 配置绘制缎带的绘制器
+    final paintRibbon = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+    offsetTitle = Offset(-textPainter.width / 2, -textPainter.height / 2);
+    final path = Path();
+    // 确定梯形缎带的绘制起点，绘制4条边
+    path.moveTo(size.width - _inLength, 0);
+    path.lineTo(size.width - _outLength, 0);
+    path.lineTo(size.width, _outLength);
+    path.lineTo(size.width, _inLength);
+    path.close();
+    // 文字置于缎带顶端所需偏移量
+    final offsetRibbon = Offset(size.width - _inLength, 0);
+    // 绘制缎带，文字的偏移、旋转
     canvas
-      ..drawPath(pathRibbon!, paintRibbon!)
-      ..translate(offsetRibbon!.dx, offsetRibbon!.dy)
-      ..rotate(rotateRibbon!);
-    textPainter!.paint(canvas, offsetTitle!);
+      ..drawPath(path, paintRibbon)
+      ..translate(offsetRibbon.dx, offsetRibbon.dy)
+      ..rotate(math.pi / 4);
+    // 绘制文字，以文字大小为因子微调文字位置
+    textPainter.paint(
+        canvas, Offset(-textPainter.width / 18, textPainter.height / 18));
   }
 
   @override
   bool shouldRepaint(_RibbonPainter oldDelegate) {
     return title != oldDelegate.title || color != oldDelegate.color;
-  }
-
-  void _init(Size size) {
-    if (_outLength > size.width) {
-      _outLength = size.width;
-    }
-    TextSpan span = TextSpan(
-        text: title,
-        style: TextStyle(color: _Default.textColor, fontSize: config.textSize));
-    textPainter = TextPainter(
-        text: span,
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.ltr);
-    textPainter!.layout();
-    paintRibbon = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
-    offsetTitle = Offset(-textPainter!.width / 2.1, -textPainter!.height / 1.8);
-    rotateRibbon = _rotation;
-    pathRibbon = _ribbonPath(size);
-  }
-
-  Path _ribbonPath(Size size) {
-    Path path = Path();
-    List<Offset> vec = [];
-    path.moveTo(size.width - _inLength, 0);
-    vec.add(Offset(size.width - _inLength, 0));
-    path.lineTo(size.width - _outLength, 0);
-    vec.add(Offset(size.width - _outLength, 0));
-    path.lineTo(size.width, _outLength);
-    vec.add(Offset(size.width, _outLength));
-    path.lineTo(size.width, _inLength);
-    vec.add(Offset(size.width, _inLength));
-    path.close();
-    offsetRibbon = _center(vec);
-    return path;
-  }
-
-  double get _rotation {
-    return math.pi / 4;
-  }
-
-  Offset _center(List<Offset> vecs) {
-    double sumX = 0, sumY = 0, sumS = 0;
-    double x1 = vecs[0].dx;
-    double y1 = vecs[0].dy;
-    double x2 = vecs[1].dx;
-    double y2 = vecs[1].dy;
-    double x3, y3;
-    for (int i = 2; i < vecs.length; i++) {
-      x3 = vecs[i].dx;
-      y3 = vecs[i].dy;
-      double s = ((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)) / 2.0;
-      sumX += (x1 + x2 + x3) * s;
-      sumY += (y1 + y2 + y3) * s;
-      sumS += s;
-      x2 = x3;
-      y2 = y3;
-    }
-    double cx = sumX / sumS / 3.0;
-    double cy = sumY / sumS / 3.0;
-    return Offset(cx, cy);
   }
 }
