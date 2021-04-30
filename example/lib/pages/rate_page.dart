@@ -18,7 +18,7 @@ class _RatePageState extends State<RatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Rate')),
+      appBar: AppBar(backgroundColor: TDColors.blue, title: Text('Rate')),
       body: SafeArea(bottom: false, child: _widget()),
     );
   }
