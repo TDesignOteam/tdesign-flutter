@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
 import 'dart:math' as math;
 
-/// Badge支持的预设尺寸
+/// Badge支持的预设尺寸枚举
 enum BadgeSize { medium, small }
 
-/// Badge的形状
+/// Badge的形状枚举
 enum BadgeShape { circle, rounded, ribbon }
 
-class _BadgeSizeConfig {
+/// 会基于Badge尺寸变化的特定配置
+class _BadgeSizeSpecConfig {
   /// Badge类型为`BadgeShape.circle`或`BadgeShape.rounded`时，Badge的高度
   final double height;
 
@@ -33,7 +34,7 @@ class _BadgeSizeConfig {
 
   /// Badge类型为`BadgeShape.Rib`时，缎带远离角落的侧边的与右侧边缘的距离
   final double ribbonOut;
-  const _BadgeSizeConfig({
+  const _BadgeSizeSpecConfig({
     required this.height,
     required this.roundedBorderRadius,
     required this.textSize,
@@ -47,8 +48,8 @@ class _BadgeSizeConfig {
 /// 默认配置
 abstract class _Default {
   /// 不同`size`的Badge所对应的默认配置
-  static const Map<BadgeSize, _BadgeSizeConfig> _sizeSpecConfig = {
-    BadgeSize.medium: _BadgeSizeConfig(
+  static const Map<BadgeSize, _BadgeSizeSpecConfig> _sizeSpecConfig = {
+    BadgeSize.medium: _BadgeSizeSpecConfig(
       height: 17,
       roundedBorderRadius: 4,
       textSize: 13.5,
@@ -57,7 +58,7 @@ abstract class _Default {
       ribbonIn: 18,
       ribbonOut: 45,
     ),
-    BadgeSize.small: _BadgeSizeConfig(
+    BadgeSize.small: _BadgeSizeSpecConfig(
         height: 14,
         roundedBorderRadius: 2,
         textSize: 10.5,
@@ -177,7 +178,7 @@ class _BadgeState extends State<Badge> {
     }
   }
 
-  Widget _buildDot(_BadgeSizeConfig _config) {
+  Widget _buildDot(_BadgeSizeSpecConfig _config) {
     return Stack(
       alignment: Alignment.center,
       clipBehavior: Clip.none,
@@ -191,7 +192,7 @@ class _BadgeState extends State<Badge> {
     );
   }
 
-  Widget _buildDotWithoutChild(_BadgeSizeConfig _config) {
+  Widget _buildDotWithoutChild(_BadgeSizeSpecConfig _config) {
     return ClipRRect(
         child: Container(
           width: _config.dotSize,
@@ -201,7 +202,7 @@ class _BadgeState extends State<Badge> {
         borderRadius: BorderRadius.all(Radius.circular(_config.dotSize / 2)));
   }
 
-  Widget _buildBadge(_BadgeSizeConfig _config) {
+  Widget _buildBadge(_BadgeSizeSpecConfig _config) {
     final textWidth =
         _calculateTextWidth(_getText(), TextStyle(fontSize: _config.textSize));
     return Stack(
@@ -224,7 +225,7 @@ class _BadgeState extends State<Badge> {
     );
   }
 
-  Widget _buildBadgeWithOutChild(_BadgeSizeConfig _config) {
+  Widget _buildBadgeWithOutChild(_BadgeSizeSpecConfig _config) {
     final width = math.max(
                     _calculateTextWidth(
                             _getText(), TextStyle(fontSize: _config.textSize)) +
@@ -257,7 +258,7 @@ class _BadgeState extends State<Badge> {
     ]);
   }
 
-  Widget _buildRibbon(_BadgeSizeConfig _config) {
+  Widget _buildRibbon(_BadgeSizeSpecConfig _config) {
     return CustomPaint(
       foregroundPainter: _RibbonPainter(
           title: _getText(), color: widget.color, config: _config),
@@ -294,7 +295,7 @@ class _RibbonPainter extends CustomPainter {
   double _outLength;
 
   /// 传入的Badge配置数据
-  final _BadgeSizeConfig config;
+  final _BadgeSizeSpecConfig config;
 
   /// 展示的文字内容
   final String title;
