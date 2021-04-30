@@ -162,11 +162,11 @@ abstract class TDTheme {
   // 需要时添加
   // static BoxShadow shadow = BoxShadow();
 
-//   // 图标尺寸
-// @icon-x: 16px;
-// @icon-default: 24px;
+  /// 图标尺寸
+  static double iconX = 24;
 
-
-// // 暗色模式
-// @dark-bg-color: #272B30; // 色彩-深色背景
+  static double iconDefault = 32;
+  
+  /// 暗色模式
+  static Color darkBgColor = Color(0xFF272B30); // 色彩-深色背景
 }
