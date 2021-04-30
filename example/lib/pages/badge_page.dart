@@ -80,13 +80,11 @@ class _BadgePageState extends State<BadgePage> {
           color: TDColors.orange,
           shape: BadgeShape.rounded,
           count: 30,
-          offset: Offset(0, 5),
           child: Icon(TDIcons.usergroup, size: 35)),
       Badge(
           color: Colors.yellow,
           textColor: Colors.black45,
           shape: BadgeShape.rounded,
-          offset: Offset(0, 10),
           content: 'NEW',
           child: Icon(TDIcons.shop, size: 35))
     ];
@@ -115,14 +113,12 @@ class _BadgePageState extends State<BadgePage> {
         child: _exampleButton('文字'),
         content: 'NEW',
         size: size,
-        offset: Offset(0, size == BadgeSize.small ? 4 : 7),
       ),
       Badge(
           child: _exampleButton('max:99'),
           count: 100,
           maxCount: 99,
           size: size,
-          offset: Offset(0, size == BadgeSize.small ? 2.5 : 5),
           ),
     ];
   }

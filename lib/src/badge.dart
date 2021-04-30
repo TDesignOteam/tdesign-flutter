@@ -149,44 +149,49 @@ class Badge extends StatefulWidget {
 class _BadgeState extends State<Badge> {
   @override
   Widget build(BuildContext context) {
+    // 未传入任何显示内容且dot == false，直接返回child或空Widget。
     if (!widget.dot && widget.content == null && widget.count == null) {
       return widget.child == null ? Container() : widget.child!;
     }
     final _config = _Default._sizeSpecConfig[widget.size]!;
-    final _defaultOffset =
-        widget.dot ? _config.dotSize / 2 : _config.height / 2;
+    final _noChild = widget.child == null;
+    // 显示为dot
+    if (widget.dot == true) {
+      if (_noChild) {
+        return _buildDotWithoutChild(_config);
+      }
+      return _buildDot(_config);
+    }
+    // 类型为ribbon
     if (widget.shape == BadgeShape.ribbon) {
+      if (_noChild) {
+        return Container();
+      }
       return _buildRibbon(_config);
     }
+    // 剩余情况：类型为circle或rounded
     if (widget.child == null) {
-      return _getBadge(_config);
+      return _buildBadgeWithOutChild(_config);
+    } else {
+      return _buildBadge(_config);
     }
+  }
+
+  Widget _buildDot(_BadgeSizeConfig _config) {
     return Stack(
       alignment: Alignment.center,
       clipBehavior: Clip.none,
       children: [
         widget.child!,
         PositionedDirectional(
-            child: _getBadge(_config),
-            top: -(widget.offset.dx + _defaultOffset),
-            end: -(widget.offset.dy + _defaultOffset))
+            child: _buildDotWithoutChild(_config),
+            top: -(widget.offset.dx + _config.dotSize / 2),
+            end: -(widget.offset.dy + _config.dotSize / 2))
       ],
     );
   }
 
-  Widget _getBadge(_BadgeSizeConfig _config) {
-    final Widget content;
-    if (widget.dot) {
-      content = _buildDot(_config);
-    } else if (widget.content == null && widget.count == null) {
-      content = Container();
-    } else {
-      content = _buildContent(_config);
-    }
-    return Row(mainAxisSize: MainAxisSize.min, children: [content]);
-  }
-
-  Widget _buildDot(_BadgeSizeConfig _config) {
+  Widget _buildDotWithoutChild(_BadgeSizeConfig _config) {
     return ClipRRect(
         child: Container(
           width: _config.dotSize,
@@ -196,39 +201,63 @@ class _BadgeState extends State<Badge> {
         borderRadius: BorderRadius.all(Radius.circular(_config.dotSize / 2)));
   }
 
-  Widget _buildContent(_BadgeSizeConfig _config) {
-    return Offstage(
-        offstage: widget.content == null &&
-            widget.count != null &&
-            widget.count! <= 0,
-        child: ClipRRect(
-          child: Container(
-              alignment: Alignment.center,
-              width: widget.count != null && widget.count! < 10
-                  ? _config.height
-                  : null,
-              height: _config.height,
-              color: widget.color,
-              child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: _config.sidePadding),
-                  child: Text(
-                    _getText(),
-                    style: TextStyle(
-                        color: widget.textColor, fontSize: _config.textSize),
-                  ))),
-          borderRadius: BorderRadius.all(Radius.circular(
-              widget.shape == BadgeShape.circle
-                  ? _config.height / 2
-                  : _config.roundedBorderRadius)),
-        ));
+  Widget _buildBadge(_BadgeSizeConfig _config) {
+    final textWidth =
+        _calculateTextWidth(_getText(), TextStyle(fontSize: _config.textSize));
+    return Stack(
+      alignment: Alignment.center,
+      clipBehavior: Clip.none,
+      children: [
+        widget.child!,
+        PositionedDirectional(
+            child: _buildBadgeWithOutChild(_config),
+            top: -(widget.offset.dx + _config.height / 2),
+            /**
+             * 利用文字的绘制宽度计算Bagde在横轴的偏移量：
+             * 偏移量应为：Bagde宽度/2，即：文字绘制宽度/2 + 两侧边距。
+             * 但当此偏移量小于高度/2，即宽度小于高度时，会强制使宽度=高度，Badge展示为圆形或正方形，偏移量取高度/2
+             */
+            end: -(widget.offset.dy +
+                math.max(
+                    textWidth / 2 + _config.sidePadding, _config.height / 2)))
+      ],
+    );
+  }
+
+  Widget _buildBadgeWithOutChild(_BadgeSizeConfig _config) {
+    final width = math.max(
+                    _calculateTextWidth(
+                            _getText(), TextStyle(fontSize: _config.textSize)) +
+                        _config.sidePadding * 2,
+                    _config.height);
+    return Row(mainAxisSize: MainAxisSize.min, children: [
+      Offstage(
+          offstage: widget.content == null &&
+              widget.count != null &&
+              widget.count! <= 0,
+          child: ClipRRect(
+            child: Container(
+                alignment: Alignment.center,
+                width: width,
+                height: _config.height,
+                color: widget.color,
+                child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: _config.sidePadding),
+                    child: Text(
+                      _getText(),
+                      style: TextStyle(
+                          color: widget.textColor, fontSize: _config.textSize),
+                    ))),
+            borderRadius: BorderRadius.all(Radius.circular(
+                widget.shape == BadgeShape.circle
+                    ? _config.height / 2
+                    : _config.roundedBorderRadius)),
+          ))
+    ]);
   }
 
   Widget _buildRibbon(_BadgeSizeConfig _config) {
-    // 缎带型组件不能独立存在，child必须不为空。
-    if (widget.child == null) {
-      return Container();
-    }
     return CustomPaint(
       foregroundPainter: _RibbonPainter(
           title: _getText(), color: widget.color, config: _config),
@@ -242,6 +271,17 @@ class _BadgeState extends State<Badge> {
         : widget.count! <= widget.maxCount
             ? '${widget.count}'
             : '${widget.maxCount}+';
+  }
+
+  double _calculateTextWidth(String text, TextStyle textStyle) {
+    final Size size = (TextPainter(
+            text: TextSpan(text: text, style: textStyle),
+            maxLines: 1,
+            textScaleFactor: MediaQuery.of(context).textScaleFactor,
+            textDirection: TextDirection.ltr)
+          ..layout())
+        .size;
+    return size.width;
   }
 }
 
@@ -262,8 +302,6 @@ class _RibbonPainter extends CustomPainter {
   /// 缎带Badge主体颜色
   final Color color;
 
-  Offset? offsetTitle;
-  Paint? paintShadow;
   _RibbonPainter({
     required this.title,
     required this.color,
@@ -284,7 +322,6 @@ class _RibbonPainter extends CustomPainter {
     final paintRibbon = Paint()
       ..color = color
       ..style = PaintingStyle.fill;
-    offsetTitle = Offset(-textPainter.width / 2, -textPainter.height / 2);
     final path = Path();
     // 确定梯形缎带的绘制起点，绘制4条边
     path.moveTo(size.width - _inLength, 0);
