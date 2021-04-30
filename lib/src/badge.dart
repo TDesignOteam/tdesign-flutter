@@ -63,7 +63,7 @@ abstract class _Default {
     ),
     BadgeSize.small: _BadgeSizeSpecConfig(
         height: 14,
-        roundedBorderRadius: 2,
+        roundedBorderRadius: 3,
         textSize: 10.5,
         sidePadding: 2,
         dotSize: 6,
@@ -230,10 +230,9 @@ class _BadgeState extends State<Badge> {
 
   Widget _buildBadgeWithOutChild(_BadgeSizeSpecConfig _config) {
     final width = math.max(
-                    _calculateTextWidth(
-                            _getText(), TextStyle(fontSize: _config.textSize)) +
-                        _config.sidePadding * 2,
-                    _config.height);
+        _calculateTextWidth(_getText(), TextStyle(fontSize: _config.textSize)) +
+            _config.sidePadding * 2,
+        _config.height);
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Offstage(
           offstage: widget.content == null &&

@@ -24,7 +24,7 @@ class TDesignColor extends ColorSwatch<int> {
   Color get shade5 => this[5]!;
 
   /// The default shade.
-  Color get shade6 => this[6 ]!;
+  Color get shade6 => this[6]!;
 
   /// The fourth darkest shade.
   Color get shade7 => this[7]!;
@@ -40,6 +40,7 @@ class TDesignColor extends ColorSwatch<int> {
 }
 
 abstract class TDColors {
+  /// primary-color
   static const TDesignColor blue = TDesignColor(
     _bluePrimaryValue,
     <int, Color>{
@@ -57,6 +58,7 @@ abstract class TDColors {
   );
   static const int _bluePrimaryValue = 0xFF0052D9;
 
+  /// error-color
   static const TDesignColor red = TDesignColor(
     _redPrimaryValue,
     <int, Color>{
@@ -74,6 +76,7 @@ abstract class TDColors {
   );
   static const int _redPrimaryValue = 0xFFE34D59;
 
+  /// warning-color
   static const TDesignColor orange = TDesignColor(
     _orangePrimaryValue,
     <int, Color>{
@@ -91,6 +94,7 @@ abstract class TDColors {
   );
   static const int _orangePrimaryValue = 0xFFED7B2F;
 
+  ///success-color
   static const TDesignColor green = TDesignColor(
     _greenPrimaryValue,
     <int, Color>{

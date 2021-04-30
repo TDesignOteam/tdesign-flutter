@@ -128,7 +128,6 @@ class _BadgePageState extends State<BadgePage> {
         shape: BadgeShape.ribbon,
         content: 'NEW',
         child: ListTile(
-            minLeadingWidth: 20,
             leading: Badge(
                 content: 'NEW',
                 shape: BadgeShape.ribbon,
