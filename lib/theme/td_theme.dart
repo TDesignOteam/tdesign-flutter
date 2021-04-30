@@ -5,9 +5,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
-
 abstract class TDTheme {
-  /// 基础颜色
 
   /// 基础颜色 - 主题色
   static Color primaryColor = TDColors.blue;
@@ -21,8 +19,6 @@ abstract class TDTheme {
   /// 基础颜色 - 成功色
   static Color successColor = TDColors.green;
 
-  /// 基础颜色的扩展 用于 hover / 禁用 / 点击 等状态
-
   /// 主题色扩展 - active
   static Color primaryColorActive = TDColors.blue.shade9;
 
@@ -32,24 +28,20 @@ abstract class TDTheme {
   /// 失败/错误色扩展 - active
   static Color errorColorActive = TDColors.red.shade7;
 
-  /// 失败/错误色扩展 - active
+  /// 失败/错误色扩展 - disabled
   static Color errorColorDisabled = TDColors.red.shade2;
 
   /// 警告色扩展 - active
   static Color warningColorActive = TDColors.red.shade7;
 
-  /// 警告色扩展 - active
+  /// 警告色扩展 - disabled
   static Color warningColorDisabled = TDColors.red.shade2;
-
-  /// 遮罩
 
   /// 遮罩 - 弹出
   static Color maskActive = Color.fromARGB((255 * 0.6).round(), 0, 0, 0);
 
   /// 遮罩 - 禁用
   static Color maskDisabled = Color.fromARGB((255 * 0.6).round(), 255, 255, 255);
-
-  /// 背景色
 
   /// 背景
   static Color bgColor = Color(0xFFFBFBFB);
@@ -69,11 +61,11 @@ abstract class TDTheme {
   /// 模块
   static Color bgColorBlock = Color(0xFFFFFFFF);
 
+  /// icon灰显颜色
   static Color bgIconFade = Color(0xFFCCCCCC);
 
+  /// icon深色
   static Color bgIconDark = Color(0xFF444444);
-
-  /// 文本颜色
 
   /// 文字 - 一级
   static Color textColorL1 = Color.fromARGB((255 * 0.9).round(), 0, 0, 0);
@@ -93,10 +85,10 @@ abstract class TDTheme {
   /// 文字主色反色
   static Color textAntiPrimaryColor = Color.fromARGB((255 * 0.9).round(), 255, 255, 255);
 
-  /// 边框色
-
+  /// 边框色1
   static Color borderColorL1 = Color(0xFFE6E6E6);
 
+  /// 边框色2
   static Color borderColorL2 = Color(0xFFDDDDDD);
 
   /// Spacer间距
@@ -138,33 +130,36 @@ abstract class TDTheme {
   /// 字号 - xl
   static double fontSizeXL = fontSize * 1.8;
 
-  /// 字体
   // 字体文件和依赖待添加
-
+  /// 字体 - 普通
   static String fontFamily1 = 'PingFangSC-Regular';
 
+  /// 字体 - 加粗
   static String fontFamilyMedium1 = 'PingFangSC-Medium';
 
   ///  圆角
   static double borderRadius = 6;
 
-  /// 表单相关
-
+  /// 表单高度
   static double formHeight = 60;
 
+  /// 表单文字颜色
   static Color formTextColor = textColorL1;
 
+  /// 表单背景颜色
   static Color formBgColor = bgColorBlock;
 
+  /// 表单边框
   static Color formBorderColor = borderColorL2;
 
-  /// 阴影
+  // 阴影
   // 需要时添加
   // static BoxShadow shadow = BoxShadow();
 
-  /// 图标尺寸
+  /// 图标尺寸 - 小
   static double iconX = 24;
 
+  /// 图标尺寸 - 默认
   static double iconDefault = 32;
   
   /// 暗色模式

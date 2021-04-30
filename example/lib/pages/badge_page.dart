@@ -15,8 +15,9 @@ class _BadgePageState extends State<BadgePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(backgroundColor: TDColors.blue, title: Text('Badge')),
-        body: SafeArea(bottom: false, child: _widget()));
+      appBar: AppBar(backgroundColor: TDColors.blue, title: Text('Badge')),
+      body: SafeArea(bottom: false, child: _widget()),
+    );
   }
 
   Widget _widget() {
@@ -34,26 +35,25 @@ class _BadgePageState extends State<BadgePage> {
       Divider(height: 0),
       _tileWithIsolateBadge(Badge(count: 15)),
       Divider(height: 0),
-      _tileWithIsolateBadge(Badge(content: 'NEW', shape: BadgeShape.rounded,)),
+      _tileWithIsolateBadge(Badge(
+        content: 'NEW',
+        shape: BadgeShape.rounded,
+      )),
       Divider(height: 0),
     ]);
   }
 
   Widget _splitTitle(String text) {
-    return ListTile(
-        tileColor: Color(0xFFEEEEEE),
-        title: Text(text, style: TextStyle(color: Colors.black45)));
+    return ListTile(tileColor: Color(0xFFEEEEEE), title: Text(text, style: TextStyle(color: Colors.black45)));
   }
 
   Widget _exampleButton(String text, {double height = 30, double? width}) {
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Container(
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: Text(
-              text,
-              style: TextStyle(color: Colors.white),
-            )),
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: Text(text, style: TextStyle(color: Colors.white)),
+        ),
         height: height,
         width: width,
         color: TDColors.blue,
@@ -64,12 +64,13 @@ class _BadgePageState extends State<BadgePage> {
 
   Widget _buildTile(List<Widget> list) {
     return Container(
-        height: 80,
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: list,
-        ));
+      height: 80,
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: list,
+      ),
+    );
   }
 
   List<Widget> _badgeOnIconList() {
@@ -77,16 +78,18 @@ class _BadgePageState extends State<BadgePage> {
       Badge(dot: true, child: Icon(TDIcons.refresh, size: TDTheme.iconDefault)),
       Badge(color: TDColors.green, count: 20, child: Icon(TDIcons.mail, size: TDTheme.iconDefault)),
       Badge(
-          color: TDColors.orange,
-          shape: BadgeShape.rounded,
-          count: 30,
-          child: Icon(TDIcons.usergroup, size: TDTheme.iconDefault)),
+        color: TDColors.orange,
+        shape: BadgeShape.rounded,
+        count: 30,
+        child: Icon(TDIcons.usergroup, size: TDTheme.iconDefault),
+      ),
       Badge(
-          color: Colors.yellow,
-          textColor: Colors.black45,
-          shape: BadgeShape.rounded,
-          content: 'NEW',
-          child: Icon(TDIcons.shop, size: TDTheme.iconDefault))
+        color: Colors.yellow,
+        textColor: Colors.black45,
+        shape: BadgeShape.rounded,
+        content: 'NEW',
+        child: Icon(TDIcons.shop, size: TDTheme.iconDefault),
+      ),
     ];
   }
 
@@ -97,16 +100,17 @@ class _BadgePageState extends State<BadgePage> {
       Badge(
         size: size,
         child: GestureDetector(
-            child: _exampleButton('点我+1'),
-            onTap: () {
-              setState(() {
-                if (size == BadgeSize.small) {
-                  _smallBadgeValue++;
-                } else {
-                  _mediumBadgeValue++;
-                }
-              });
-            }),
+          child: _exampleButton('点我+1'),
+          onTap: () {
+            setState(() {
+              if (size == BadgeSize.small) {
+                _smallBadgeValue++;
+              } else {
+                _mediumBadgeValue++;
+              }
+            });
+          },
+        ),
         count: size == BadgeSize.small ? _smallBadgeValue : _mediumBadgeValue,
       ),
       Badge(
@@ -115,25 +119,28 @@ class _BadgePageState extends State<BadgePage> {
         size: size,
       ),
       Badge(
-          child: _exampleButton('max:99'),
-          count: 100,
-          maxCount: 99,
-          size: size,
-          ),
+        child: _exampleButton('max:99'),
+        count: 100,
+        maxCount: 99,
+        size: size,
+      ),
     ];
   }
 
   Widget _ribbonExample() {
     return Badge(
-        shape: BadgeShape.ribbon,
-        content: 'NEW',
-        child: ListTile(
-            leading: Badge(
-                content: 'NEW',
-                shape: BadgeShape.ribbon,
-                size: BadgeSize.small,
-                child: _exampleButton('', height: 40, width: 40)),
-            title: Text('缎带型徽标')));
+      shape: BadgeShape.ribbon,
+      content: 'NEW',
+      child: ListTile(
+        leading: Badge(
+          content: 'NEW',
+          shape: BadgeShape.ribbon,
+          size: BadgeSize.small,
+          child: _exampleButton('', height: 40, width: 40),
+        ),
+        title: Text('缎带型徽标'),
+      ),
+    );
   }
 
   Widget _tileWithIsolateBadge(Widget badge) {
