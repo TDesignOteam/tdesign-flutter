@@ -94,7 +94,7 @@ abstract class TDColors {
   );
   static const int _orangePrimaryValue = 0xFFED7B2F;
 
-  ///success-color
+  /// success-color
   static const TDesignColor green = TDesignColor(
     _greenPrimaryValue,
     <int, Color>{
