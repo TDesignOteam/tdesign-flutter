@@ -258,8 +258,7 @@ class _BadgeState extends State<Badge> {
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Offstage(
         offstage: widget.content == null &&
-            widget.count != null &&
-            widget.count! <= 0,
+            (widget.count ?? -1) <= 0,
         child: ClipRRect(
           child: Container(
             alignment: Alignment.center,
