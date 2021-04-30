@@ -1,4 +1,7 @@
-/// 评星控件
+//  Created by lyrisli on 2021/4/26.
+//  Copyright © 2021年 Tencent Inc. All rights reserved.
+
+/// 徽标控件
 ///
 /// 能力参考：http://tdesign.woa.com/vue-mobile/components/badge
 
