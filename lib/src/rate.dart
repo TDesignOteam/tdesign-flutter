@@ -302,7 +302,6 @@ extension _RateStateRating on _RateState {
     return FittedBox(
       fit: BoxFit.contain,
       child: ClipRect(
-        key: Key('hello'),
         clipper: _HalfClipper(
           rtlMode: _isRTL,
         ),
