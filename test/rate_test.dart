@@ -5,7 +5,7 @@ import 'utils.dart';
 
 void main() {
   group('rate', () {
-    testWidgets('默认Rate', (WidgetTester tester) async {
+    testWidgets('默认Rate状态正常', (WidgetTester tester) async {
       await tester.pumpWidget(boilerplate(Rate(value: 2)));
 
       // 默认存在5个star类型的图标
@@ -25,7 +25,7 @@ void main() {
       expect(tester.typeCount(ColorFiltered), 0);
     });
 
-    testWidgets('通过Builder提供Icon的Rate', (WidgetTester tester) async {
+    testWidgets('通过Builder提供Icon的Rate状态正常', (WidgetTester tester) async {
       await tester.pumpWidget(boilerplate(Rate(
         value: 2,
         itemBuilder: (context, index) => Icon(Icons.ac_unit),
@@ -34,7 +34,7 @@ void main() {
       expect(tester.iconCount(Icons.ac_unit), 5);
     });
 
-    testWidgets('通过Config配置提供Icon的Rate', (WidgetTester tester) async {
+    testWidgets('通过Config配置提供Icon的Rate状态正常', (WidgetTester tester) async {
       await tester.pumpWidget(boilerplate(Rate(
         value: 2,
         ratingIcons: RatingIconConfig(
@@ -48,7 +48,7 @@ void main() {
       expect(tester.iconCount(Icons.star_border), 3);
     });
 
-    testWidgets('支持半星的默认Rate', (WidgetTester tester) async {
+    testWidgets('支持半星的默认Rate，操作逻辑验证', (WidgetTester tester) async {
       await tester.pumpWidget(boilerplate(Rate(value: 2.5, allowHalf: true)));
 
       // 半星图标需要用到ClipRect，有且只有一个
@@ -92,7 +92,7 @@ void main() {
       expect(tester.typeCount(ColorFiltered), 5);
     });
 
-    testWidgets('支持半星的Config配置Rate', (WidgetTester tester) async {
+    testWidgets('支持半星的Config配置Rate，操作逻辑验证', (WidgetTester tester) async {
       await tester.pumpWidget(boilerplate(Rate(
         value: 2.5,
         allowHalf: true,
