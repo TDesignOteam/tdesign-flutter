@@ -250,7 +250,7 @@ class _BadgeState extends State<Badge> {
         _config.height);
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Offstage(
-        offstage: widget.content == null && (widget.count ?? -1) <= 0,
+        offstage: (widget.content == null && (widget.count ?? -1) < 0) || (!widget.showZero && widget.count == 0),
         child: ClipRRect(
           child: Container(
             alignment: Alignment.center,
