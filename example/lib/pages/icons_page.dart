@@ -4,7 +4,7 @@ import 'package:tdesign/tdesign.dart';
 class IconsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('Icons')), body: SafeArea(bottom: false, child: _widget()));
+    return Scaffold(appBar: AppBar(backgroundColor: TDColors.blue, title: Text('Icons')), body: SafeArea(bottom: false, child: _widget()));
   }
 
   Widget _widget() {

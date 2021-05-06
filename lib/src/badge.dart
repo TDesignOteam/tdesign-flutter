@@ -69,12 +69,6 @@ abstract class _Default {
       ribbonOut: 35,
     ),
   };
-
-  // 文字颜色
-  static const textColor = Colors.white;
-
-  // Badge主体颜色
-  static const color = TDColors.red;
 }
 
 /// 徽标组件
@@ -99,8 +93,8 @@ class Badge extends StatefulWidget {
   const Badge({
     this.child,
     this.dot = false,
-    this.color = _Default.color,
-    this.textColor = _Default.textColor,
+    this.color,
+    this.textColor,
     this.count,
     this.maxCount = 99,
     this.content,
@@ -121,12 +115,12 @@ class Badge extends StatefulWidget {
   /// Bagde的背景色
   ///
   /// 默认为`TDColors.red`
-  final Color color;
+  final Color? color;
 
   /// Badge的文字颜色
   ///
   /// 默认为`Colors.white`
-  final Color textColor;
+  final Color? textColor;
 
   /// Badge上展示的数字，优先级低于`content`
   ///
@@ -162,12 +156,15 @@ class Badge extends StatefulWidget {
   final Offset offset;
 
   @override
-  State<StatefulWidget> createState() {
-    return _BadgeState();
-  }
+  State<StatefulWidget> createState() => _BadgeState(color ?? TDTheme.errorColor, textColor ?? TDTheme.textAntiPrimaryColor);
 }
 
 class _BadgeState extends State<Badge> {
+  final Color _color;
+  final Color _textColor;
+
+  _BadgeState(this._color, this._textColor);
+
   @override
   Widget build(BuildContext context) {
     // 未传入任何显示内容且dot == false，直接返回child或空Widget。
@@ -218,7 +215,7 @@ class _BadgeState extends State<Badge> {
       child: Container(
         width: _config.dotSize,
         height: _config.dotSize,
-        color: widget.color,
+        color: _color,
       ),
       borderRadius: BorderRadius.all(
         Radius.circular(_config.dotSize / 2),
@@ -227,8 +224,7 @@ class _BadgeState extends State<Badge> {
   }
 
   Widget _buildBadge(_BadgeSizeSpecConfig _config) {
-    final textWidth =
-        _calculateTextWidth(_getText(), TextStyle(fontSize: _config.textSize));
+    final textWidth = _calculateTextWidth(_getText(), TextStyle(fontSize: _config.textSize));
     return Stack(
       alignment: Alignment.center,
       clipBehavior: Clip.none,
@@ -242,9 +238,7 @@ class _BadgeState extends State<Badge> {
              * 偏移量应为：Bagde宽度/2，即：文字绘制宽度/2 + 两侧边距。
              * 但当此偏移量小于高度/2，即宽度小于高度时，会强制使宽度=高度，Badge展示为圆形或正方形，偏移量取高度/2
              */
-          end: -(widget.offset.dy +
-              math.max(
-                  textWidth / 2 + _config.sidePadding, _config.height / 2)),
+          end: -(widget.offset.dy + math.max(textWidth / 2 + _config.sidePadding, _config.height / 2)),
         ),
       ],
     );
@@ -252,32 +246,27 @@ class _BadgeState extends State<Badge> {
 
   Widget _buildBadgeWithoutChild(_BadgeSizeSpecConfig _config) {
     final width = math.max(
-        _calculateTextWidth(_getText(), TextStyle(fontSize: _config.textSize)) +
-            _config.sidePadding * 2,
+        _calculateTextWidth(_getText(), TextStyle(fontSize: _config.textSize)) + _config.sidePadding * 2,
         _config.height);
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Offstage(
-        offstage: widget.content == null &&
-            (widget.count ?? -1) <= 0,
+        offstage: widget.content == null && (widget.count ?? -1) <= 0,
         child: ClipRRect(
           child: Container(
             alignment: Alignment.center,
             width: width,
             height: _config.height,
-            color: widget.color,
+            color: _color,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: _config.sidePadding),
               child: Text(
                 _getText(),
-                style: TextStyle(
-                    color: widget.textColor, fontSize: _config.textSize),
+                style: TextStyle(color: _textColor, fontSize: _config.textSize),
               ),
             ),
           ),
           borderRadius: BorderRadius.all(
-            Radius.circular(widget.shape == BadgeShape.circle
-                ? _config.height / 2
-                : _config.roundedBorderRadius),
+            Radius.circular(widget.shape == BadgeShape.circle ? _config.height / 2 : _config.roundedBorderRadius),
           ),
         ),
       ),
@@ -288,7 +277,8 @@ class _BadgeState extends State<Badge> {
     return CustomPaint(
       foregroundPainter: _RibbonPainter(
         title: _getText(),
-        color: widget.color,
+        color: _color,
+        textColor: _textColor,
         config: _config,
       ),
       child: widget.child,
@@ -296,10 +286,7 @@ class _BadgeState extends State<Badge> {
   }
 
   String _getText() {
-    return widget.content ??
-        (widget.count! <= widget.maxCount
-            ? '${widget.count}'
-            : '${widget.maxCount}+');
+    return widget.content ?? (widget.count! <= widget.maxCount ? '${widget.count}' : '${widget.maxCount}+');
   }
 
   double _calculateTextWidth(String text, TextStyle textStyle) {
@@ -317,10 +304,10 @@ class _BadgeState extends State<Badge> {
 // 缎带型Badge的绘制器
 class _RibbonPainter extends CustomPainter {
   // 缎带靠近角落的侧边的与右侧边缘的距离
-  double _inLength;
+  double inLength;
 
   // 缎带远离角落的侧边的与右侧边缘的距离
-  double _outLength;
+  double outLength;
 
   // 传入的Badge配置数据
   final _BadgeSizeSpecConfig config;
@@ -328,21 +315,25 @@ class _RibbonPainter extends CustomPainter {
   // 展示的文字内容
   final String title;
 
+  // 展示的文字颜色
+  final Color textColor;
+
   // 缎带Badge主体颜色
   final Color color;
 
   _RibbonPainter({
     required this.title,
     required this.color,
+    required this.textColor,
     required this.config,
-  })   : _inLength = config.ribbonIn,
-        _outLength = config.ribbonOut;
+  })   : inLength = config.ribbonIn,
+        outLength = config.ribbonOut;
   @override
   void paint(Canvas canvas, Size size) {
     final textPainter = TextPainter(
       text: TextSpan(
         text: title,
-        style: TextStyle(color: _Default.textColor, fontSize: config.textSize),
+        style: TextStyle(color: textColor, fontSize: config.textSize),
       ),
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
@@ -354,21 +345,20 @@ class _RibbonPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
     final path = Path();
     // 确定梯形缎带的绘制起点，绘制4条边
-    path.moveTo(size.width - _inLength, 0);
-    path.lineTo(size.width - _outLength, 0);
-    path.lineTo(size.width, _outLength);
-    path.lineTo(size.width, _inLength);
+    path.moveTo(size.width - inLength, 0);
+    path.lineTo(size.width - outLength, 0);
+    path.lineTo(size.width, outLength);
+    path.lineTo(size.width, inLength);
     path.close();
     // 文字置于缎带顶端所需偏移量
-    final offsetRibbon = Offset(size.width - _inLength, 0);
+    final offsetRibbon = Offset(size.width - inLength, 0);
     // 绘制缎带，文字的偏移、旋转
     canvas
       ..drawPath(path, paintRibbon)
       ..translate(offsetRibbon.dx, offsetRibbon.dy)
       ..rotate(math.pi / 4);
     // 绘制文字，以文字大小为因子微调文字位置
-    textPainter.paint(
-        canvas, Offset(-textPainter.width / 18, textPainter.height / 18));
+    textPainter.paint(canvas, Offset(-textPainter.width / 18, textPainter.height / 18));
   }
 
   @override
