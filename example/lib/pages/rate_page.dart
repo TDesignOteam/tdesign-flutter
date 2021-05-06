@@ -1,3 +1,4 @@
+import 'package:example/page_util.dart';
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
 
@@ -16,11 +17,9 @@ class _RatePageState extends State<RatePage> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(backgroundColor: TDColors.blue, title: Text('Rate')),
-      body: SafeArea(bottom: false, child: _widget()),
-    );
+    return ExamplePage(child: _widget(), title: 'Rating',);
   }
 
   Widget _widget() {
