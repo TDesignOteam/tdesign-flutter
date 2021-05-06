@@ -26,43 +26,61 @@ tdesign:
 
 #### 工程结构
 
-所有组件都在`lib\src`路径下
+所有组件都在`lib\src`路径下。
 
+```
+tdesign-mobile-flutter
+├─ CHANGELOG.md
+├─ LICENSE
+├─ README.md
+├─ example
+│  ├─ lib
+│  │  ├─ main.dart
+│  │  ├─ page_util.dart
+│  │  └─ pages             # 所有组件示例代码文件在pages目录下
+├─ lib
+│  ├─ fonts
+│  ├─ src                  # 所有组件代码文件在src目录下
+│  ├─ tdesign.dart
+│  └─ theme
+│     ├─ td_colors.dart    # TDesign色卡，组件所需颜色可以从这里取用
+│     └─ td_theme.dart     # TDesign主题化相关属性，组件中部分默认属性需要从这里取用
+├─ pubspec.yaml
+└─ test                    # 所有组件测试代码在test目录下
+
+```
 
 
 #### 提交日志
 
-git提交日志，使用[commitizen](https://github.com/commitizen/cz-cli)工具
+git提交日志，使用[commitizen](https://github.com/commitizen/cz-cli)工具。
 
-通过：`git cz`来提交代码
-
+通过：`git cz`来提交代码。
 
 
 #### 示例
 
-在示例中完整展示组件的使用效果
+在示例中完整展示组件的使用效果，风格参考[TDesign移动端组件库示例](http://tdesign.woa.com/vue-mobile/components/badge)。
 
+在`example\lib\pages`下添加页面，在`example\lib\main.dart`中的主菜单添加页面入口。页面统一以`page_util.dart`中的`ExamplePage`作为根Widget。
+
+
+#### 测试
+
+在`test`目录下为组件添加测试。若组件中存在重要逻辑则必须进行测试，例如边界条件，显示与隐藏等。
 
 
 #### 分支
 
-开发组件时，创建自己的`个人分支`或`feature`分支，开发完之后通过MR方式合入`master`
+开发组件时，创建自己的`个人分支`或`feature`分支，开发完之后通过MR方式合入`master`。
 
 
 
-#### 接口设计
+### 文档/资源
 
 [接口设计文档](https://docs.qq.com/sheet/DWmViVlNvU3p2VHZs?tab=6mdwpj)
 
-
-
-#### 设计稿
-
 [TDesign-for-web](https://www.figma.com/file/UghlEiQXZogyPvx1XDMMyx/TDesign-for-web?node-id=729%3A9)
-
-
-
-#### 资源
 
 [TDesign-Mobile图标库](http://bkicon.oa.com/resource/project/95/detail)
 
@@ -70,7 +88,7 @@ git提交日志，使用[commitizen](https://github.com/commitizen/cz-cli)工具
 
 ### 工程/代码规范
 
-主要遵守 [腾讯Dart规范](https://git.code.oa.com/standards/dart)
+主要遵守 [腾讯Dart规范](https://git.code.oa.com/standards/dart)。
 
 #### 名称
 
@@ -87,6 +105,7 @@ git提交日志，使用[commitizen](https://github.com/commitizen/cz-cli)工具
 ### 支持组件列表
 
 - [Rate](http://tdesign.woa.com/vue-mobile/components/rate)
+- [Badge](http://tdesign.woa.com/vue-mobile/components/badge)
 
 
 
