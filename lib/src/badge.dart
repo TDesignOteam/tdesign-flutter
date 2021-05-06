@@ -15,34 +15,35 @@ enum BadgeShape { circle, rounded, ribbon }
 
 /// 会基于Badge尺寸变化的特定配置
 class _BadgeSizeSpecConfig {
-  /// Badge类型为`BadgeShape.circle`或`BadgeShape.rounded`时，Badge的高度
-  final double height;
-
-  /// Badge类型为`BadgeShape.rounded`时，Badge的圆角半径
+  // Badge类型为`BadgeShape.rounded`时，Badge的圆角半径
   final double roundedBorderRadius;
 
-  /// Badge上文字的字体大小
+  // Badge上文字的字体大小
   final double textSize;
 
-  /// 文字两侧的边距，用于略微加宽Badge
+  // 文字两侧的边距，用于略微加宽Badge
   final double sidePadding;
 
-  /// Badge为圆点时圆点大小
+  // Badge为圆点时圆点大小
   final double dotSize;
 
-  /// Badge类型为`BadgeShape.Rib`时，缎带靠近角落的侧边的与右侧边缘的距离
+  // Badge类型为`BadgeShape.Rib`时，缎带靠近角落的侧边的与右侧边缘的距离
   final double ribbonIn;
 
-  /// Badge类型为`BadgeShape.Rib`时，缎带远离角落的侧边的与右侧边缘的距离
+  // Badge类型为`BadgeShape.Rib`时，缎带远离角落的侧边的与右侧边缘的距离
   final double ribbonOut;
+
+  // Badge类型为`BadgeShape.Rib`时，使文字对齐缎带的偏移半径
+  final double ribbonOffset;
+
   const _BadgeSizeSpecConfig({
-    required this.height,
     required this.roundedBorderRadius,
     required this.textSize,
     required this.sidePadding,
     required this.dotSize,
     required this.ribbonIn,
     required this.ribbonOut,
+    required this.ribbonOffset,
   });
 }
 
@@ -51,24 +52,42 @@ abstract class _Default {
   // 不同`size`的Badge所对应的默认配置
   static const Map<BadgeSize, _BadgeSizeSpecConfig> sizeSpecConfig = {
     BadgeSize.medium: _BadgeSizeSpecConfig(
-      height: 17,
       roundedBorderRadius: 4,
-      textSize: 13.5,
+      textSize: 14,
       sidePadding: 3,
       dotSize: 8,
       ribbonIn: 18,
       ribbonOut: 45,
+      ribbonOffset: 9.5,
     ),
     BadgeSize.small: _BadgeSizeSpecConfig(
-      height: 14,
       roundedBorderRadius: 3,
-      textSize: 10.5,
+      textSize: 11,
       sidePadding: 2,
       dotSize: 6,
       ribbonIn: 15,
       ribbonOut: 35,
+      ribbonOffset: 7.5,
     ),
   };
+
+  // Badge是否显示为点状的默认值
+  static const dot = false;
+
+  // Badge显示数字时的最大值的默认值
+  static const maxCount = 99;
+
+  // Badge大小未设置时的的默认值
+  static const size = BadgeSize.medium;
+
+  // Badge形状未设置时的默认形状
+  static const shape = BadgeShape.circle;
+
+  // Badge显示数字时是否显示0的默认值
+  static const showZero = false;
+
+  // Badge的默认位移
+  static const offset = const Offset(0, 0);
 }
 
 /// 徽标组件
@@ -92,16 +111,16 @@ abstract class _Default {
 class Badge extends StatefulWidget {
   const Badge({
     this.child,
-    this.dot = false,
+    this.dot = _Default.dot,
     this.color,
     this.textColor,
     this.count,
-    this.maxCount = 99,
+    this.maxCount = _Default.maxCount,
     this.content,
-    this.size = BadgeSize.medium,
-    this.shape = BadgeShape.circle,
-    this.showZero = false,
-    this.offset = const Offset(0, 0),
+    this.size = _Default.size,
+    this.shape = _Default.shape,
+    this.showZero = _Default.showZero,
+    this.offset = _Default.offset,
   });
 
   /// 这个Badge所依附的widget。如果为`null`，则badge独立存在。
@@ -156,7 +175,8 @@ class Badge extends StatefulWidget {
   final Offset offset;
 
   @override
-  State<StatefulWidget> createState() => _BadgeState(color ?? TDTheme.errorColor, textColor ?? TDTheme.textAntiPrimaryColor);
+  State<StatefulWidget> createState() =>
+      _BadgeState(color ?? TDTheme.errorColor, textColor ?? TDTheme.textAntiPrimaryColor);
 }
 
 class _BadgeState extends State<Badge> {
@@ -224,7 +244,8 @@ class _BadgeState extends State<Badge> {
   }
 
   Widget _buildBadge(_BadgeSizeSpecConfig _config) {
-    final textWidth = _calculateTextWidth(_getText(), TextStyle(fontSize: _config.textSize));
+    final size = _calculateTextSize(_getText(), TextStyle(fontSize: _config.textSize));
+    final textWidth = size.width;
     return Stack(
       alignment: Alignment.center,
       clipBehavior: Clip.none,
@@ -232,22 +253,21 @@ class _BadgeState extends State<Badge> {
         widget.child!,
         PositionedDirectional(
           child: _buildBadgeWithoutChild(_config),
-          top: -(widget.offset.dx + _config.height / 2),
+          top: -(widget.offset.dx + size.height / 2),
           /**
              * 利用文字的绘制宽度计算Bagde在横轴的偏移量：
              * 偏移量应为：Bagde宽度/2，即：文字绘制宽度/2 + 两侧边距。
              * 但当此偏移量小于高度/2，即宽度小于高度时，会强制使宽度=高度，Badge展示为圆形或正方形，偏移量取高度/2
              */
-          end: -(widget.offset.dy + math.max(textWidth / 2 + _config.sidePadding, _config.height / 2)),
+          end: -(widget.offset.dy + math.max(textWidth / 2 + _config.sidePadding, size.height / 2)),
         ),
       ],
     );
   }
 
   Widget _buildBadgeWithoutChild(_BadgeSizeSpecConfig _config) {
-    final width = math.max(
-        _calculateTextWidth(_getText(), TextStyle(fontSize: _config.textSize)) + _config.sidePadding * 2,
-        _config.height);
+    final size = _calculateTextSize(_getText(), TextStyle(fontSize: _config.textSize));
+    final width = math.max(size.width + _config.sidePadding * 2, size.height);
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Offstage(
         offstage: (widget.content == null && (widget.count ?? -1) < 0) || (!widget.showZero && widget.count == 0),
@@ -255,7 +275,7 @@ class _BadgeState extends State<Badge> {
           child: Container(
             alignment: Alignment.center,
             width: width,
-            height: _config.height,
+            height: size.height,
             color: _color,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: _config.sidePadding),
@@ -266,7 +286,7 @@ class _BadgeState extends State<Badge> {
             ),
           ),
           borderRadius: BorderRadius.all(
-            Radius.circular(widget.shape == BadgeShape.circle ? _config.height / 2 : _config.roundedBorderRadius),
+            Radius.circular(widget.shape == BadgeShape.circle ? size.height / 2 : _config.roundedBorderRadius),
           ),
         ),
       ),
@@ -289,7 +309,7 @@ class _BadgeState extends State<Badge> {
     return widget.content ?? (widget.count! <= widget.maxCount ? '${widget.count}' : '${widget.maxCount}+');
   }
 
-  double _calculateTextWidth(String text, TextStyle textStyle) {
+  Size _calculateTextSize(String text, TextStyle textStyle) {
     final Size size = (TextPainter(
       text: TextSpan(text: text, style: textStyle),
       maxLines: 1,
@@ -297,7 +317,7 @@ class _BadgeState extends State<Badge> {
       textDirection: TextDirection.ltr,
     )..layout())
         .size;
-    return size.width;
+    return size;
   }
 }
 
@@ -350,15 +370,15 @@ class _RibbonPainter extends CustomPainter {
     path.lineTo(size.width, outLength);
     path.lineTo(size.width, inLength);
     path.close();
-    // 文字置于缎带顶端所需偏移量
-    final offsetRibbon = Offset(size.width - inLength, 0);
+    // 文字置于缎带上方所需偏移量(优先满足下方以大小为因子的调整后，微调使文字位置正确)
+    final offsetRibbon = Offset(size.width - inLength + config.ribbonOffset, config.ribbonOffset);
     // 绘制缎带，文字的偏移、旋转
     canvas
       ..drawPath(path, paintRibbon)
       ..translate(offsetRibbon.dx, offsetRibbon.dy)
       ..rotate(math.pi / 4);
-    // 绘制文字，以文字大小为因子微调文字位置
-    textPainter.paint(canvas, Offset(-textPainter.width / 18, textPainter.height / 18));
+    // 绘制文字，以文字大小为因子调整文字位置(横向必须为宽度的一半，使文字中心位置始终在缎带中心)
+    textPainter.paint(canvas, Offset(-textPainter.width / 2, textPainter.height / 10));
   }
 
   @override
