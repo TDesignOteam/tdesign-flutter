@@ -17,7 +17,6 @@ class _RatePageState extends State<RatePage> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return ExamplePage(child: _widget(), title: 'Rating',);
   }
