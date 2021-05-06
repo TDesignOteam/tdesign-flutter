@@ -5,7 +5,7 @@ import 'utils.dart';
 
 void main() {
   group('rate', () {
-    testWidgets('Default', (WidgetTester tester) async {
+    testWidgets('默认Rate', (WidgetTester tester) async {
       await tester.pumpWidget(boilerplate(Rate(value: 2)));
 
       // 默认存在5个star类型的图标
@@ -17,8 +17,6 @@ void main() {
       // 默认是不存在描述文字的
       expect(tester.typeCount(Text), 0);
 
-      expect(tester.typeCount(IgnorePointer), 5);
-
       expect(tester.typeCount(ClipRect), 0);
 
       // 点击了最后一个图标，就会打5星，颜色混合组件就会消失
@@ -27,7 +25,7 @@ void main() {
       expect(tester.typeCount(ColorFiltered), 0);
     });
 
-    testWidgets('IconBuilder', (WidgetTester tester) async {
+    testWidgets('通过Builder提供Icon的Rate', (WidgetTester tester) async {
       await tester.pumpWidget(boilerplate(Rate(
         value: 2,
         itemBuilder: (context, index) => Icon(Icons.ac_unit),
@@ -36,7 +34,7 @@ void main() {
       expect(tester.iconCount(Icons.ac_unit), 5);
     });
 
-    testWidgets('IconConfig', (WidgetTester tester) async {
+    testWidgets('通过Config配置提供Icon的Rate', (WidgetTester tester) async {
       await tester.pumpWidget(boilerplate(Rate(
         value: 2,
         ratingIcons: RatingIconConfig(
@@ -50,7 +48,7 @@ void main() {
       expect(tester.iconCount(Icons.star_border), 3);
     });
 
-    testWidgets('Default-Half', (WidgetTester tester) async {
+    testWidgets('支持半星的默认Rate', (WidgetTester tester) async {
       await tester.pumpWidget(boilerplate(Rate(value: 2.5, allowHalf: true)));
 
       // 半星图标需要用到ClipRect，有且只有一个
@@ -94,7 +92,7 @@ void main() {
       expect(tester.typeCount(ColorFiltered), 5);
     });
 
-    testWidgets('IconConfig-Half', (WidgetTester tester) async {
+    testWidgets('支持半星的Config配置Rate', (WidgetTester tester) async {
       await tester.pumpWidget(boilerplate(Rate(
         value: 2.5,
         allowHalf: true,
@@ -105,7 +103,7 @@ void main() {
         ),
       )));
 
-      // 配置的图标，半分情况是直接使用的提供的图标
+      // 配置的图标，半星的情况是直接使用的提供的图标
       expect(tester.iconCount(Icons.star), 2);
       expect(tester.iconCount(Icons.star_border), 2);
       expect(tester.iconCount(Icons.star_half), 1);
