@@ -12,4 +12,10 @@ Widget boilerplate(Widget child) {
 extension WidgetTesterExt on WidgetTester {
   // 获取指定finder匹配到元素的个数
   int count(Finder finder) => widgetList(finder).length;
+
+  // 统计指定Icon出现的次数
+  int iconCount(IconData icon) => count(find.byIcon(icon));
+
+  // 统计指定type出现的次数
+  int typeCount(Type type) => count(find.byType(type));
 }
