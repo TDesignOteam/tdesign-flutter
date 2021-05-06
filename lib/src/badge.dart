@@ -13,7 +13,7 @@ enum BadgeSize { medium, small }
 /// Badge的形状枚举
 enum BadgeShape { circle, rounded, ribbon }
 
-/// 会基于Badge尺寸变化的特定配置
+// 会基于Badge尺寸变化的特定配置
 class _BadgeSizeSpecConfig {
   // Badge类型为`BadgeShape.rounded`时，Badge的圆角半径
   final double roundedBorderRadius;
