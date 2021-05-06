@@ -18,4 +18,14 @@ extension WidgetTesterExt on WidgetTester {
 
   // 统计指定type出现的次数
   int typeCount(Type type) => count(find.byType(type));
+
+  Future<void> tapRight(Finder finder) {
+    Offset o = getCenter(finder);
+    return tapAt(Offset(o.dx + 1, o.dy));
+  }
+
+  Future<void> tapLeft(Finder finder) {
+    Offset o = getCenter(finder);
+    return tapAt(Offset(o.dx - 1, o.dy));
+  }
 }
