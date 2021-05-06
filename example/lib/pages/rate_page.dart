@@ -54,7 +54,7 @@ class _RatePageState extends State<RatePage> {
 
   Widget _rateByItemBuilder() {
     return Rate(
-      value: 2,
+      value: 2.5,
       count: 5,
       allowHalf: true,
       itemBuilder: (context, _) => Icon(
