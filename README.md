@@ -37,19 +37,16 @@ tdesign-mobile-flutter
 │  ├─ lib
 │  │  ├─ main.dart
 │  │  ├─ page_util.dart
-│  │  └─ pages
-│  │     └─ // 所有组件示例代码
+│  │  └─ pages             # 所有组件示例代码文件在pages目录下
 ├─ lib
 │  ├─ fonts
-│  ├─ src
-│  │  └─ // 所有组件代码文件放在这里
+│  ├─ src                  # 所有组件代码文件在src目录下
 │  ├─ tdesign.dart
 │  └─ theme
-│     ├─ td_colors.dart // TDesign色卡，组件所需颜色可以从这里取用
-│     └─ td_theme.dart // TDesign主题化相关属性，组件中部分默认属性需要从这里取用
+│     ├─ td_colors.dart    # TDesign色卡，组件所需颜色可以从这里取用
+│     └─ td_theme.dart     # TDesign主题化相关属性，组件中部分默认属性需要从这里取用
 ├─ pubspec.yaml
-└─ test
-   └─ // 所有组件测试代码
+└─ test                    # 所有组件测试代码在test目录下
 
 ```
 
