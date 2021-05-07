@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
+
 abstract class TDTheme {
 
   /// 基础颜色 - 主题色
@@ -68,22 +69,22 @@ abstract class TDTheme {
   static Color bgIconDark = Color(0xFF444444);
 
   /// 文字 - 一级
-  static Color textColorL1 = Color.fromARGB((255 * 0.9).round(), 0, 0, 0);
+  static Color textColorL1 = TDColors.fontBlack;
 
   /// 文字 - 二级
-  static Color textColorL2 = Color.fromARGB((255 * 0.6).round(), 0, 0, 0);
+  static Color textColorL2 = TDColors.fontBlack[2]!;
 
   /// 文字 - 三级
-  static Color textColorL3 = Color.fromARGB((255 * 0.3).round(), 0, 0, 0);
+  static Color textColorL3 = TDColors.fontBlack[3]!;
 
   /// 文字 - 四级
-  static Color textColorL4 = Color.fromARGB((255 * 0.16).round(), 0, 0, 0);
+  static Color textColorL4 = TDColors.fontBlack[4]!;
 
   /// 文字禁用色
   static Color textColorDisabled = textColorL4;
 
   /// 文字主色反色
-  static Color textAntiPrimaryColor = Color.fromARGB((255 * 0.9).round(), 255, 255, 255);
+  static Color textAntiPrimaryColor = TDColors.fontWhite;
 
   /// 边框色1
   static Color borderColorL1 = Color(0xFFE6E6E6);
