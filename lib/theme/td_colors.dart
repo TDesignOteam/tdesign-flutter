@@ -111,9 +111,7 @@ abstract class TDColors {
     },
   );
   static const int _greenPrimaryValue = 0xFF00A870;
-}
 
-extension TDColorsFont on TDColors {
   /// 字体黑色色板
   static const ColorSwatch fontBlack = ColorSwatch(
     _fontBlackPrimaryValue,
