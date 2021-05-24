@@ -64,19 +64,17 @@ git提交日志，请使用[commitizen](https://github.com/commitizen/cz-cli)工
 
 ### 风格和主题
 
-TDesign支持主题化。即用户可以通过改变一些全局属性来改变所有组件的风格。工程`lib\theme`目录下的`td_theme.dart`文件中定义了这些全局属性。
+TDesign-mobile-flutter支持黑暗模式。在配置组件的部分颜色属性时，请优先从`Theme.of(context)`中取用样式、颜色，确保黑暗模式下组件展示出合理外观。
 
-当配置所开发组件的各类默认外观属性，例如尺寸、颜色、字号等时，请判断属性是否需要包含在主题化的范畴中。如果需要，则从`td_theme.dart`中取值。
+TDesign支持主题化。即用户可以通过改变一些全局属性来改变所有组件的风格。工程`lib\theme`目录下的`td_theme.dart`文件中定义了这些全局属性。当配置所开发组件的各类默认外观属性，例如尺寸、颜色、字号等时，请判断属性是否需要包含在主题化的范畴中。如果需要，则从`td_theme.dart`中取值。
 
-工程`lib\theme`目录下的`td_colors.dart`文件定义了TDesign的设计色卡。在配置所开发组件的默认颜色时，如果不在主题化范畴内，请从`td_colors.dart`的色卡中取用颜色。
-
+工程`lib\theme`目录下的`td_colors.dart`文件定义了TDesign的设计色卡。在配置所开发组件的默认颜色时，如果颜色不需要适配黑暗模式并且不在主题化范畴内，请从`td_colors.dart`的色卡中取用颜色。
 
 ### 示例
 
 在示例中完整展示组件的使用效果，风格参考[TDesign移动端组件库示例](http://tdesign.woa.com/vue-mobile/components/badge)。
 
 在`example\lib\pages`下添加页面，在`example\lib\main.dart`中的主菜单添加页面入口。页面统一以`page_util.dart`中的`ExamplePage`作为根Widget。
-
 
 ### 测试
 
