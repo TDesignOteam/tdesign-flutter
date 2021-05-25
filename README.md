@@ -64,9 +64,9 @@ git提交日志，使用[commitizen](https://github.com/commitizen/cz-cli)工具
 
 ### 风格和主题
 
-TDesign支持主题化。即用户可以通过改变一些全局属性来改变所有组件的风格。工程`lib\theme`目录下的`td_theme.dart`文件中定义了这些全局属性。当配置所开发组件的各类默认外观属性，例如尺寸、颜色、字号等时，判断属性是否需要包含在主题化的范畴中，需要则从`td_theme.dart`中取值。
+TDesign支持主题化。即用户可以通过改变一些全局属性来改变所有组件的风格。工程`lib\theme`目录下的`td_theme.dart`文件中定义了这些全局属性。当配置所开发组件的各类默认外观属性，判断属性是否需要包含在主题化的范畴中，需要则从`td_theme.dart`中取值。
 
-工程`lib\theme`目录下的`td_colors.dart`文件定义了TDesign的设计色卡。在配置所开发组件的默认颜色时，如果颜色不在主题化范畴内，从`td_colors.dart`的色卡中取用颜色。
+工程`lib\theme`目录下的`td_colors.dart`文件定义了TDesign的设计色卡。在配置所开发组件的默认颜色时，如果颜色不在主题化范畴内，可以从`td_colors.dart`的色卡中取用颜色。
 
 TDesign-mobile-flutter支持黑暗模式。如果组件某部分不使用默认颜色，且需要在黑暗模式下改变，调用`TDTheme.isDarkMode(context)`判断场景模式以配置不同的颜色。
 
@@ -102,7 +102,7 @@ TDesign-mobile-flutter支持黑暗模式。如果组件某部分不使用默认�
 
 使用`dart format`来格式化你的代码。
 
-注意：使用多个参数时在最后一个参数后添加逗号可能造成`dart format`格式化出多余的缩进，删除逗号重新格式化可以解决问题。
+注意：使用多个参数时在最后一个参数的逗号可能造成`dart format`格式化出多余的缩进，删除或添加逗号重新格式化可以解决问题。
 
 ### 名称
 
