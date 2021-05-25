@@ -13,11 +13,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'TDesign Example',
-        darkTheme: ThemeData.dark(),
-        home: Scaffold(
-            appBar: AppBar(backgroundColor: TDColors.blue, title: Text('TDesign Example')),
-            body: SafeArea(bottom: false, child: MyHomePage())));
+      title: 'TDesign Example',
+      darkTheme: ThemeData.dark(),
+      home: Scaffold(
+        appBar: AppBar(backgroundColor: TDColors.blue, title: Text('TDesign Example')),
+        body: SafeArea(bottom: false, child: MyHomePage()),
+      ),
+    );
   }
 }
 
