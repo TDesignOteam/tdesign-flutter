@@ -4,16 +4,16 @@ TDesign Flutter组件
 
 ## 使用
 
-请通过在`pubspec.yaml`中作如下配置使用：
+通过在`pubspec.yaml`中作如下配置使用：
 
 ``` json
 tdesign:
   git: http://git.woa.com/TDesign/tdesign-mobile-flutter.git
 ```
 
-组件的使用方式请参考[示例工程`example`](https://git.code.oa.com/TDesign/tdesign-mobile-flutter/tree/master/example)。
+组件的使用方式参考[示例工程`example`](https://git.code.oa.com/TDesign/tdesign-mobile-flutter/tree/master/example)。
 
-要使用图标资源的话，请在`pubspec.yaml`中添加如下配置：
+要使用图标资源的话，在`pubspec.yaml`中添加如下配置：
 
 ``` json
   fonts:
@@ -54,31 +54,35 @@ tdesign-mobile-flutter
 
 ### 分支
 
-开发组件时，请创建自己的`个人分支`或`feature`分支，开发完之后通过MR方式合入`master`。
+开发组件时，创建自己的`个人分支`或`feature`分支，开发完之后通过MR方式合入`master`。
 
 ### 提交日志
 
-git提交日志，请使用[commitizen](https://github.com/commitizen/cz-cli)工具，根据其中的指引安装并配置[Commitizen-friendly repo](https://github.com/commitizen/cz-cli#making-your-repo-commitizen-friendly)。
+git提交日志，使用[commitizen](https://github.com/commitizen/cz-cli)工具，根据其中的指引安装并配置[Commitizen-friendly repo](https://github.com/commitizen/cz-cli#making-your-repo-commitizen-friendly)。
 
-配置完成后，所有修改的提交都请使用`git cz`命令提交，以生成规范的、“社区友好”的提交信息。
+配置完成后，所有修改的提交都使用`git cz`命令提交，以生成规范的、“社区友好”的提交信息。
 
 ### 风格和主题
 
-TDesign-mobile-flutter支持黑暗模式。在配置组件的部分颜色属性时，请优先从`Theme.of(context)`中取用样式、颜色，确保黑暗模式下组件展示出合理外观。
+TDesign支持主题化。即用户可以通过改变一些全局属性来改变所有组件的风格。工程`lib\theme`目录下的`td_theme.dart`文件中定义了这些全局属性。当配置所开发组件的各类默认外观属性，例如尺寸、颜色、字号等时，判断属性是否需要包含在主题化的范畴中，需要则从`td_theme.dart`中取值。
 
-TDesign支持主题化。即用户可以通过改变一些全局属性来改变所有组件的风格。工程`lib\theme`目录下的`td_theme.dart`文件中定义了这些全局属性。当配置所开发组件的各类默认外观属性，例如尺寸、颜色、字号等时，请判断属性是否需要包含在主题化的范畴中。如果需要，则从`td_theme.dart`中取值。
+工程`lib\theme`目录下的`td_colors.dart`文件定义了TDesign的设计色卡。在配置所开发组件的默认颜色时，如果颜色不在主题化范畴内，从`td_colors.dart`的色卡中取用颜色。
 
-工程`lib\theme`目录下的`td_colors.dart`文件定义了TDesign的设计色卡。在配置所开发组件的默认颜色时，如果颜色不需要适配黑暗模式并且不在主题化范畴内，请从`td_colors.dart`的色卡中取用颜色。
+TDesign-mobile-flutter支持黑暗模式。如果组件某颜色配置需要在黑暗模式下改变，调用`TDTheme.isDarkMode(context)`判断场景模式以配置不同的颜色。
 
 ### 示例
 
 在示例中完整展示组件的使用效果，风格参考[TDesign移动端组件库示例](http://tdesign.woa.com/vue-mobile/components/badge)。
 
-在`example\lib\pages`下添加页面，在`example\lib\main.dart`中的主菜单添加页面入口。页面统一以`page_util.dart`中的`ExamplePage`作为根Widget。
+在`example\lib\pages`下添加文件，命名为`组件名_page.dart`。
+
+在`example\lib\main.dart`中的主菜单添加页面入口。页面统一以`page_util.dart`中的`ExamplePage`作为根Widget。
 
 ### 测试
 
 在`test`目录下为组件添加测试。若组件中存在重要逻辑则必须进行测试，例如边界条件，显示与隐藏等。
+
+为每个组件创建一个单独的测试文件，命名为`组件名_test.dart`。
 
 
 
@@ -96,7 +100,7 @@ TDesign支持主题化。即用户可以通过改变一些全局属性来改变�
 
 主要遵守 [腾讯Dart规范](https://git.code.oa.com/standards/dart)。
 
-请使用`dart format`来格式化你的代码。
+使用`dart format`来格式化你的代码。
 
 注意：使用多个参数时在最后一个参数后添加逗号可能造成`dart format`格式化出多余的缩进，删除逗号重新格式化可以解决问题。
 
@@ -107,7 +111,6 @@ TDesign支持主题化。即用户可以通过改变一些全局属性来改变�
 ### 逻辑分块
 
 当类接口过多时，使用extension来分组不同功能的接口。
-
 
 
 
