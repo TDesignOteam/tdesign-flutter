@@ -15,20 +15,20 @@ class _BadgePageState extends State<BadgePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ExamplePage(child: _widget(), title: 'Badge',);
+    return ExamplePage(child: _widget(), title: 'Badge');
   }
 
   Widget _widget() {
     return ListView(children: [
-      _splitTitle('覆盖于组件的徽标'),
+      PageUtil.buildSubTitle('覆盖于组件的徽标'),
       _buildTile(_badgesOnButtonList(BadgeSize.small)),
       Divider(height: 0),
       _buildTile(_badgesOnButtonList(BadgeSize.medium)),
       Divider(height: 0),
       _buildTile(_badgeOnIconList()),
-      _splitTitle('缎带型徽标'),
+      PageUtil.buildSubTitle('缎带型徽标'),
       _ribbonExample(),
-      _splitTitle('独立存在的徽标'),
+      PageUtil.buildSubTitle('独立存在的徽标'),
       _tileWithIsolateBadge(Badge(dot: true)),
       Divider(height: 0),
       _tileWithIsolateBadge(Badge(count: 15)),
@@ -39,10 +39,6 @@ class _BadgePageState extends State<BadgePage> {
       )),
       Divider(height: 0),
     ]);
-  }
-
-  Widget _splitTitle(String text) {
-    return ListTile(tileColor: Color(0xFFEEEEEE), title: Text(text, style: TextStyle(color: Colors.black45)));
   }
 
   Widget _exampleButton(String text, {double height = 30, double? width}) {
@@ -61,13 +57,13 @@ class _BadgePageState extends State<BadgePage> {
   }
 
   Widget _buildTile(List<Widget> list) {
-    return Container(
-      height: 80,
-      alignment: Alignment.center,
-      child: Row(
+    return PageUtil.buildTile(
+      context,
+      Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: list,
       ),
+      alignment: Alignment.center
     );
   }
 
@@ -130,6 +126,7 @@ class _BadgePageState extends State<BadgePage> {
       shape: BadgeShape.ribbon,
       content: 'NEW',
       child: ListTile(
+        tileColor: Theme.of(context).dialogBackgroundColor,
         leading: Badge(
           content: 'NEW',
           shape: BadgeShape.ribbon,
@@ -142,6 +139,6 @@ class _BadgePageState extends State<BadgePage> {
   }
 
   Widget _tileWithIsolateBadge(Widget badge) {
-    return ListTile(leading: Text('单行标题'), trailing: badge);
+    return ListTile(tileColor: Theme.of(context).dialogBackgroundColor, leading: Text('单行标题'), trailing: badge);
   }
 }
