@@ -68,7 +68,7 @@ TDesign支持主题化。即用户可以通过改变一些全局属性来改变�
 
 工程`lib\theme`目录下的`td_colors.dart`文件定义了TDesign的设计色卡。在配置所开发组件的默认颜色时，如果颜色不在主题化范畴内，从`td_colors.dart`的色卡中取用颜色。
 
-TDesign-mobile-flutter支持黑暗模式。如果组件某颜色配置需要在黑暗模式下改变，调用`TDTheme.isDarkMode(context)`判断场景模式以配置不同的颜色。
+TDesign-mobile-flutter支持黑暗模式。如果组件某部分不使用默认颜色，且需要在黑暗模式下改变，调用`TDTheme.isDarkMode(context)`判断场景模式以配置不同的颜色。
 
 ### 示例
 

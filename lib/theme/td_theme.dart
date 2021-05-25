@@ -86,6 +86,9 @@ abstract class TDTheme {
   /// 文字主色反色
   static Color textAntiPrimaryColor = TDColors.fontWhite;
 
+  /// 占位文字颜色
+  static Color placeHolderColor = textColorL3;
+
   /// 边框色1
   static Color borderColorL1 = Color(0xFFE6E6E6);
 
@@ -165,4 +168,9 @@ abstract class TDTheme {
   
   /// 暗色模式
   static Color darkBgColor = Color(0xFF272B30); // 色彩-深色背景
+
+  /// 返回当前所处应用主题环境是否是黑暗模式
+  static bool isDarkMode(BuildContext? context) {
+    return context == null ? false : MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+  }
 }
