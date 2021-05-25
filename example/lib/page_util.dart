@@ -13,3 +13,26 @@ class ExamplePage extends StatelessWidget {
         body: SafeArea(bottom: false, child: child));
   }
 }
+
+class PageUtil {
+  static Widget buildSubTitle(String text, {double height = 60}) {
+    return Container(
+      height: height,
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: EdgeInsets.only(left: 15),
+        child: Text(text, style: TextStyle(fontSize: 17, color: Colors.grey)),
+      ),
+    );
+  }
+
+  static Widget buildTile(BuildContext context, Widget child,
+      {double? height = 80, Alignment alignment = Alignment.centerLeft}) {
+    return Container(
+      color: Theme.of(context).dialogBackgroundColor,
+      height: height,
+      alignment: alignment,
+      child: Padding(padding: EdgeInsets.symmetric(horizontal: 15), child: child),
+    );
+  }
+}

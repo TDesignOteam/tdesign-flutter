@@ -9,6 +9,8 @@ class RatePage extends StatefulWidget {
 
 class _RatePageState extends State<RatePage> {
   late double _rating;
+  final _subTitleHeight = 45.0;
+  final _tileHight = 50.0;
 
   @override
   void initState() {
@@ -18,30 +20,30 @@ class _RatePageState extends State<RatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ExamplePage(child: _widget(), title: 'Rating',);
+    return ExamplePage(
+      child: _widget(),
+      title: 'Rating',
+    );
   }
 
   Widget _widget() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
+    return ListView(
       children: [
-        SizedBox(height: 20),
-        _titleWith('默认Rate组件'),
-        _defaultIconRate(),
-        _space,
-        _titleWith('使用itemBuilder构建的组件'),
-        _rateByItemBuilder(),
-        _space,
-        _titleWith('使用ratingIcons自定义图标'),
-        _rateByConfig(),
-        _space,
-        _titleWith('完整使用'),
-        _fullUseRate(),
-        Text(
-          '当前分值为：$_rating',
-          style: TextStyle(fontSize: 20, color: Colors.lightBlue),
-        ),
+        _buildSubTitle('默认Rate组件'),
+        _buildTile(_defaultIconRate()),
+        _buildSubTitle('允许半星'),
+        _buildTile(_allowHalf()),
+        _buildSubTitle('使用itemBuilder配置图标'),
+        _buildTile(_rateByItemBuilder()),
+        _buildSubTitle('大小、总分、初始分'),
+        PageUtil.buildTile(context, _differentSize(), height: null),
+        _buildSubTitle('自定义辅助文字'),
+        _buildTile(_withHelperText()),
+        PageUtil.buildTile(context, Text('回调传入当前分值：$_rating', style: TextStyle(fontSize: 18, color: Colors.grey)),
+            height: 30),
+        Divider(),
+        _buildSubTitle('自定义全星、半星、无星图标和颜色'),
+        _buildTile(_rateByConfig()),
       ],
     );
   }
@@ -50,35 +52,53 @@ class _RatePageState extends State<RatePage> {
     return Rate(value: 2, count: 5);
   }
 
-  Widget _rateByItemBuilder() {
+  Widget _allowHalf() {
     return Rate(
       value: 2.5,
       count: 5,
       allowHalf: true,
-      itemBuilder: (context, _) => Icon(
-        TDIcons.starFilled,
-        color: TDColors.blue[3],
-      ),
+    );
+  }
+
+  Widget _rateByItemBuilder() {
+    return Rate(
+      value: 2,
+      count: 5,
+      itemBuilder: (context, _) =>
+          Padding(padding: EdgeInsets.all(2), child: Icon(TDIcons.starFilled, color: Color(0xFFF1AD3D),))
+    );
+  }
+
+  Widget _differentSize() {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Rate(value: 0, count: 4, size: 30),
+        Divider(),
+        Rate(value: 3, count: 8, size: 20),
+        Divider(),
+        Rate(value: 4, count: 5, size: 50)
+      ]),
     );
   }
 
   Widget _rateByConfig() {
     return Rate(
-      value: 3,
+      value: 2.5,
       allowHalf: true,
       count: 5,
       ratingIcons: RatingIconConfig(
         full: Icon(
-          TDIcons.usergroup,
-          color: Colors.amber,
+          Icons.emoji_events,
+          color: TDColors.orange,
         ),
-        half: Icon(TDIcons.userAvatar, color: Colors.amber),
-        empty: Icon(TDIcons.user, color: Colors.amber),
+        half: Icon(Icons.emoji_emotions, color: TDColors.blue),
+        empty: Icon(Icons.circle, color: TDColors.green),
       ),
     );
   }
 
-  Widget _fullUseRate() {
+  Widget _withHelperText() {
     return Rate(
       value: 2,
       count: 5,
@@ -86,10 +106,6 @@ class _RatePageState extends State<RatePage> {
       showText: true,
       textSize: 20,
       texts: ['差评', '差评', '一般', '一般', '好评', '好评'],
-      itemBuilder: (context, _) => Icon(
-        Icons.star,
-        color: TDColors.blue[5],
-      ),
       onRatingUpdate: (value) {
         _rating = value;
         setState(() {});
@@ -97,12 +113,11 @@ class _RatePageState extends State<RatePage> {
     );
   }
 
-  Widget _titleWith(String txt) {
-    return Text(
-      txt,
-      style: TextStyle(fontSize: 20),
-    );
+  Widget _buildTile(Widget child) {
+    return PageUtil.buildTile(context, child, height: _tileHight);
   }
 
-  Widget get _space => SizedBox(height: 35);
+  Widget _buildSubTitle(String text) {
+    return PageUtil.buildSubTitle(text, height: _subTitleHeight);
+  }
 }
