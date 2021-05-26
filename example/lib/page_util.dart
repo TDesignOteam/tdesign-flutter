@@ -9,8 +9,9 @@ class ExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(backgroundColor: TDColors.blue, title: Text(title)),
-        body: SafeArea(bottom: false, child: child));
+      appBar: AppBar(backgroundColor: TDColors.blue, title: Text(title)),
+      body: SafeArea(bottom: false, child: child),
+    );
   }
 }
 
@@ -32,7 +33,8 @@ class PageUtil {
       color: Theme.of(context).dialogBackgroundColor,
       height: height,
       alignment: alignment,
-      child: Padding(padding: EdgeInsets.symmetric(horizontal: 15), child: child),
+      child:
+          Padding(padding: EdgeInsets.symmetric(horizontal: 15), child: child),
     );
   }
 }

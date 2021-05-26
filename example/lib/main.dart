@@ -13,11 +13,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'TDesign Example',
-        darkTheme: ThemeData.dark(),
-        home: Scaffold(
-            appBar: AppBar(backgroundColor: TDColors.blue, title: Text('TDesign Example')),
-            body: SafeArea(bottom: false, child: MyHomePage())));
+      title: 'TDesign Example',
+      darkTheme: ThemeData.dark(),
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: TDColors.blue,
+          title: Text('TDesign Example'),
+        ),
+        body: SafeArea(
+          bottom: false,
+          child: MyHomePage(),
+        ),
+      ),
+    );
   }
 }
 
@@ -48,7 +56,9 @@ class _MyHomePageState extends State<MyHomePage> {
       itemCount: list.length,
       itemBuilder: (context, index) => Container(
         margin: EdgeInsets.symmetric(vertical: 4),
-        color: list[index].isSelected ? Colors.red[100] : Theme.of(context).dialogBackgroundColor,
+        color: list[index].isSelected
+            ? Colors.red[100]
+            : Theme.of(context).dialogBackgroundColor,
         child: TextButton(
           onPressed: () {
             ListItem item = this.list[index];

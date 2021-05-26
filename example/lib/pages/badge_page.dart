@@ -63,14 +63,18 @@ class _BadgePageState extends State<BadgePage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: list,
       ),
-      alignment: Alignment.center
+      alignment: Alignment.center,
     );
   }
 
   List<Widget> _badgeOnIconList() {
     return [
       Badge(dot: true, child: Icon(TDIcons.refresh, size: TDTheme.iconDefault)),
-      Badge(color: TDColors.green, count: 20, child: Icon(TDIcons.mail, size: TDTheme.iconDefault)),
+      Badge(
+        color: TDColors.green,
+        count: 20,
+        child: Icon(TDIcons.mail, size: TDTheme.iconDefault),
+      ),
       Badge(
         color: TDColors.orange,
         shape: BadgeShape.rounded,
@@ -139,6 +143,10 @@ class _BadgePageState extends State<BadgePage> {
   }
 
   Widget _tileWithIsolateBadge(Widget badge) {
-    return ListTile(tileColor: Theme.of(context).dialogBackgroundColor, leading: Text('单行标题'), trailing: badge);
+    return ListTile(
+      tileColor: Theme.of(context).dialogBackgroundColor,
+      leading: Text('单行标题'),
+      trailing: badge,
+    );
   }
 }

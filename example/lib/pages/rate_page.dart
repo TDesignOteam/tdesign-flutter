@@ -39,8 +39,14 @@ class _RatePageState extends State<RatePage> {
         PageUtil.buildTile(context, _differentSize(), height: null),
         _buildSubTitle('自定义辅助文字'),
         _buildTile(_withHelperText()),
-        PageUtil.buildTile(context, Text('回调传入当前分值：$_rating', style: TextStyle(fontSize: 18, color: Colors.grey)),
-            height: 30),
+        PageUtil.buildTile(
+          context,
+          Text(
+            '回调传入当前分值：$_rating',
+            style: TextStyle(fontSize: 18, color: Colors.grey),
+          ),
+          height: 30,
+        ),
         Divider(),
         _buildSubTitle('自定义全星、半星、无星图标和颜色'),
         _buildTile(_rateByConfig()),
@@ -64,8 +70,13 @@ class _RatePageState extends State<RatePage> {
     return Rate(
       value: 2,
       count: 5,
-      itemBuilder: (context, _) =>
-          Padding(padding: EdgeInsets.all(2), child: Icon(TDIcons.starFilled, color: Color(0xFFF1AD3D),))
+      itemBuilder: (context, _) => Padding(
+        padding: EdgeInsets.all(2),
+        child: Icon(
+          TDIcons.starFilled,
+          color: Color(0xFFF1AD3D),
+        ),
+      ),
     );
   }
 
