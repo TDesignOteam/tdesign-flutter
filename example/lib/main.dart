@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
 import 'pages/icons_page.dart';
 import 'pages/rate_page.dart';
+import 'pages/toast_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
           child: MyHomePage(),
         ),
       ),
+      builder: Toast.init(),
     );
   }
 }
@@ -48,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Icon', (context) => _push(context, IconsPage())),
     ListItem('Rate', (context) => _push(context, RatePage())),
     ListItem('Badge', (context) => _push(context, BadgePage())),
+    ListItem('Toast', (context) => _push(context, ToastPage())),
   ];
 
   Widget build(BuildContext context) {
