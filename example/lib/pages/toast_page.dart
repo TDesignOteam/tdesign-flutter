@@ -13,9 +13,6 @@ class _ToastPageState extends State<ToastPage> {
   @override
   void initState() {
     super.initState();
-    Toast.addStatusCallback((status) {
-      print('Toast Callback Status $status');
-    });
     // Toast.removeCallbacks();
   }
 

@@ -37,14 +37,6 @@ enum ToastPosition {
   bottom,
 }
 
-/// toast status
-enum ToastStatus {
-  show,
-  dismiss,
-}
-
-typedef ToastStatusCallback = void Function(ToastStatus status);
-
 // only message: 文本轻提示
 // only icon: 图标轻提示
 // message+icon: 图标加文本轻提示，包括loading
@@ -143,8 +135,6 @@ class Toast {
 
   ToastOverlayEntry? overlayEntry;
   Timer? _timer;
-
-  final List<ToastStatusCallback> _statusCallbacks = <ToastStatusCallback>[];
 
   factory Toast() => _instance;
   static final Toast _instance = Toast._internal();
@@ -318,25 +308,6 @@ class Toast {
     return _instance._clear(animation);
   }
 
-  /// add toast status callback
-  static void addStatusCallback(ToastStatusCallback callback) {
-    if (!_instance._statusCallbacks.contains(callback)) {
-      _instance._statusCallbacks.add(callback);
-    }
-  }
-
-  /// remove single toast status callback
-  static void removeCallback(ToastStatusCallback callback) {
-    if (_instance._statusCallbacks.contains(callback)) {
-      _instance._statusCallbacks.remove(callback);
-    }
-  }
-
-  /// remove all toast status callback
-  static void removeAllCallbacks() {
-    _instance._statusCallbacks.clear();
-  }
-
   /// show [message] [duration] [toastPosition]
   Future<void> _show({
     Widget? w,
@@ -366,7 +337,6 @@ class Toast {
       completer: completer,
     );
     completer.future.whenComplete(() {
-      _callback(ToastStatus.show);
       if (duration != null) {
         _cancelTimer();
         _timer = Timer(duration, () async {
@@ -394,13 +364,6 @@ class Toast {
     _key = null;
     _cancelTimer();
     _markNeedsBuild();
-    _callback(ToastStatus.dismiss);
-  }
-
-  void _callback(ToastStatus status) {
-    for (final ToastStatusCallback callback in _statusCallbacks) {
-      callback(status);
-    }
   }
 
   void _markNeedsBuild() {
