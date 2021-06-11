@@ -23,42 +23,12 @@ import 'theme.dart';
 //   custom,
 // }
 
-/// toast info style
-// enum ToastInfoStyle {
-//   loading,
-//   success,
-//   fail,
-// }
-
 /// toast position
 enum ToastPosition {
   top,
   middle,
   bottom,
 }
-
-// only message: 文本轻提示
-// only icon: 图标轻提示
-// message+icon: 图标加文本轻提示，包括loading
-// class ToastProps {
-//   /// 文本内容，支持通过\n 换行
-//   String? message;
-
-//   /// 提示类型，可选值 loading、success、fail
-//   ToastInfoStyle? type;
-
-//   /// 展示位置，可选值 top、middle、bottom
-//   ToastPosition? position;
-
-//   /// 自定义图标URL
-//   String? icon;
-
-//   /// 显示背景遮罩，禁止背景点击和滚动
-//   bool? showOverlay;
-
-//   /// 展示时长 ms，值为 0 时不消失
-//   Duration? duration;
-// }
 
 class Toast {
   /// toast theme style.
