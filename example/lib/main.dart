@@ -17,11 +17,6 @@ class MyApp extends StatelessWidget {
       title: 'TDesign Example',
       darkTheme: ThemeData.dark(),
       home: Scaffold(
-<<<<<<< HEAD
-        appBar: AppBar(backgroundColor: TDColors.blue, title: Text('TDesign Example')),
-        body: SafeArea(bottom: false, child: MyHomePage()),
-      ),
-=======
         appBar: AppBar(
           backgroundColor: TDColors.blue,
           title: Text('TDesign Example'),
@@ -32,7 +27,6 @@ class MyApp extends StatelessWidget {
         ),
       ),
       builder: Toast.init(),
->>>>>>> master
     );
   }
 }
