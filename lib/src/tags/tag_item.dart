@@ -270,26 +270,28 @@ class _TagItemState extends State<TagItem> {
           children: <Widget>[
             Flexible(fit: FlexFit.loose, flex: 2, child: row),
             Flexible(
-                flex: 0,
-                child: FittedBox(
-                    alignment: Alignment.centerRight,
-                    fit: BoxFit.fill,
-                    child: GestureDetector(
-                      child: Container(
-                        margin: EdgeInsets.only(left: _removeLeftMargin),
-                        padding: EdgeInsets.all(2),
-                        child: Icon(
-                          Icons.clear,
-                          color: Colors.white,
-                          size: 12,
-                        ),
-                      ),
-                      onTap: () {
-                        if (widget.onRemove != null) {
-                          widget.onRemove!();
-                        }
-                      },
-                    )))
+              flex: 0,
+              child: FittedBox(
+                alignment: Alignment.centerRight,
+                fit: BoxFit.fill,
+                child: GestureDetector(
+                  child: Container(
+                    margin: EdgeInsets.only(left: _removeLeftMargin),
+                    padding: EdgeInsets.all(2),
+                    child: Icon(
+                      Icons.clear,
+                      color: Colors.white,
+                      size: 12,
+                    ),
+                  ),
+                  onTap: () {
+                    if (widget.onRemove != null) {
+                      widget.onRemove!();
+                    }
+                  },
+                ),
+              ),
+            )
           ]);
 
     return row;

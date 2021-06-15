@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'tag_data.dart';
 
-///ItemBuilder
 typedef Widget ItemBuilder(int index);
 
 class TagPanel extends StatefulWidget {
