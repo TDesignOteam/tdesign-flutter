@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
 import 'pages/icons_page.dart';
 import 'pages/rate_page.dart';
+import 'pages/toast_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,9 +17,22 @@ class MyApp extends StatelessWidget {
       title: 'TDesign Example',
       darkTheme: ThemeData.dark(),
       home: Scaffold(
+<<<<<<< HEAD
         appBar: AppBar(backgroundColor: TDColors.blue, title: Text('TDesign Example')),
         body: SafeArea(bottom: false, child: MyHomePage()),
       ),
+=======
+        appBar: AppBar(
+          backgroundColor: TDColors.blue,
+          title: Text('TDesign Example'),
+        ),
+        body: SafeArea(
+          bottom: false,
+          child: MyHomePage(),
+        ),
+      ),
+      builder: Toast.init(),
+>>>>>>> master
     );
   }
 }
@@ -42,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Icon', (context) => _push(context, IconsPage())),
     ListItem('Rate', (context) => _push(context, RatePage())),
     ListItem('Badge', (context) => _push(context, BadgePage())),
+    ListItem('Toast', (context) => _push(context, ToastPage())),
   ];
 
   Widget build(BuildContext context) {
@@ -50,7 +65,9 @@ class _MyHomePageState extends State<MyHomePage> {
       itemCount: list.length,
       itemBuilder: (context, index) => Container(
         margin: EdgeInsets.symmetric(vertical: 4),
-        color: list[index].isSelected ? Colors.red[100] : Theme.of(context).dialogBackgroundColor,
+        color: list[index].isSelected
+            ? Colors.red[100]
+            : Theme.of(context).dialogBackgroundColor,
         child: TextButton(
           onPressed: () {
             ListItem item = this.list[index];
