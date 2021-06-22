@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
 
 abstract class TDTheme {
-
   /// 基础颜色 - 主题色
   static Color primaryColor = TDColors.blue;
 
@@ -42,7 +41,8 @@ abstract class TDTheme {
   static Color maskActive = Color.fromARGB((255 * 0.6).round(), 0, 0, 0);
 
   /// 遮罩 - 禁用
-  static Color maskDisabled = Color.fromARGB((255 * 0.6).round(), 255, 255, 255);
+  static Color maskDisabled =
+      Color.fromARGB((255 * 0.6).round(), 255, 255, 255);
 
   /// 背景
   static Color bgColor = Color(0xFFFBFBFB);
@@ -165,12 +165,18 @@ abstract class TDTheme {
 
   /// 图标尺寸 - 默认
   static double iconDefault = 32;
-  
+
   /// 暗色模式
   static Color darkBgColor = Color(0xFF272B30); // 色彩-深色背景
 
   /// 返回当前所处应用主题环境是否是黑暗模式
   static bool isDarkMode(BuildContext? context) {
-    return context == null ? false : MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+    return context == null
+        ? false
+        : MediaQuery.platformBrightnessOf(context) == Brightness.dark;
   }
+
+  static Color divideColor = Color(0xFFE7E7E7); // 分割线颜色
+  static Color editBackground = Color(0xFFF5F5F5); //输入框背景色
+
 }

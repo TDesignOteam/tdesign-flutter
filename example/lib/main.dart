@@ -1,6 +1,8 @@
 import 'package:example/pages/badge_page.dart';
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
+
+import 'pages/dialog_page.dart';
 import 'pages/icons_page.dart';
 import 'pages/rate_page.dart';
 import 'pages/tags_page.dart';
@@ -53,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Badge', (context) => _push(context, BadgePage())),
     ListItem('Tags', (context) => _push(context, TagsPage())),
     ListItem('Toast', (context) => _push(context, ToastPage())),
+    ListItem('Dialog', (context) => _push(context, DialogPage())),
   ];
 
   Widget build(BuildContext context) {
