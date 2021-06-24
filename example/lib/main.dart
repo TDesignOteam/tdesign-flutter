@@ -1,6 +1,7 @@
 import 'package:example/pages/badge_page.dart';
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
+import 'pages/checkbox_page.dart';
 import 'pages/icons_page.dart';
 import 'pages/rate_page.dart';
 import 'pages/tags_page.dart';
@@ -14,20 +15,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TDesign Example',
-      darkTheme: ThemeData.dark(),
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: TDColors.blue,
-          title: Text('TDesign Example'),
+    return TDTheme(
+      child: MaterialApp(
+        title: 'TDesign Example',
+        darkTheme: ThemeData.dark(),
+        home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: TDColors.blue,
+            title: Text('TDesign Example'),
+          ),
+          body: SafeArea(
+            bottom: false,
+            child: MyHomePage(),
+          ),
         ),
-        body: SafeArea(
-          bottom: false,
-          child: MyHomePage(),
-        ),
+        builder: Toast.init(),
       ),
-      builder: Toast.init(),
     );
   }
 }
@@ -53,27 +56,28 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Badge', (context) => _push(context, BadgePage())),
     ListItem('Tags', (context) => _push(context, TagsPage())),
     ListItem('Toast', (context) => _push(context, ToastPage())),
+    ListItem('CheckBox', (context) => _push(context, CheckBoxPage())),
   ];
 
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: EdgeInsets.only(top: 5),
       itemCount: list.length,
-      itemBuilder: (context, index) => Container(
-        margin: EdgeInsets.symmetric(vertical: 4),
-        color: list[index].isSelected
-            ? Colors.red[100]
-            : Theme.of(context).dialogBackgroundColor,
-        child: TextButton(
-          onPressed: () {
-            ListItem item = this.list[index];
-            item.action(context);
-          },
-          child: ListTile(
-            title: Text(list[index].data),
+      itemBuilder: (context, index) {
+        return Container(
+          margin: EdgeInsets.symmetric(vertical: 4),
+          color: list[index].isSelected ? Colors.red[100] : Theme.of(context).dialogBackgroundColor,
+          child: TextButton(
+            onPressed: () {
+              ListItem item = this.list[index];
+              item.action(context);
+            },
+            child: ListTile(
+              title: Text(list[index].data),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
