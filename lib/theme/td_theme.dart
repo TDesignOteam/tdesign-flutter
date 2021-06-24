@@ -23,10 +23,13 @@ class TDTheme extends InheritedWidget {
         this.themeData = themeData ?? TDThemeData(),
         super(child: child);
 
+  static TDTheme? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<TDTheme>();
+  }
+
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {
-    // TODO: implement updateShouldNotify
-    throw UnimplementedError();
+    return oldWidget != this;
   }
 
   TDThemeColor themeColor(BuildContext context) {

@@ -69,24 +69,27 @@ class _BadgePageState extends State<BadgePage> {
 
   List<Widget> _badgeOnIconList() {
     return [
-      Badge(dot: true, child: Icon(TDIcons.refresh, size: TDTheme.iconDefault)),
+      Badge(
+        dot: true,
+        child: Icon(TDIcons.refresh, size: TDTheme.of(context)?.themeData.iconDefault),
+      ),
       Badge(
         color: TDColors.green,
         count: 20,
-        child: Icon(TDIcons.mail, size: TDTheme.iconDefault),
+        child: Icon(TDIcons.mail, size: TDTheme.of(context)?.themeData.iconDefault),
       ),
       Badge(
         color: TDColors.orange,
         shape: BadgeShape.rounded,
         count: 30,
-        child: Icon(TDIcons.usergroup, size: TDTheme.iconDefault),
+        child: Icon(TDIcons.usergroup, size: TDTheme.of(context)?.themeData.iconDefault),
       ),
       Badge(
         color: Colors.yellow,
         textColor: Colors.black45,
         shape: BadgeShape.rounded,
         content: 'NEW',
-        child: Icon(TDIcons.shop, size: TDTheme.iconDefault),
+        child: Icon(TDIcons.shop, size: TDTheme.of(context)?.themeData.iconDefault),
       ),
     ];
   }
