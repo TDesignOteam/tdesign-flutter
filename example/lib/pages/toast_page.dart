@@ -47,8 +47,10 @@ class _ToastPageState extends State<ToastPage> {
     return ListView(children: [
       PageUtil.buildSubTitle('文本轻提示'),
       _outlinedButton('短文本轻提示', () => Toast.toast('轻提示内容')),
-      _outlinedButton('长文本轻提示',
-          () => Toast.toast('这是一条长文字提示，超过一定字数就会换行。这是一条长文字提示，超过一定字数就会换行')),
+      _outlinedButton(
+          '长文本轻提示', () => Toast.toast('色不异空空不异色色即是空空即是色色不异空空不异色色即是空空即是色')),
+      _outlinedButton('超长文本轻提示',
+          () => Toast.toast('色不异空，空不异色，色即是空，空即是色。色不异空，空不异色，色即是空，空即是色。')),
       PageUtil.buildSubTitle('图标轻提示'),
       _outlinedButton('成功', () => Toast.success()),
       _outlinedButton('警告', () => Toast.fail()),
@@ -59,6 +61,7 @@ class _ToastPageState extends State<ToastPage> {
       _outlinedButton('警告', () => Toast.fail(message: '失败文案')),
       _outlinedButton('加载', () => Toast.loading(message: '加载')),
       _outlinedButton('自定义图标', () => Toast.info(message: '自定义图标')),
+      _outlinedButton('超长警告', () => Toast.fail(message: '般若波罗蜜多心经')),
       PageUtil.buildSubTitle('提示位置'),
       _outlinedButton(
           '顶部Top', () => Toast.success(toastPosition: ToastPosition.top)),
