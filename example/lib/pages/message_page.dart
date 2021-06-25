@@ -67,6 +67,10 @@ class _MessagePageState extends State<MessagePage> {
           '错误',
           () => Message.show('错误消息',
               msgType: MessageType.error, msgPosition: MessagePosition.top)),
+      _outlinedButton(
+          '超长警示',
+          () => Message.show('色不异空空不异色色即是空空即是色色不异空空不异色色即是空空即是色',
+              msgType: MessageType.warning, msgPosition: MessagePosition.top)),
       PageUtil.buildSubTitle('纯文本消息'),
       _outlinedButton(
           '普通',
@@ -92,6 +96,12 @@ class _MessagePageState extends State<MessagePage> {
               showIcon: false,
               msgType: MessageType.error,
               msgPosition: MessagePosition.top)),
+      _outlinedButton(
+          '超长警示',
+          () => Message.show('不生不灭不垢不净不增不减不生不灭不垢不净不增不减',
+              showIcon: false,
+              msgType: MessageType.warning,
+              msgPosition: MessagePosition.top)),
       PageUtil.buildSubTitle('自定义配置'),
       _outlinedButton(
           '自定义显示时间',
@@ -106,23 +116,12 @@ class _MessagePageState extends State<MessagePage> {
               msgType: MessageType.info,
               msgPosition: MessagePosition.top,
               msgAlignment: MessageAlignment.center)),
-      PageUtil.buildSubTitle('快捷调用'),
       _outlinedButton(
-          '普通',
-          () => Message.show('info',
-              msgType: MessageType.info, msgPosition: MessagePosition.top)),
-      _outlinedButton(
-          '成功',
-          () => Message.show('success',
-              msgType: MessageType.success, msgPosition: MessagePosition.top)),
-      _outlinedButton(
-          '警示',
-          () => Message.show('warning',
-              msgType: MessageType.warning, msgPosition: MessagePosition.top)),
-      _outlinedButton(
-          '错误',
-          () => Message.show('error',
-              msgType: MessageType.error, msgPosition: MessagePosition.top)),
+          '超长居中',
+          () => Message.show('无眼耳鼻舌身意无色声香味触法无眼耳鼻舌身意无色声香味触法',
+              msgType: MessageType.warning,
+              msgPosition: MessagePosition.top,
+              msgAlignment: MessageAlignment.center)),
     ]);
   }
 }

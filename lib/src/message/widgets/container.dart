@@ -128,18 +128,19 @@ class MessageContainerState extends State<MessageContainer>
               size: 20,
               color: Colors.white,
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: 12,
-              ),
-              child: Text(
-                _message!,
-                style: MessageTheme.textStyle ??
-                    TextStyle(
-                      color: MessageTheme.textColor,
-                      fontSize: MessageTheme.fontSize,
-                    ),
-                textAlign: MessageTheme.textAlign,
+            Flexible(
+              child: new Container(
+                padding: new EdgeInsets.only(left: 12.0),
+                child: Text(
+                  _message!,
+                  style: MessageTheme.textStyle ??
+                      TextStyle(
+                        color: MessageTheme.textColor,
+                        fontSize: MessageTheme.fontSize,
+                      ),
+                  textAlign: MessageTheme.textAlign,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ]);
@@ -148,15 +149,18 @@ class MessageContainerState extends State<MessageContainer>
           mainAxisAlignment: alignment,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Text(
-              _message!,
-              style: MessageTheme.textStyle ??
-                  TextStyle(
-                    color: MessageTheme.textColor,
-                    fontSize: MessageTheme.fontSize,
-                  ),
-              textAlign: MessageTheme.textAlign,
-            )
+            Flexible(
+              child: Text(
+                _message!,
+                style: MessageTheme.textStyle ??
+                    TextStyle(
+                      color: MessageTheme.textColor,
+                      fontSize: MessageTheme.fontSize,
+                    ),
+                textAlign: MessageTheme.textAlign,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ]);
     }
   }
@@ -200,6 +204,7 @@ class MessageContainerState extends State<MessageContainer>
                 padding: const EdgeInsets.only(
                     top: 44.0, left: 16.0, right: 16.0), // 容器两侧边距
                 child: Container(
+                  // width: MediaQuery.of(context).size.width - 2 * 16,
                   height: 48.0,
                   decoration: BoxDecoration(
                     color: MessageTheme.backgroundColor,
