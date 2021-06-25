@@ -175,18 +175,15 @@ class Badge extends StatefulWidget {
   final Offset offset;
 
   @override
-  State<StatefulWidget> createState() =>
-      _BadgeState(color ?? TDTheme.errorColor, textColor ?? TDTheme.textAntiPrimaryColor);
+  State<StatefulWidget> createState() => _BadgeState();
 }
 
 class _BadgeState extends State<Badge> {
-  final Color _color;
-  final Color _textColor;
-
-  _BadgeState(this._color, this._textColor);
-
+  TDTheme? theme;
+  
   @override
   Widget build(BuildContext context) {
+    theme = TDTheme.of(context);
     // 未传入任何显示内容且dot == false，直接返回child或空Widget。
     if (!widget.dot && widget.content == null && widget.count == null) {
       return widget.child ?? Container();
@@ -235,7 +232,7 @@ class _BadgeState extends State<Badge> {
       child: Container(
         width: _config.dotSize,
         height: _config.dotSize,
-        color: _color,
+        color: widget.color ?? theme?.themeColor(context).errorColor,
       ),
       borderRadius: BorderRadius.all(
         Radius.circular(_config.dotSize / 2),
@@ -276,12 +273,15 @@ class _BadgeState extends State<Badge> {
             alignment: Alignment.center,
             width: width,
             height: size.height,
-            color: _color,
+            color: widget.color ?? theme?.themeColor(context).errorColor,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: _config.sidePadding),
               child: Text(
                 _getText(),
-                style: TextStyle(color: _textColor, fontSize: _config.textSize),
+                style: TextStyle(
+                  color: widget.textColor ?? theme?.themeColor(context).textAntiPrimaryColor,
+                  fontSize: _config.textSize,
+                ),
               ),
             ),
           ),
@@ -297,8 +297,8 @@ class _BadgeState extends State<Badge> {
     return CustomPaint(
       foregroundPainter: _RibbonPainter(
         title: _getText(),
-        color: _color,
-        textColor: _textColor,
+        color: widget.color ?? theme?.themeColor(context).errorColor ?? TDColors.red,
+        textColor: widget.textColor ?? theme?.themeColor(context).textAntiPrimaryColor ?? TDColors.fontWhite,
         config: _config,
       ),
       child: widget.child,

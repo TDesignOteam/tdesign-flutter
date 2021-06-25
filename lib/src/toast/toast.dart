@@ -167,8 +167,8 @@ class Toast {
 
     return _instance._show(
       message: message,
-      duration: duration ?? ToastTheme.displayDuration,
-      toastPosition: toastPosition ?? ToastTheme.toastPosition,
+      duration: duration ?? ToastConfig.displayDuration,
+      toastPosition: toastPosition ?? ToastConfig.toastPosition,
       dismissOnTap: dismissOnTap,
     );
   }
@@ -187,8 +187,8 @@ class Toast {
     Widget w = indicator ?? (_instance.indicatorWidget ?? ToastIndicator());
     return _instance._show(
       message: message,
-      duration: duration ?? ToastTheme.displayDuration,
-      toastPosition: toastPosition ?? ToastTheme.toastPosition,
+      duration: duration ?? ToastConfig.displayDuration,
+      toastPosition: toastPosition ?? ToastConfig.toastPosition,
       dismissOnTap: dismissOnTap,
       w: w,
     );
@@ -206,14 +206,14 @@ class Toast {
 
     Widget w = _instance.successWidget ??
         Icon(
-          Icons.done,
+          Icons.done, // Icons.check,
           color: ToastTheme.indicatorColor,
           size: ToastTheme.indicatorSize,
         );
     return _instance._show(
       message: message,
-      duration: duration ?? ToastTheme.displayDuration,
-      toastPosition: toastPosition ?? ToastTheme.toastPosition,
+      duration: duration ?? ToastConfig.displayDuration,
+      toastPosition: toastPosition ?? ToastConfig.toastPosition,
       dismissOnTap: dismissOnTap,
       w: w,
     );
@@ -231,14 +231,14 @@ class Toast {
 
     Widget w = _instance.errorWidget ??
         Icon(
-          Icons.clear,
+          Icons.priority_high,
           color: ToastTheme.indicatorColor,
           size: ToastTheme.indicatorSize,
         );
     return _instance._show(
       message: message,
-      duration: duration ?? ToastTheme.displayDuration,
-      toastPosition: toastPosition ?? ToastTheme.toastPosition,
+      duration: duration ?? ToastConfig.displayDuration,
+      toastPosition: toastPosition ?? ToastConfig.toastPosition,
       dismissOnTap: dismissOnTap,
       w: w,
     );
@@ -262,8 +262,8 @@ class Toast {
         );
     return _instance._show(
       message: message,
-      duration: duration ?? ToastTheme.displayDuration,
-      toastPosition: toastPosition ?? ToastTheme.toastPosition,
+      duration: duration ?? ToastConfig.displayDuration,
+      toastPosition: toastPosition ?? ToastConfig.toastPosition,
       dismissOnTap: dismissOnTap,
       w: w,
     );
