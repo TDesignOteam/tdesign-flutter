@@ -1,7 +1,6 @@
 import 'package:example/pages/badge_page.dart';
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
-import 'pages/checkbox_page.dart';
 import 'pages/icons_page.dart';
 import 'pages/rate_page.dart';
 import 'pages/tags_page.dart';
@@ -56,7 +55,6 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Badge', (context) => _push(context, BadgePage())),
     ListItem('Tags', (context) => _push(context, TagsPage())),
     ListItem('Toast', (context) => _push(context, ToastPage())),
-    ListItem('CheckBox', (context) => _push(context, CheckBoxPage())),
   ];
 
   Widget build(BuildContext context) {
@@ -66,7 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
       itemBuilder: (context, index) {
         return Container(
           margin: EdgeInsets.symmetric(vertical: 4),
-          color: list[index].isSelected ? Colors.red[100] : Theme.of(context).dialogBackgroundColor,
+          color: list[index].isSelected
+              ? Colors.red[100]
+              : Theme.of(context).dialogBackgroundColor,
           child: TextButton(
             onPressed: () {
               ListItem item = this.list[index];
