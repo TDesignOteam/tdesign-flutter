@@ -5,6 +5,7 @@ import 'pages/icons_page.dart';
 import 'pages/rate_page.dart';
 import 'pages/tags_page.dart';
 import 'pages/toast_page.dart';
+import 'pages/message_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,6 +15,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final toastBuilder = Toast.init();
+    final messageBuilder = Message.init();
     return TDTheme(
       child: MaterialApp(
         title: 'TDesign Example',
@@ -28,7 +31,11 @@ class MyApp extends StatelessWidget {
             child: MyHomePage(),
           ),
         ),
-        builder: Toast.init(),
+        builder: (context, child) {
+          child = toastBuilder(context, child);
+          child = messageBuilder(context, child);
+          return child;
+        },
       ),
     );
   }
@@ -55,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Badge', (context) => _push(context, BadgePage())),
     ListItem('Tags', (context) => _push(context, TagsPage())),
     ListItem('Toast', (context) => _push(context, ToastPage())),
+    ListItem('Message', (context) => _push(context, MessagePage())),
   ];
 
   Widget build(BuildContext context) {
