@@ -1,3 +1,6 @@
+//  Created by jamsun, 22Jun21.
+//  Copyright © 2021年 Tencent Inc. All rights reserved.
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tdesign/src/button/button_base.dart';

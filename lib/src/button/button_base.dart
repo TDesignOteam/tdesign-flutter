@@ -1,3 +1,6 @@
+//  Created by jamsun, 22Jun21.
+//  Copyright © 2021年 Tencent Inc. All rights reserved.
+
 //按钮样式大小，控制间距和文字大小
 import 'package:flutter/cupertino.dart';
 

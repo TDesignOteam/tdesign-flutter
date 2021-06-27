@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tdesign/src/dialog/confirm_dialog.dart';
-import 'package:tdesign/src/dialog/dialog_util.dart';
-import 'package:tdesign/src/dialog/edit_dialog.dart';
-import 'package:tdesign/src/dialog/list_dialog.dart';
-import 'package:tdesign/src/dialog/whether_dialog.dart';
+import 'package:tdesign/tdesign.dart';
 
 import '../main.dart';
 
