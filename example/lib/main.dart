@@ -7,6 +7,7 @@ import 'pages/icons_page.dart';
 import 'pages/rate_page.dart';
 import 'pages/tags_page.dart';
 import 'pages/toast_page.dart';
+import 'pages/message_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,20 +17,28 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TDesign Example',
-      darkTheme: ThemeData.dark(),
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: TDColors.blue,
-          title: Text('TDesign Example'),
+    final toastBuilder = Toast.init();
+    final messageBuilder = Message.init();
+    return TDTheme(
+      child: MaterialApp(
+        title: 'TDesign Example',
+        darkTheme: ThemeData.dark(),
+        home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: TDColors.blue,
+            title: Text('TDesign Example'),
+          ),
+          body: SafeArea(
+            bottom: false,
+            child: MyHomePage(),
+          ),
         ),
-        body: SafeArea(
-          bottom: false,
-          child: MyHomePage(),
-        ),
+        builder: (context, child) {
+          child = toastBuilder(context, child);
+          child = messageBuilder(context, child);
+          return child;
+        },
       ),
-      builder: Toast.init(),
     );
   }
 }
@@ -55,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Badge', (context) => _push(context, BadgePage())),
     ListItem('Tags', (context) => _push(context, TagsPage())),
     ListItem('Toast', (context) => _push(context, ToastPage())),
+    ListItem('Message', (context) => _push(context, MessagePage())),
     ListItem('Dialog', (context) => _push(context, DialogPage())),
   ];
 
@@ -62,21 +72,23 @@ class _MyHomePageState extends State<MyHomePage> {
     return ListView.builder(
       padding: EdgeInsets.only(top: 5),
       itemCount: list.length,
-      itemBuilder: (context, index) => Container(
-        margin: EdgeInsets.symmetric(vertical: 4),
-        color: list[index].isSelected
-            ? Colors.red[100]
-            : Theme.of(context).dialogBackgroundColor,
-        child: TextButton(
-          onPressed: () {
-            ListItem item = this.list[index];
-            item.action(context);
-          },
-          child: ListTile(
-            title: Text(list[index].data),
+      itemBuilder: (context, index) {
+        return Container(
+          margin: EdgeInsets.symmetric(vertical: 4),
+          color: list[index].isSelected
+              ? Colors.red[100]
+              : Theme.of(context).dialogBackgroundColor,
+          child: TextButton(
+            onPressed: () {
+              ListItem item = this.list[index];
+              item.action(context);
+            },
+            child: ListTile(
+              title: Text(list[index].data),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

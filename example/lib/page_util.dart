@@ -5,11 +5,24 @@ import 'package:tdesign/tdesign.dart';
 class ExamplePage extends StatelessWidget {
   final Widget child;
   final String title;
-  ExamplePage({required this.child, required this.title});
+  final Color backgroundColor;
+  final Color titleColor;
+  ExamplePage(
+      {required this.child,
+      required this.title,
+      this.backgroundColor = TDColors.blue,
+      this.titleColor = TDColors.fontWhite});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: TDColors.blue, title: Text(title)),
+      appBar: AppBar(
+        backgroundColor: backgroundColor,
+        iconTheme: IconThemeData(color: titleColor),
+        title: Text(
+          title,
+          style: TextStyle(color: titleColor),
+        ),
+      ),
       body: SafeArea(bottom: false, child: child),
     );
   }
