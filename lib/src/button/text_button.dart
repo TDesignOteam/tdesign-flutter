@@ -1,6 +1,8 @@
 //  Created by jamsun, 22Jun21.
 //  Copyright © 2021年 Tencent Inc. All rights reserved.
 
+// import 'dart:js';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tdesign/theme/td_text_style.dart';
@@ -35,6 +37,19 @@ class TTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle getTextStyle(TButtonSize size) {
+      if (size == TButtonSize.large) {
+        return tdTextStyle.r16Primary(context);
+      } else if (size == TButtonSize.mid) {
+        return tdTextStyle.r16Primary(context);
+      } else if (size == TButtonSize.small) {
+        return tdTextStyle.r14Primary(context);
+      }
+      return tdTextStyle.r16Primary(context);
+    }
+
+    TDTheme? theme = TDTheme.of(context);
+    Color? primaryColor = theme?.themeColor(context).primaryColor;
     var contentWidget = <Widget>[];
     if (icon != null) {
       //默认是最小2dp的间距，需要增加则自行在传入Widget处增加。
@@ -54,8 +69,8 @@ class TTextButton extends StatelessWidget {
         //radius 0 关闭水波纹
         radius: 0.0,
         //加按压颜色
-        highlightColor: textStyle?.color?.withAlpha(40) ??
-            TDTheme.primaryColor.withAlpha(40),
+        highlightColor:
+            textStyle?.color?.withAlpha(40) ?? primaryColor!.withAlpha(40),
         highlightShape: BoxShape.rectangle,
         child: Padding(
           padding: tdButtonBase.getEdgeBySize(size),
@@ -68,16 +83,5 @@ class TTextButton extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  TextStyle getTextStyle(TButtonSize size) {
-    if (size == TButtonSize.large) {
-      return tdTextStyle.r16Primary;
-    } else if (size == TButtonSize.mid) {
-      return tdTextStyle.r16Primary;
-    } else if (size == TButtonSize.small) {
-      return tdTextStyle.r14Primary;
-    }
-    return tdTextStyle.r16Primary;
   }
 }

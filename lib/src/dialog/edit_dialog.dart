@@ -52,7 +52,7 @@ class TDEditDialog extends StatelessWidget {
           ),
           Divider(
             height: 1,
-            color: TDTheme.divideColor,
+            color: tdDialogBase.divideColor(context),
           ),
           Row(
             children: [
@@ -62,7 +62,7 @@ class TDEditDialog extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border(
                           right: BorderSide(
-                              color: TDTheme.divideColor,
+                              color: tdDialogBase.divideColor(context),
                               width: 1,
                               style: BorderStyle.solid))),
                   child: TTextButton(
@@ -75,7 +75,7 @@ class TDEditDialog extends StatelessWidget {
                       }
                     },
                     text: cancel ?? '取消',
-                    textStyle: tdDialogBase.dialogTitle,
+                    textStyle: tdDialogBase.dialogTitle(context),
                   ),
                 ),
               ),
@@ -90,7 +90,7 @@ class TDEditDialog extends StatelessWidget {
                       }
                     },
                     text: confirm ?? '确认',
-                    textStyle: tdTextStyle.m16Primary),
+                    textStyle: tdTextStyle.m16Primary(context)),
               ),
               //确认
             ],
@@ -113,8 +113,8 @@ class TDialogDefaultTextField extends StatelessWidget {
         decoration: InputDecoration(
             hintText: '输入文案',
             border: InputBorder.none,
-            fillColor: TDTheme.editBackground,
+            fillColor: tdDialogBase.editBackground(context),
             filled: true,
-            hintStyle: tdDialogBase.dialogHint));
+            hintStyle: tdDialogBase.dialogHint(context)));
   }
 }

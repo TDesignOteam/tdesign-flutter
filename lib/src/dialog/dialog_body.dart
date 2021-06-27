@@ -27,7 +27,7 @@ class TDialogBody extends StatelessWidget {
               bottom: (describe?.isNotEmpty == true) ? 8.0 : 32.0),
           child: Text(
             title,
-            style: tdDialogBase.dialogTitle,
+            style: tdDialogBase.dialogTitle(context),
           ),
         ),
         Visibility(
@@ -43,7 +43,7 @@ class TDialogBody extends StatelessWidget {
                             left: 24.0, right: 24.0, bottom: 32.0),
                         child: Text(
                           describe ?? '',
-                          style: tdDialogBase.dialogDescribe,
+                          style: tdDialogBase.dialogDescribe(context),
                         ),
                       ),
                     ),
@@ -54,14 +54,14 @@ class TDialogBody extends StatelessWidget {
                       top: 8.0, left: 24.0, right: 24.0, bottom: 32.0),
                   child: Text(
                     describe ?? '',
-                    style: tdDialogBase.dialogDescribe,
+                    style: tdDialogBase.dialogDescribe(context),
                   ),
                 ),
         ),
         hasDivider ?? true
             ? Divider(
                 height: 1,
-                color: TDTheme.divideColor,
+                color: tdDialogBase.divideColor(context),
               )
             : Container(),
       ],

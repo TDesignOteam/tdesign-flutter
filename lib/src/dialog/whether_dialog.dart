@@ -45,7 +45,7 @@ class TDWhetherDialog extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border(
                           right: BorderSide(
-                              color: TDTheme.divideColor,
+                              color: tdDialogBase.divideColor(context),
                               width: 1,
                               style: BorderStyle.solid))),
                   child: TTextButton(
@@ -58,7 +58,7 @@ class TDWhetherDialog extends StatelessWidget {
                       }
                     },
                     text: cancel ?? '取消',
-                    textStyle: tdDialogBase.dialogTitle,
+                    textStyle: tdDialogBase.dialogTitle(context),
                   ),
                 ),
               ),
@@ -74,8 +74,8 @@ class TDWhetherDialog extends StatelessWidget {
                     },
                     text: confirm ?? '确认',
                     textStyle: primary ?? true
-                        ? tdTextStyle.m16Primary
-                        : tdTextStyle.m16Error),
+                        ? tdTextStyle.m16Primary(context)
+                        : tdTextStyle.m16Error(context)),
               ),
               //确认
             ],

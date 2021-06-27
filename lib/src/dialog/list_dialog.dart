@@ -36,7 +36,8 @@ class TDListDialog extends StatelessWidget {
     var childList = <Widget>[];
     if (title != null) {
       childList.add(TDialogBody(title: title!, describe: describe));
-      childList.add(Divider(height: 1, color: TDTheme.divideColor));
+      childList
+          .add(Divider(height: 1, color: tdDialogBase.divideColor(context)));
     }
     //增加item和取消  带下分割线
     var index = 0;
@@ -54,7 +55,8 @@ class TDListDialog extends StatelessWidget {
           ))
         ],
       ));
-      childList.add(Divider(height: 1, color: TDTheme.divideColor));
+      childList
+          .add(Divider(height: 1, color: tdDialogBase.divideColor(context)));
       index++;
     });
     //添加取消
@@ -71,7 +73,7 @@ class TDListDialog extends StatelessWidget {
             }
           },
           text: cancel ?? '取消',
-          textStyle: tdDialogBase.dialogTitle,
+          textStyle: tdDialogBase.dialogTitle(context),
         ))
       ],
     ));
