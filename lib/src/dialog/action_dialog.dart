@@ -13,7 +13,7 @@ import 'dialog_body.dart';
 typedef OnItemClick = void Function(int index);
 typedef OnCancelClick = void Function();
 
-class TDListDialog extends StatelessWidget {
+class TDActionDialog extends StatelessWidget {
   final List<String> list;
   final String? cancel;
   final String? title;
@@ -21,7 +21,7 @@ class TDListDialog extends StatelessWidget {
   final OnItemClick onItemClick;
   final OnCancelClick? onCancelClick;
 
-  TDListDialog(
+  TDActionDialog(
       {required this.list,
       this.title,
       this.cancel,

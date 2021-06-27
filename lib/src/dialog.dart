@@ -3,8 +3,8 @@
 
 library dialog;
 
-export 'dialog/confirm_dialog.dart';
 export 'dialog/dialog_util.dart';
-export 'dialog/edit_dialog.dart';
-export 'dialog/list_dialog.dart';
-export 'dialog/whether_dialog.dart';
+export 'dialog/alert_dialog.dart';
+export 'dialog/confirm_dialog.dart';
+export 'dialog/action_dialog.dart';
+export 'dialog/input_dialog.dart';

@@ -2,29 +2,28 @@
 //  Copyright © 2021年 Tencent Inc. All rights reserved.
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:tdesign/src/button/button_base.dart';
 import 'package:tdesign/src/button/text_button.dart';
 import 'package:tdesign/src/dialog/dialog_util.dart';
+import 'package:tdesign/src/dialog/confirm_dialog.dart';
+import 'package:tdesign/tdesign.dart';
 import 'package:tdesign/theme/td_text_style.dart';
 
-import '../../tdesign.dart';
 import 'dialog_body.dart';
 
-typedef OnWhetherClick = void Function(bool yes, String? payload);
-
-class TDWhetherDialog extends StatelessWidget {
+class TDInputDialog extends StatelessWidget {
   final String? confirm;
   final String? cancel;
   final String title;
   final String? describe;
-  final bool? primary;
   final OnWhetherClick? onWhetherClick;
+  final TextEditingController _controller = TextEditingController();
 
-  TDWhetherDialog(
+  TDInputDialog(
       {this.confirm,
       required this.title,
       this.cancel,
-      this.primary,
       this.describe,
       this.onWhetherClick,
       Key? key})
@@ -32,11 +31,29 @@ class TDWhetherDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TDialogDefaultTextField textField = TDialogDefaultTextField(
+      controller: _controller,
+    );
     return Container(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          TDialogBody(title: title, describe: describe),
+          TDialogBody(title: title, describe: describe, hasDivider: false),
+          //编辑框
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 24, right: 24, bottom: 32),
+                  child: textField,
+                ),
+              ),
+            ],
+          ),
+          Divider(
+            height: 1,
+            color: tdDialogBase.divideColor(context),
+          ),
           Row(
             children: [
               //取消按钮
@@ -52,7 +69,7 @@ class TDWhetherDialog extends StatelessWidget {
                     size: TButtonSize.large,
                     onClick: () {
                       if (onWhetherClick != null) {
-                        onWhetherClick!(false, null);
+                        onWhetherClick!(false, _controller.text);
                       } else {
                         Navigator.pop(context);
                       }
@@ -67,15 +84,13 @@ class TDWhetherDialog extends StatelessWidget {
                     size: TButtonSize.large,
                     onClick: () {
                       if (onWhetherClick != null) {
-                        onWhetherClick!(true, null);
+                        onWhetherClick!(true, _controller.text);
                       } else {
                         Navigator.pop(context);
                       }
                     },
                     text: confirm ?? '确认',
-                    textStyle: primary ?? true
-                        ? tdTextStyle.m16Primary(context)
-                        : tdTextStyle.m16Error(context)),
+                    textStyle: tdTextStyle.m16Primary(context)),
               ),
               //确认
             ],
@@ -83,5 +98,23 @@ class TDWhetherDialog extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class TDialogDefaultTextField extends StatelessWidget {
+  final TextEditingController controller;
+
+  TDialogDefaultTextField({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+        controller: controller,
+        decoration: InputDecoration(
+            hintText: '输入文案',
+            border: InputBorder.none,
+            fillColor: tdDialogBase.editBackground(context),
+            filled: true,
+            hintStyle: tdDialogBase.dialogHint(context)));
   }
 }

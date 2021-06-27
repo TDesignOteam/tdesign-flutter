@@ -2,23 +2,31 @@
 //  Copyright © 2021年 Tencent Inc. All rights reserved.
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:tdesign/src/button/button_base.dart';
 import 'package:tdesign/src/button/text_button.dart';
+import 'package:tdesign/src/dialog/dialog_util.dart';
+import 'package:tdesign/theme/td_text_style.dart';
 
+import '../../tdesign.dart';
 import 'dialog_body.dart';
 
-class TDConfirmDialog extends StatelessWidget with WidgetsBindingObserver {
-  final String? confirmText;
+typedef OnWhetherClick = void Function(bool yes, String? payload);
+
+class TDConfirmDialog extends StatelessWidget {
+  final String? confirm;
+  final String? cancel;
   final String title;
   final String? describe;
-  final VoidCallback? onConfirm;
+  final bool? primary;
+  final OnWhetherClick? onWhetherClick;
 
   TDConfirmDialog(
-      {this.confirmText,
+      {this.confirm,
       required this.title,
+      this.cancel,
+      this.primary,
       this.describe,
-      this.onConfirm,
+      this.onWhetherClick,
       Key? key})
       : super(key: key);
 
@@ -29,16 +37,49 @@ class TDConfirmDialog extends StatelessWidget with WidgetsBindingObserver {
         mainAxisSize: MainAxisSize.min,
         children: [
           TDialogBody(title: title, describe: describe),
-          TTextButton(
-              size: TButtonSize.large,
-              onClick: () {
-                if (onConfirm != null) {
-                  onConfirm!();
-                } else {
-                  Navigator.pop(context);
-                }
-              },
-              text: '知道了'),
+          Row(
+            children: [
+              //取消按钮
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          right: BorderSide(
+                              color: tdDialogBase.divideColor(context),
+                              width: 1,
+                              style: BorderStyle.solid))),
+                  child: TTextButton(
+                    size: TButtonSize.large,
+                    onClick: () {
+                      if (onWhetherClick != null) {
+                        onWhetherClick!(false, null);
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
+                    text: cancel ?? '取消',
+                    textStyle: tdDialogBase.dialogTitle(context),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: TTextButton(
+                    size: TButtonSize.large,
+                    onClick: () {
+                      if (onWhetherClick != null) {
+                        onWhetherClick!(true, null);
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
+                    text: confirm ?? '确认',
+                    textStyle: primary ?? true
+                        ? tdTextStyle.m16Primary(context)
+                        : tdTextStyle.m16Error(context)),
+              ),
+              //确认
+            ],
+          )
         ],
       ),
     );

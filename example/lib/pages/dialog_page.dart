@@ -50,7 +50,7 @@ class _DialogPageState extends State<DialogPage> {
       PageUtil.buildSubTitle('反馈类对话框'),
       _outlinedButton('单行标题', () {
         tdDialogBase.showCenterDialog(
-            dialog: TDConfirmDialog(
+            dialog: TDAlertDialog(
               title: '对话框标题',
               confirmText: '知道了',
             ),
@@ -58,7 +58,7 @@ class _DialogPageState extends State<DialogPage> {
       }),
       _outlinedButton('多行标题最大高度', () {
         tdDialogBase.showCenterDialog(
-            dialog: TDConfirmDialog(
+            dialog: TDAlertDialog(
               title: '对话框标题告知当前状态、信息和解决方法，等内容。描述文案尽可能控制在三行内',
               confirmText: '知道了',
             ),
@@ -66,7 +66,7 @@ class _DialogPageState extends State<DialogPage> {
       }),
       _outlinedButton('带说明文本', () {
         tdDialogBase.showCenterDialog(
-            dialog: TDConfirmDialog(
+            dialog: TDAlertDialog(
               title: '对话框标题',
               describe: '告知当前状态、信息和解决方法，等内容。描述文案尽可能控制在三行内',
               confirmText: '知道了',
@@ -75,7 +75,7 @@ class _DialogPageState extends State<DialogPage> {
       }),
       _outlinedButton('带说明文本最大高度', () {
         tdDialogBase.showCenterDialog(
-            dialog: TDConfirmDialog(
+            dialog: TDAlertDialog(
               title: '对话框带文本最大高度',
               describe: '告知当前状态、信息和解决方法。告知当前状态、信息和解决方法。告知当前状态、信息和'
                   '解决方法。告知当前状态、信息和解决方法。告知当前状态、信息和解决方法。告知当'
@@ -95,7 +95,7 @@ class _DialogPageState extends State<DialogPage> {
       PageUtil.buildSubTitle('确认类对话框'),
       _outlinedButton('双按钮', () {
         tdDialogBase.showCenterDialog(
-            dialog: TDWhetherDialog(
+            dialog: TDConfirmDialog(
               title: '对话框标题',
               describe: '告知当前状态、信息和解决方法，等内容。描述文案尽可能控制在三行内',
               confirm: '按钮最多字数',
@@ -105,7 +105,7 @@ class _DialogPageState extends State<DialogPage> {
       }),
       _outlinedButton('带警示按钮', () {
         tdDialogBase.showCenterDialog(
-            dialog: TDWhetherDialog(
+            dialog: TDConfirmDialog(
               primary: false,
               title: '对话框标题',
               // describe: '告知当前状态、信息和解决方法，等内容。描述文案尽可能控制在三行内',
@@ -116,7 +116,7 @@ class _DialogPageState extends State<DialogPage> {
       }),
       _outlinedButton('双按钮文字过长', () {
         tdDialogBase.showCenterDialog(
-            dialog: TDListDialog(
+            dialog: TDActionDialog(
               list: ['按钮文案文字内容较长'],
               onItemClick: (index) {
                 print('jam~~~$index');
@@ -128,7 +128,7 @@ class _DialogPageState extends State<DialogPage> {
       }),
       _outlinedButton('多按钮', () {
         tdDialogBase.showCenterDialog(
-            dialog: TDListDialog(
+            dialog: TDActionDialog(
               list: ['按钮文案文字内容较长', '单行按钮最多十五个字符文案内容'],
               onItemClick: (index) {
                 print('jam~~~$index');
@@ -142,7 +142,7 @@ class _DialogPageState extends State<DialogPage> {
       _outlinedButton('单行标题', () {
         tdDialogBase
             .showCenterDialog(
-                dialog: TDEditDialog(
+                dialog: TDInputDialog(
                   title: '带输入框对话框',
                   onWhetherClick: (yes, payload) {
                     print('jam bool $yes');
@@ -156,7 +156,7 @@ class _DialogPageState extends State<DialogPage> {
       _outlinedButton('带说明文本', () {
         tdDialogBase
             .showCenterDialog(
-                dialog: TDEditDialog(
+                dialog: TDInputDialog(
                   title: '带输入框对话框',
                   describe: '告知当前状态、信息和解决方法，等内容。描述文案尽可能控制在三行内',
                   onWhetherClick: (yes, payload) {
