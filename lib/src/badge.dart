@@ -232,7 +232,7 @@ class _BadgeState extends State<Badge> {
       child: Container(
         width: _config.dotSize,
         height: _config.dotSize,
-        color: widget.color ?? theme?.themeColor(context).errorColor,
+        color: widget.color ?? theme?.themeColor.errorColor,
       ),
       borderRadius: BorderRadius.all(
         Radius.circular(_config.dotSize / 2),
@@ -273,13 +273,13 @@ class _BadgeState extends State<Badge> {
             alignment: Alignment.center,
             width: width,
             height: size.height,
-            color: widget.color ?? theme?.themeColor(context).errorColor,
+            color: widget.color ?? theme?.themeColor.errorColor,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: _config.sidePadding),
               child: Text(
                 _getText(),
                 style: TextStyle(
-                  color: widget.textColor ?? theme?.themeColor(context).textAntiPrimaryColor,
+                  color: widget.textColor ?? theme?.themeColor.textAntiPrimaryColor,
                   fontSize: _config.textSize,
                 ),
               ),
@@ -297,8 +297,8 @@ class _BadgeState extends State<Badge> {
     return CustomPaint(
       foregroundPainter: _RibbonPainter(
         title: _getText(),
-        color: widget.color ?? theme?.themeColor(context).errorColor ?? TDColors.red,
-        textColor: widget.textColor ?? theme?.themeColor(context).textAntiPrimaryColor ?? TDColors.fontWhite,
+        color: widget.color ?? theme?.themeColor.errorColor ?? TDColors.red,
+        textColor: widget.textColor ?? theme?.themeColor.textAntiPrimaryColor ?? TDColors.fontWhite,
         config: _config,
       ),
       child: widget.child,

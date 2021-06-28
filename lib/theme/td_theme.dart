@@ -6,12 +6,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
 
+// ignore: must_be_immutable
 class TDTheme extends InheritedWidget {
   final TDThemeColor _themeColorBright;
 
   final TDThemeColor _themeColorDark;
 
   final TDThemeData themeData;
+
+  bool _isDarkMode;
 
   TDTheme({
     required child,
@@ -21,10 +24,15 @@ class TDTheme extends InheritedWidget {
   })  : this._themeColorBright = themeColorBright ?? TDThemeColor(),
         this._themeColorDark = themeColorDark ?? TDThemeColor.dark(),
         this.themeData = themeData ?? TDThemeData(),
+        this._isDarkMode = false,
         super(child: child);
 
   static TDTheme? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<TDTheme>();
+    final TDTheme? instance = context.dependOnInheritedWidgetOfExactType<TDTheme>();
+    if (instance != null) {
+      instance._isDarkMode = isDarkMode(context);
+    }
+    return instance;
   }
 
   @override
@@ -32,9 +40,7 @@ class TDTheme extends InheritedWidget {
     return oldWidget != this;
   }
 
-  TDThemeColor themeColor(BuildContext context) {
-    return isDarkMode(context) ? _themeColorDark : _themeColorBright;
-  }
+  TDThemeColor get themeColor => _isDarkMode ? _themeColorDark : _themeColorBright;
 
   /// 返回当前所处应用主题环境是否是黑暗模式
   static bool isDarkMode(BuildContext? context) {
