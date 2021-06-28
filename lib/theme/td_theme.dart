@@ -14,7 +14,7 @@ class TDTheme extends InheritedWidget {
 
   final TDThemeData themeData;
 
-  TDThemeColor themeColor;
+  bool _isDarkMode;
 
   TDTheme({
     required child,
@@ -24,13 +24,13 @@ class TDTheme extends InheritedWidget {
   })  : this._themeColorBright = themeColorBright ?? TDThemeColor(),
         this._themeColorDark = themeColorDark ?? TDThemeColor.dark(),
         this.themeData = themeData ?? TDThemeData(),
-        this.themeColor = themeColorBright ?? TDThemeColor(),
+        this._isDarkMode = false,
         super(child: child);
 
   static TDTheme? of(BuildContext context) {
     final TDTheme? instance = context.dependOnInheritedWidgetOfExactType<TDTheme>();
     if (instance != null) {
-      instance.themeColor = isDarkMode(context) ? instance._themeColorDark : instance._themeColorBright;
+      instance._isDarkMode = isDarkMode(context);
     }
     return instance;
   }
@@ -39,6 +39,8 @@ class TDTheme extends InheritedWidget {
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {
     return oldWidget != this;
   }
+
+  TDThemeColor get themeColor => _isDarkMode ? _themeColorDark : _themeColorBright;
 
   /// 返回当前所处应用主题环境是否是黑暗模式
   static bool isDarkMode(BuildContext? context) {
