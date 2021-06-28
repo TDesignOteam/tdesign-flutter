@@ -375,7 +375,7 @@ class TDThemeColor {
   }) {
     return TDThemeColor.raw(
       primaryColor: primaryColor ?? TDColors.blue,
-      errorColor: errorColor ?? TDColors.fontBlack,
+      errorColor: errorColor ?? TDColors.red,
       warningColor: warningColor ?? TDColors.orange,
       successColor: successColor ?? TDColors.green,
       primaryColorActive: primaryColorActive ?? TDColors.blue.shade9,
