@@ -6,12 +6,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
 
+// ignore: must_be_immutable
 class TDTheme extends InheritedWidget {
   final TDThemeColor _themeColorBright;
 
   final TDThemeColor _themeColorDark;
 
   final TDThemeData themeData;
+
+  TDThemeColor themeColor;
 
   TDTheme({
     required child,
@@ -21,19 +24,20 @@ class TDTheme extends InheritedWidget {
   })  : this._themeColorBright = themeColorBright ?? TDThemeColor(),
         this._themeColorDark = themeColorDark ?? TDThemeColor.dark(),
         this.themeData = themeData ?? TDThemeData(),
+        this.themeColor = themeColorBright ?? TDThemeColor(),
         super(child: child);
 
   static TDTheme? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<TDTheme>();
+    final TDTheme? instance = context.dependOnInheritedWidgetOfExactType<TDTheme>();
+    if (instance != null) {
+      instance.themeColor = isDarkMode(context) ? instance._themeColorDark : instance._themeColorBright;
+    }
+    return instance;
   }
 
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {
     return oldWidget != this;
-  }
-
-  TDThemeColor themeColor(BuildContext context) {
-    return isDarkMode(context) ? _themeColorDark : _themeColorBright;
   }
 
   /// 返回当前所处应用主题环境是否是黑暗模式
@@ -371,7 +375,7 @@ class TDThemeColor {
   }) {
     return TDThemeColor.raw(
       primaryColor: primaryColor ?? TDColors.blue,
-      errorColor: errorColor ?? TDColors.red,
+      errorColor: errorColor ?? TDColors.fontBlack,
       warningColor: warningColor ?? TDColors.orange,
       successColor: successColor ?? TDColors.green,
       primaryColorActive: primaryColorActive ?? TDColors.blue.shade9,
