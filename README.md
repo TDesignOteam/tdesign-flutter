@@ -67,6 +67,7 @@ API和能力参考：
 - [TDesign-Mobile-Vue](https://ty.tdesign.woa.com/vue-mobile/components/readme)
 
 - [TDesign组件功能设计和负责人](https://docs.qq.com/sheet/DWmViVlNvU3p2VHZs?tab=6mdwpj)
+
 ### 分支
 
 开发组件时，创建自己的`个人分支`或`feature`分支，开发完之后通过MR方式合入`master`。
@@ -109,9 +110,9 @@ TDesign-mobile-flutter支持黑暗模式。`TDTheme.of(context).themeColor`会�
 
 [接口设计文档](https://docs.qq.com/sheet/DWmViVlNvU3p2VHZs?tab=6mdwpj)
 
-[TDesign-for-web](https://www.figma.com/file/UghlEiQXZogyPvx1XDMMyx/TDesign-for-web?node-id=729%3A9)
+[TDesign-for-web 设计资源](https://www.figma.com/file/UghlEiQXZogyPvx1XDMMyx/TDesign-for-web?node-id=729%3A9)
 
-[TDesign-Mobile图标库](http://bkicon.oa.com/resource/project/95/detail)
+[TDesign-Mobile 图标库](http://bkicon.oa.com/resource/project/95/detail)
 
 
 
