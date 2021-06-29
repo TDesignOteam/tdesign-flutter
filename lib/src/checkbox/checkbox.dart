@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tdesign/tdesign.dart';
 
-import 'td_icons.dart';
+import '../td_icons.dart';
 
 // 默认配置项
 abstract class _Default {
@@ -32,7 +32,7 @@ abstract class _Default {
   static const double contentGap = 5;
 }
 
-typedef void OnChangeCallback(bool checked, String name);
+typedef void OnChangeSingle(bool checked, String name);
 
 /// 基础复选框组件
 ///
@@ -40,7 +40,15 @@ typedef void OnChangeCallback(bool checked, String name);
 ///
 /// 使用示例：
 /// ``` dart
-/// todo
+/// CheckBox(
+///   name: '1.1',
+///   title: '单行标题',
+///   onChange: (selected, name) {
+///     setState(() {
+///       this.selected = selected;
+///     });
+///   },
+/// )
 /// ```
 class CheckBox extends StatefulWidget {
   /// 选项的值，即ID，必须传入。
@@ -64,8 +72,7 @@ class CheckBox extends StatefulWidget {
   /// 内容的行数限制，默认为`1`。
   final int limitContentRow;
 
-  /// 选中图标的颜色，默认为`TDColors.blue`，即`0xFF0052D9`。
-  ///
+  /// 选中图标的颜色，默认为`TDTheme.of(context).themeColor.primaryColor`或`TDColors.blue`。
   /// 仅在使用默认图标时生效。
   final Color? checkedColor;
 
@@ -78,11 +85,17 @@ class CheckBox extends StatefulWidget {
   /// 自定义未选中时的左侧icon
   final Widget? unselectedIcon;
 
+  // 左侧Icon大小
   final double? iconSize;
 
-  final double? fontSize;
+  // 标题字体大小
+  final double? titleFontSize;
 
-  final OnChangeCallback? onChange;
+  // 内容字体大小
+  final double? contentFontSize;
+
+  // 选项选中状态变化的回调
+  final OnChangeSingle? onChange;
 
   const CheckBox({
     required this.name,
@@ -98,7 +111,8 @@ class CheckBox extends StatefulWidget {
     this.unselectedIcon,
     this.onChange,
     this.iconSize,
-    this.fontSize,
+    this.titleFontSize,
+    this.contentFontSize,
   });
 
   @override
@@ -155,7 +169,7 @@ class _CheckBoxState extends State<CheckBox> {
             widget.title,
             style: TextStyle(
               fontFamily: theme?.themeData.fontFamily,
-              fontSize: widget.fontSize ?? theme?.themeData.fontSizeL,
+              fontSize: widget.titleFontSize ?? theme?.themeData.fontSizeL,
             ),
             maxLines: widget.limitTitleRow,
             overflow: TextOverflow.ellipsis,
@@ -170,7 +184,7 @@ class _CheckBoxState extends State<CheckBox> {
               widget.content ?? '',
               style: TextStyle(
                   fontFamily: theme?.themeData.fontFamily,
-                  fontSize: widget.fontSize ?? theme?.themeData.fontSizeBase,
+                  fontSize: widget.contentFontSize ?? theme?.themeData.fontSizeBase,
                   color: theme?.themeColor.textColorL3),
               maxLines: widget.limitContentRow,
               overflow: TextOverflow.ellipsis,
@@ -208,7 +222,7 @@ class _CheckBoxState extends State<CheckBox> {
             child: widget.selectedIcon ??
                 Icon(
                   _Default.selectedIconData,
-                  color: widget.checkedColor ?? theme?.themeColor.primaryColor,
+                  color: widget.checkedColor ?? theme?.themeColor.primaryColor ?? TDColors.blue,
                   size: size,
                 ),
           ),
