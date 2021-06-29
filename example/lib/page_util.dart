@@ -41,13 +41,13 @@ class PageUtil {
   }
 
   static Widget buildTile(BuildContext context, Widget child,
-      {double? height = 80, Alignment alignment = Alignment.centerLeft}) {
+      {double? height, Alignment alignment = Alignment.centerLeft}) {
     return Container(
       color: Theme.of(context).dialogBackgroundColor,
       height: height,
       alignment: alignment,
       child:
-          Padding(padding: EdgeInsets.symmetric(horizontal: 15), child: child),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 10), child: child),
     );
   }
 }

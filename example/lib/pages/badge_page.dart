@@ -64,6 +64,7 @@ class _BadgePageState extends State<BadgePage> {
         children: list,
       ),
       alignment: Alignment.center,
+      height: 80,
     );
   }
 
