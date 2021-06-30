@@ -26,8 +26,10 @@ abstract class _Default {
   // 当选项被禁用时，选项的透明度
   static const double disabledOpacity = 0.4;
 
+  // icon四周的padding宽度
   static const double iconEdge = 7;
 
+  // icon和文字之间的间隔宽度
   static const double contentGap = 5;
 }
 
@@ -264,8 +266,10 @@ class CheckGroupController {
   // 反选某一选项的调用
   _ToggleListener? _toggle;
 
-  // 取消选择某一选项的调用
+  // 选择某一选项的调用
   _ToggleListener? _check;
+
+  // 取消选择某一选项的调用
   _ToggleListener? _uncheck;
 
   // CheckGroup传入相应能力函数以注入能力
