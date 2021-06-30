@@ -133,14 +133,15 @@ TDesign-mobile-flutter支持黑暗模式。`TDTheme.of(context).themeColor`会�
 当类接口过多时，使用extension来分组不同功能的接口。
 
 
-
-
 ## 支持组件列表
 
-- [Rate](http://tdesign.woa.com/vue-mobile/components/rate)
-- [Badge](http://tdesign.woa.com/vue-mobile/components/badge)
-
-
+- Badge
+- CheckBox
+- Icon
+- Message
+- Rate
+- Tags
+- Toast
 
 ## 三方工具
 
