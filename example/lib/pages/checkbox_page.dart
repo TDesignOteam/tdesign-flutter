@@ -173,15 +173,17 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       )),
       Row(
         children: [
-        PageUtil.outlinedButton('全选', () => controller.toggleAll(checked: true)),
-        PageUtil.outlinedButton('取消', () => controller.toggleAll(checked: false)),
-        PageUtil.outlinedButton('反选', () => controller.toggleAll()),
-      ],),
+          PageUtil.outlinedButton('全选', () => controller.toggleAll(checked: true)),
+          PageUtil.outlinedButton('取消', () => controller.toggleAll(checked: false)),
+          PageUtil.outlinedButton('反选', () => controller.toggleAll()),
+        ],
+      ),
       Row(
         children: [
-        PageUtil.outlinedButton('选择选项三', () => controller.check('3')),
-        PageUtil.outlinedButton('取消选项三', () => controller.uncheck('3')),
-      ],),
+          PageUtil.outlinedButton('选择选项三', () => controller.check('3')),
+          PageUtil.outlinedButton('取消选项三', () => controller.uncheck('3')),
+        ],
+      ),
     ]);
   }
 
