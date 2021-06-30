@@ -139,15 +139,23 @@ class _CheckBoxState extends State<CheckBox> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              child: Container(
-                  padding: EdgeInsets.all(_Default.iconEdge),
-                  child: _WidgetHelper.buildIcon(
-                      widget.checkedColor, widget.selectedIcon, widget.unselectedIcon, theme, selected)),
-              onTap: () => _clicked()),
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              padding: EdgeInsets.all(_Default.iconEdge),
+              child: _WidgetHelper.buildIcon(
+                widget.checkedColor,
+                widget.selectedIcon,
+                widget.unselectedIcon,
+                theme,
+                selected,
+              ),
+            ),
+            onTap: () => _clicked(),
+          ),
           Flexible(
-              child: _WidgetHelper.buildText(
-                  widget.title, widget.content, widget.limitTitleRow, widget.limitContentRow, theme)),
+            child: _WidgetHelper.buildText(
+                widget.title, widget.content, widget.limitTitleRow, widget.limitContentRow, theme),
+          ),
         ],
       ),
       onTap: () {
@@ -320,7 +328,6 @@ class CheckGroupController {
 /// CheckGroup(
 ///   names: ['1', '2', '3', '4'],
 ///   titles: ['选项一', '选项二', '选项三', '选项四'],
-///   },
 /// )
 /// ```
 class CheckGroup extends StatefulWidget {
@@ -513,9 +520,15 @@ class _CheckGroupState extends State<CheckGroup> {
           GestureDetector(
               behavior: HitTestBehavior.opaque,
               child: Container(
-                  padding: EdgeInsets.all(_Default.iconEdge),
-                  child: _WidgetHelper.buildIcon(
-                      widget.checkedColor, widget.selectedIcon, widget.unselectedIcon, theme, selected)),
+                padding: EdgeInsets.all(_Default.iconEdge),
+                child: _WidgetHelper.buildIcon(
+                  widget.checkedColor,
+                  widget.selectedIcon,
+                  widget.unselectedIcon,
+                  theme,
+                  selected,
+                ),
+              ),
               onTap: () => _clicked(index)),
           Flexible(child: _WidgetHelper.buildText(title, content, widget.limitTitleRow, widget.limitContentRow, theme)),
         ],
