@@ -11,6 +11,8 @@ class CheckBoxPage extends StatefulWidget {
 
 class _CheckBoxPageState extends State<CheckBoxPage> {
   bool selected = false;
+  List<String> selectedInGroup = [];
+  CheckGroupController controller = CheckGroupController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,10 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
           },
         ),
       ),
-      PageUtil.buildSubTitle('单行标题状态回调：${selected ? '选中' : '未选中'}'),
+      _buildTile(Text(
+        '单行标题状态：${selected ? '选中' : '未选中'}',
+        style: TextStyle(color: Colors.grey),
+      )),
       Divider(height: 0),
       _buildTile(
         CheckBox(name: '1.2', title: '默认选中', defaultSelected: true),
@@ -75,10 +80,28 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       _buildTile(
         CheckBox(name: '1.7', title: '本行文字部分点击无效', contentDisabled: true),
       ),
-      PageUtil.buildSubTitle('带辅助信息多选框'),
+      PageUtil.buildSubTitle('自定义图标和颜色'),
       _buildTile(
         CheckBox(
           name: '2.1',
+          checkedColor: TDColors.green,
+          title: '自定义颜色',
+          defaultSelected: true,
+        ),
+      ),
+      Divider(height: 0),
+      _buildTile(
+        CheckBox(
+          name: '2.2',
+          selectedIcon: Icon(TDIcons.notificationFilled, color: TDColors.blue),
+          unselectedIcon: Icon(TDIcons.notification),
+          title: '自定义图标',
+        ),
+      ),
+      PageUtil.buildSubTitle('带辅助信息多选框'),
+      _buildTile(
+        CheckBox(
+          name: '3.1',
           title: '单行标题',
           content: '我的思想随着这些闪耀的绿叶而闪耀；我的心灵因了这日光的抚触而歌唱；我的生命因为偕了万物一同浮泛在空间的蔚蓝，时间的墨黑而感到欢快。',
         ),
@@ -86,7 +109,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       Divider(height: 0),
       _buildTile(
         CheckBox(
-          name: '2.2',
+          name: '3.2',
           title: '单行标题',
           limitContentRow: 5,
           content: '我的思想随着这些闪耀的绿叶而闪耀；我的心灵因了这日光的抚触而歌唱；我的生命因为偕了万物一同浮泛在空间的蔚蓝，时间的墨黑而感到欢快。',
@@ -96,7 +119,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       Divider(height: 0),
       _buildTile(
         CheckBox(
-          name: '2.3',
+          name: '3.3',
           title: '单行标题',
           limitContentRow: 5,
           content: '我的思想随着这些闪耀的绿叶而闪耀；我的心灵因了这日光的抚触而歌唱；我的生命因为偕了万物一同浮泛在空间的蔚蓝，时间的墨黑而感到欢快。',
@@ -124,25 +147,41 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
           defaultSelected: true,
         ),
       ),
-      Divider(height: 0),
-      PageUtil.buildSubTitle('自定义图标和颜色'),
-      _buildTile(
-        CheckBox(
-          name: '3.1',
-          checkedColor: TDColors.green,
-          title: '自定义颜色',
-          defaultSelected: true,
-        ),
-      ),
-      Divider(height: 0),
-      _buildTile(
-        CheckBox(
-          name: '3.1',
-          selectedIcon: Icon(TDIcons.notificationFilled, color: TDColors.blue),
-          unselectedIcon: Icon(TDIcons.notification),
-          title: '自定义图标',
-        ),
-      ),
+      PageUtil.buildSubTitle('选项框群组 - 最多选两项'),
+      _buildTile(CheckGroup(
+          names: ['选项一', '选项二', '选项三'],
+          titles: ['选项一', '选项二', '选项三'],
+          selectLimit: 2,
+          onChange: (selected) {
+            setState(() {
+              selectedInGroup = selected;
+            });
+          })),
+      _buildTile(Text(
+        '已选选项：$selectedInGroup',
+        style: TextStyle(color: Colors.grey),
+      )),
+      PageUtil.buildSubTitle('选项框群组 - 控制'),
+      _buildTile(CheckGroup(
+        names: ['1', '2', '3', '4'],
+        titles: ['选项一', '选项二', '选项三', '选项四'],
+        contents: ['使用controller从外部控制选项。', '控制包括：选择、取消、反选单个选项，选择、取消、反选全部选项', '还可以传入自定义分割Widget。'],
+        limitContentRow: 3,
+        defaultSelected: [true, false, true, false],
+        controller: controller,
+        separatorWidget: Divider(height: 10),
+      )),
+      Row(
+        children: [
+        PageUtil.outlinedButton('全选', () => controller.toggleAll(checked: true)),
+        PageUtil.outlinedButton('取消', () => controller.toggleAll(checked: false)),
+        PageUtil.outlinedButton('反选', () => controller.toggleAll()),
+      ],),
+      Row(
+        children: [
+        PageUtil.outlinedButton('选择选项三', () => controller.check('3')),
+        PageUtil.outlinedButton('取消选项三', () => controller.uncheck('3')),
+      ],),
     ]);
   }
 
