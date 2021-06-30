@@ -22,6 +22,10 @@ tdesign:
        - asset: packages/tdesign/fonts/td_icons.ttf
 ```
 
+### 在线Demo
+
+[TDesign-Mobile-Flutter 在线示例](http://tdflutter.woa.com:8085/)
+
 
 
 ## 工程开发
@@ -52,6 +56,18 @@ tdesign-mobile-flutter
 
 ```
 
+### API与文档
+
+开发组件前，在[iwiki文档目录](https://iwiki.woa.com/pages/viewpage.action?pageId=829685123)下更新进度。
+
+开发前确定组件API和能力，开发完成后更新文档至组件列表。
+
+API和能力参考：
+
+- [TDesign-Mobile-Vue](https://ty.tdesign.woa.com/vue-mobile/components/readme)
+
+- [TDesign组件功能设计和负责人](https://docs.qq.com/sheet/DWmViVlNvU3p2VHZs?tab=6mdwpj)
+
 ### 分支
 
 开发组件时，创建自己的`个人分支`或`feature`分支，开发完之后通过MR方式合入`master`。
@@ -64,11 +80,15 @@ git提交日志，使用[commitizen](https://github.com/commitizen/cz-cli)工具
 
 ### 风格和主题
 
-TDesign支持主题化。即用户可以通过改变一些全局属性来改变所有组件的风格。工程`lib\theme`目录下的`td_theme.dart`文件中定义了这些全局属性。当配置所开发组件的各类默认外观属性，判断属性是否需要包含在主题化的范畴中，需要则从`td_theme.dart`中取值。
+TDesign支持主题化。即用户可以通过改变一些全局属性来改变所有组件的风格。当配置所开发组件的各类默认外观属性时，判断属性是否需要包含在主题化的范畴中。若需要则使用`TDTheme.of(context)`获取主题实例取值。
+
+TDesign-mobile-flutter支持黑暗模式。`TDTheme.of(context).themeColor`会根据`context`判断当前是否处于黑暗模式并返回相应的`TDThemeColor`实例。
+
+部分组件如果有特定组件主题类的需要，可以直接在相应字段中添加，如`messageTheme`，但建议默认的数据使用TDTheme中已有的字段，单独的配置起覆盖的作用。
+
+由于暂无设计师跟进，当前的默认主题配置为TDesign主题化DesignToken，黑暗模式与白天模式暂无区别。若需要调整，可以在小组内确认后自行添改配置。
 
 工程`lib\theme`目录下的`td_colors.dart`文件定义了TDesign的设计色卡。在配置所开发组件的默认颜色时，如果颜色不在主题化范畴内，可以从`td_colors.dart`的色卡中取用颜色。
-
-TDesign-mobile-flutter支持黑暗模式。如果组件某部分不使用默认颜色，且需要在黑暗模式下改变，调用`TDTheme.isDarkMode(context)`判断场景模式以配置不同的颜色。
 
 ### 示例
 
@@ -90,9 +110,9 @@ TDesign-mobile-flutter支持黑暗模式。如果组件某部分不使用默认�
 
 [接口设计文档](https://docs.qq.com/sheet/DWmViVlNvU3p2VHZs?tab=6mdwpj)
 
-[TDesign-for-web](https://www.figma.com/file/UghlEiQXZogyPvx1XDMMyx/TDesign-for-web?node-id=729%3A9)
+[TDesign-for-web 设计资源](https://www.figma.com/file/UghlEiQXZogyPvx1XDMMyx/TDesign-for-web?node-id=729%3A9)
 
-[TDesign-Mobile图标库](http://bkicon.oa.com/resource/project/95/detail)
+[TDesign-Mobile 图标库](http://bkicon.oa.com/resource/project/95/detail)
 
 
 
@@ -130,4 +150,4 @@ td_icons.dart由[icon_font_generator](https://pub.dev/packages/icon_font_generat
 
 生成的ttf文件，替换掉`lib/fonts/td_icons.ttf`
 
-生成的`td_icons.dart`，将其`class TDIcons`的内容替换掉，前面的注释不要删除了。
+生成的`td_icons.dart`，将其`class TDIcons`的内容替换掉，前面的注释不要删除。

@@ -29,9 +29,7 @@ class TDTheme extends InheritedWidget {
 
   static TDTheme? of(BuildContext context) {
     final TDTheme? instance = context.dependOnInheritedWidgetOfExactType<TDTheme>();
-    if (instance != null) {
-      instance._isDarkMode = isDarkMode(context);
-    }
+    instance?._isDarkMode = isDarkMode(context);
     return instance;
   }
 
