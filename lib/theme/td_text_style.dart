@@ -13,52 +13,52 @@ class TDTextStyle {
   /// primary
   TextStyle r16Primary(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? primaryColor = theme?.themeColor(context).primaryColor;
+    Color? primaryColor = theme?.themeColor.primaryColor;
     return TextStyle(fontSize: 16, color: primaryColor);
   }
 
   TextStyle m16Primary(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? primaryColor = theme?.themeColor(context).primaryColor;
+    Color? primaryColor = theme?.themeColor.primaryColor;
     return TextStyle(
         fontSize: 16, color: primaryColor, fontWeight: FontWeight.w500);
   }
 
   TextStyle r14Primary(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? primaryColor = theme?.themeColor(context).primaryColor;
+    Color? primaryColor = theme?.themeColor.primaryColor;
     return TextStyle(fontSize: 16, color: primaryColor);
   }
 
   TextStyle r12Primary(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? primaryColor = theme?.themeColor(context).primaryColor;
+    Color? primaryColor = theme?.themeColor.primaryColor;
     return TextStyle(fontSize: 16, color: primaryColor);
   }
 
   /// Error
   TextStyle r16Error(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? errorColor = theme?.themeColor(context).errorColor;
+    Color? errorColor = theme?.themeColor.errorColor;
     return TextStyle(fontSize: 16, color: errorColor);
   }
 
   TextStyle m16Error(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? errorColor = theme?.themeColor(context).errorColor;
+    Color? errorColor = theme?.themeColor.errorColor;
     return TextStyle(
         fontSize: 16, color: errorColor, fontWeight: FontWeight.w500);
   }
 
   TextStyle r14Error(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? primaryColor = theme?.themeColor(context).primaryColor;
+    Color? primaryColor = theme?.themeColor.primaryColor;
     return TextStyle(fontSize: 16, color: primaryColor);
   }
 
   TextStyle r12Error(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? primaryColor = theme?.themeColor(context).primaryColor;
+    Color? primaryColor = theme?.themeColor.primaryColor;
     return TextStyle(fontSize: 16, color: primaryColor);
   }
 }

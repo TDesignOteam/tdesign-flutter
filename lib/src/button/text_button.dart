@@ -49,7 +49,7 @@ class TTextButton extends StatelessWidget {
     }
 
     TDTheme? theme = TDTheme.of(context);
-    Color? primaryColor = theme?.themeColor(context).primaryColor;
+    Color? primaryColor = theme?.themeColor.primaryColor;
     var contentWidget = <Widget>[];
     if (icon != null) {
       //默认是最小2dp的间距，需要增加则自行在传入Widget处增加。

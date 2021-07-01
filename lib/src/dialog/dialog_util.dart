@@ -25,31 +25,31 @@ class TDDialogBase {
 
   TextStyle dialogTitle(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? textColorL1 = theme?.themeColor(context).textColorL1;
+    Color? textColorL1 = theme?.themeColor.textColorL1;
     return TextStyle(color: textColorL1, fontSize: 16);
   }
 
   TextStyle dialogDescribe(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? textColorL2 = theme?.themeColor(context).textColorL2;
+    Color? textColorL2 = theme?.themeColor.textColorL2;
     return TextStyle(color: textColorL2, fontSize: 16);
   }
 
   TextStyle dialogHint(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? textColorL4 = theme?.themeColor(context).textColorL4;
+    Color? textColorL4 = theme?.themeColor.textColorL4;
     return TextStyle(color: textColorL4, fontSize: 16);
   }
 
   Color divideColor(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? divideColor = theme?.themeColor(context).divideColor;
+    Color? divideColor = theme?.themeColor.divideColor;
     return divideColor!;
   }
 
   Color editBackground(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? editBackground = theme?.themeColor(context).editBackground;
+    Color? editBackground = theme?.themeColor.editBackground;
     return editBackground!;
   }
 }

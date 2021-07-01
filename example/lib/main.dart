@@ -5,10 +5,10 @@ import 'package:tdesign/tdesign.dart';
 
 import 'pages/dialog_page.dart';
 import 'pages/icons_page.dart';
+import 'pages/message_page.dart';
 import 'pages/rate_page.dart';
 import 'pages/tags_page.dart';
 import 'pages/toast_page.dart';
-import 'pages/message_page.dart';
 
 void main() {
   runApp(MyApp());
