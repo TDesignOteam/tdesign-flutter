@@ -41,13 +41,34 @@ class PageUtil {
   }
 
   static Widget buildTile(BuildContext context, Widget child,
-      {double? height = 80, Alignment alignment = Alignment.centerLeft}) {
+      {double? height, Alignment alignment = Alignment.centerLeft}) {
     return Container(
       color: Theme.of(context).dialogBackgroundColor,
       height: height,
       alignment: alignment,
       child:
-          Padding(padding: EdgeInsets.symmetric(horizontal: 15), child: child),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 10), child: child),
+    );
+  }
+
+  static Widget outlinedButton(
+    String btnTitle,
+    VoidCallback callback,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 12.0, left: 16.0, right: 16.0),
+      child: OutlinedButton(
+          child: Text(
+            btnTitle,
+            style: TextStyle(
+                color: Colors.black.withOpacity(0.9),
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                height: 1.5),
+          ),
+          style: ButtonStyle(
+              ),
+          onPressed: callback),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:example/pages/badge_page.dart';
+import 'package:example/pages/checkbox_page.dart';
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
 
@@ -65,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Tags', (context) => _push(context, TagsPage())),
     ListItem('Toast', (context) => _push(context, ToastPage())),
     ListItem('Message', (context) => _push(context, MessagePage())),
+    ListItem('CheckBox', (context) => _push(context, CheckBoxPage())),
     ListItem('Dialog', (context) => _push(context, DialogPage())),
   ];
 
