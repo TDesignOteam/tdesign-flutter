@@ -2,11 +2,13 @@ import 'package:example/pages/badge_page.dart';
 import 'package:example/pages/checkbox_page.dart';
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
+
+import 'pages/dialog_page.dart';
 import 'pages/icons_page.dart';
+import 'pages/message_page.dart';
 import 'pages/rate_page.dart';
 import 'pages/tags_page.dart';
 import 'pages/toast_page.dart';
-import 'pages/message_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -65,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Toast', (context) => _push(context, ToastPage())),
     ListItem('Message', (context) => _push(context, MessagePage())),
     ListItem('CheckBox', (context) => _push(context, CheckBoxPage())),
+    ListItem('Dialog', (context) => _push(context, DialogPage())),
   ];
 
   Widget build(BuildContext context) {

@@ -42,7 +42,9 @@ class TDTheme extends InheritedWidget {
 
   /// 返回当前所处应用主题环境是否是黑暗模式
   static bool isDarkMode(BuildContext? context) {
-    return context == null ? false : MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+    return context == null
+        ? false
+        : MediaQuery.platformBrightnessOf(context) == Brightness.dark;
   }
 }
 
@@ -278,6 +280,12 @@ class TDThemeColor {
   /// 边框色2
   final Color borderColorL2;
 
+  // 分割线颜色
+  final Color divideColor;
+
+  //输入框背景色
+  final Color editBackground;
+
   factory TDThemeColor({
     Color? primaryColor,
     Color? errorColor,
@@ -308,6 +316,8 @@ class TDThemeColor {
     Color? placeHolderColor,
     Color? borderColorL1,
     Color? borderColorL2,
+    Color? divideColor,
+    Color? editBackground,
   }) {
     return TDThemeColor.raw(
       primaryColor: primaryColor ?? TDColors.blue,
@@ -321,7 +331,8 @@ class TDThemeColor {
       warningColorActive: warningColorActive ?? TDColors.red.shade7,
       warningColorDisabled: warningColorDisabled ?? TDColors.red.shade2,
       maskActive: maskActive ?? Color.fromARGB((255 * 0.6).round(), 0, 0, 0),
-      maskDisabled: maskDisabled ?? Color.fromARGB((255 * 0.6).round(), 255, 255, 255),
+      maskDisabled:
+          maskDisabled ?? Color.fromARGB((255 * 0.6).round(), 255, 255, 255),
       bgColor: bgColor ?? Color(0xFFFBFBFB),
       bgColorFade: bgColorFade ?? Color(0xFFFBFBFB),
       bgColorHover: bgColorHover ?? Color(0xFFF5F5F5),
@@ -339,6 +350,8 @@ class TDThemeColor {
       placeHolderColor: placeHolderColor ?? TDColors.fontBlack[3]!,
       borderColorL1: borderColorL1 ?? Color(0xFFE6E6E6),
       borderColorL2: borderColorL2 ?? Color(0xFFDDDDDD),
+      divideColor: divideColor ?? Color(0xFFE7E7E7),
+      editBackground: editBackground ?? Color(0xFFF5F5F5),
     );
   }
 
@@ -372,6 +385,8 @@ class TDThemeColor {
     Color? placeHolderColor,
     Color? borderColorL1,
     Color? borderColorL2,
+    Color? divideColor,
+    Color? editBackground,
   }) {
     return TDThemeColor.raw(
       primaryColor: primaryColor ?? TDColors.blue,
@@ -385,7 +400,8 @@ class TDThemeColor {
       warningColorActive: warningColorActive ?? TDColors.red.shade7,
       warningColorDisabled: warningColorDisabled ?? TDColors.red.shade2,
       maskActive: maskActive ?? Color.fromARGB((255 * 0.6).round(), 0, 0, 0),
-      maskDisabled: maskDisabled ?? Color.fromARGB((255 * 0.6).round(), 255, 255, 255),
+      maskDisabled:
+          maskDisabled ?? Color.fromARGB((255 * 0.6).round(), 255, 255, 255),
       bgColor: bgColor ?? Color(0xFFFBFBFB),
       bgColorFade: bgColorFade ?? Color(0xFFFBFBFB),
       bgColorHover: bgColorHover ?? Color(0xFFF5F5F5),
@@ -403,6 +419,8 @@ class TDThemeColor {
       placeHolderColor: placeHolderColor ?? TDColors.fontBlack[3]!,
       borderColorL1: borderColorL1 ?? Color(0xFFE6E6E6),
       borderColorL2: borderColorL2 ?? Color(0xFFDDDDDD),
+      divideColor: divideColor ?? Color(0xFFE7E7E7),
+      editBackground: editBackground ?? Color(0xFFF5F5F5),
     );
   }
 
@@ -436,5 +454,7 @@ class TDThemeColor {
     required this.placeHolderColor,
     required this.borderColorL1,
     required this.borderColorL2,
+    required this.divideColor,
+    required this.editBackground,
   });
 }
