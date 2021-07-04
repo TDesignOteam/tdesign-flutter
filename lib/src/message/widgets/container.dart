@@ -103,22 +103,22 @@ class MessageContainerState extends State<MessageContainer>
   }
 
   Widget _buildComponents() {
-    MainAxisAlignment alignment = MainAxisAlignment.start;
-    switch (widget.msgAlignment) {
-      case MessageAlignment.left:
-        alignment = MainAxisAlignment.start;
-        break;
-      case MessageAlignment.center:
-        alignment = MainAxisAlignment.center;
-        break;
-      case MessageAlignment.right:
-        alignment = MainAxisAlignment.end;
-        break;
-    }
-
     if (widget.showIcon) {
+      MainAxisAlignment rowAlign = MainAxisAlignment.start;
+      switch (widget.msgAlignment) {
+        case MessageAlignment.left:
+          rowAlign = MainAxisAlignment.start;
+          break;
+        case MessageAlignment.center:
+          rowAlign = MainAxisAlignment.center;
+          break;
+        case MessageAlignment.right:
+          rowAlign = MainAxisAlignment.end;
+          break;
+      }
+
       return Row(
-          mainAxisAlignment: alignment,
+          mainAxisAlignment: rowAlign,
           mainAxisSize: MainAxisSize.max,
           children: [
             Icon(
@@ -138,30 +138,36 @@ class MessageContainerState extends State<MessageContainer>
                         color: MessageTheme.textColor,
                         fontSize: MessageTheme.fontSize,
                       ),
-                  textAlign: MessageTheme.textAlign,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
           ]);
     } else {
-      return Row(
-          mainAxisAlignment: alignment,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Flexible(
-              child: Text(
-                _message!,
-                style: MessageTheme.textStyle ??
-                    TextStyle(
-                      color: MessageTheme.textColor,
-                      fontSize: MessageTheme.fontSize,
-                    ),
-                textAlign: MessageTheme.textAlign,
-                overflow: TextOverflow.ellipsis,
+      Alignment textAlign = Alignment.centerLeft;
+      switch (widget.msgAlignment) {
+        case MessageAlignment.left:
+          textAlign = Alignment.centerLeft;
+          break;
+        case MessageAlignment.center:
+          textAlign = Alignment.center;
+          break;
+        case MessageAlignment.right:
+          textAlign = Alignment.centerRight;
+          break;
+      }
+      return Align(
+        alignment: textAlign,
+        child: Text(
+          _message!,
+          style: MessageTheme.textStyle ??
+              TextStyle(
+                color: MessageTheme.textColor,
+                fontSize: MessageTheme.fontSize,
               ),
-            ),
-          ]);
+          overflow: TextOverflow.ellipsis,
+        ),
+      );
     }
   }
 
