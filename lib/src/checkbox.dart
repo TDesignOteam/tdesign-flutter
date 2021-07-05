@@ -1,7 +1,10 @@
+//  Created by lyrisli on 2021/6/20.
+//  Copyright © 2021年 Tencent Inc. All rights reserved.
+
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
 
-import '../td_icons.dart';
+import 'td_icons.dart';
 
 // 默认配置项
 abstract class _Default {
@@ -36,6 +39,8 @@ abstract class _Default {
 typedef void OnChangeSingle(bool checked, String name);
 
 typedef void OnChangeGroup(List<String> checked);
+
+typedef Widget IconBuilder(TDTheme? theme);
 
 /// 基础复选框组件
 ///
@@ -82,14 +87,11 @@ class CheckBox extends StatefulWidget {
   /// 默认的选中状态。默认为`false`。
   final bool defaultSelected;
 
-  /// 自定义选中时的左侧icon
-  final Widget? selectedIcon;
+  /// 自定义选中时的左侧icon的Builder
+  final IconBuilder? selectedIconBuilder;
 
-  /// 自定义未选中时的左侧icon
-  final Widget? unselectedIcon;
-
-  /// 左侧Icon大小
-  final double? iconSize;
+  /// 自定义未选中时的左侧icon的Builder
+  final IconBuilder? unselectedIconBuilder;
 
   /// 选项选中状态变化的回调
   final OnChangeSingle? onChange;
@@ -104,10 +106,9 @@ class CheckBox extends StatefulWidget {
     this.limitContentRow = _Default.limitContentRow,
     this.checkedColor,
     this.defaultSelected = _Default.defaultSelected,
-    this.selectedIcon,
-    this.unselectedIcon,
+    this.selectedIconBuilder,
+    this.unselectedIconBuilder,
     this.onChange,
-    this.iconSize,
   });
 
   @override
@@ -144,8 +145,8 @@ class _CheckBoxState extends State<CheckBox> {
               padding: EdgeInsets.all(_Default.iconEdge),
               child: _WidgetHelper.buildIcon(
                 widget.checkedColor,
-                widget.selectedIcon,
-                widget.unselectedIcon,
+                widget.selectedIconBuilder,
+                widget.unselectedIconBuilder,
                 theme,
                 selected,
               ),
@@ -177,7 +178,9 @@ class _CheckBoxState extends State<CheckBox> {
   }
 }
 
+// 辅助类，包含构建组件组成部分的帮助方法
 abstract class _WidgetHelper {
+  // 构建选项的文字部分
   static Widget buildText(String? title, String? content, int limitTitleRow, int limitContentRow, TDTheme? theme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,10 +218,11 @@ abstract class _WidgetHelper {
     );
   }
 
+  // 构建选项的Icon部分
   static Widget buildIcon(
     Color? checkedColor,
-    Widget? selectedIcon,
-    Widget? unselectedIcon,
+    IconBuilder? selectedIconBuilder,
+    IconBuilder? unselectedIconBuilder,
     TDTheme? theme,
     bool selected,
   ) {
@@ -229,7 +233,7 @@ abstract class _WidgetHelper {
         children: [
           Opacity(
             opacity: selected ? 0 : 1,
-            child: unselectedIcon ??
+            child: unselectedIconBuilder?.call(theme) ??
                 Container(
                   width: size * 5 / 6,
                   height: size * 5 / 6,
@@ -244,7 +248,7 @@ abstract class _WidgetHelper {
           ),
           Opacity(
             opacity: selected ? 1 : 0,
-            child: selectedIcon ??
+            child: selectedIconBuilder?.call(theme) ??
                 Icon(
                   _Default.selectedIconData,
                   color: checkedColor ?? theme?.themeColor.primaryColor ?? TDColors.blue,
@@ -343,7 +347,7 @@ class CheckGroup extends StatefulWidget {
   /// 选项的内容，即解释文本。
   /// 超出`names`数组长度的部分将不会显示。
   /// 元素可为`null`。
-  final List<String?> contents;
+  final List<String> contents;
 
   /// 用一个布尔序列表示哪些选项被禁用。默认为全`false`。
   /// 超出`names`数组长度的部分无效。
@@ -374,15 +378,11 @@ class CheckGroup extends StatefulWidget {
 
   /// 自定义选中时的左侧icon
   /// 所有选项统一配置。
-  final Widget? selectedIcon;
+  final IconBuilder? selectedIconBuilder;
 
   /// 自定义未选中时的左侧icon
   /// 所有选项统一配置。
-  final Widget? unselectedIcon;
-
-  /// 左侧Icon大小
-  /// 所有选项统一配置。
-  final double? iconSize;
+  final IconBuilder? unselectedIconBuilder;
 
   /// 选项选中状态变化的回调
   /// 所有选项统一配置。
@@ -408,9 +408,8 @@ class CheckGroup extends StatefulWidget {
     this.limitTitleRow = _Default.limitTitleRow,
     this.limitContentRow = _Default.limitContentRow,
     this.checkedColor,
-    this.selectedIcon,
-    this.unselectedIcon,
-    this.iconSize,
+    this.selectedIconBuilder,
+    this.unselectedIconBuilder,
     this.onChange,
     this.controller,
     this.separatorWidget,
@@ -500,7 +499,7 @@ class _CheckGroupState extends State<CheckGroup> {
   List<Widget> _childrenList() {
     List<Widget> list = <Widget>[];
     for (int i = 0; i < numTotal; i++) {
-      list.add(_checkbox(i));
+      list.add(Opacity(opacity: (widget.disabled.length > i && widget.disabled[i]) ? _Default.disabledOpacity : 1, child: _checkbox(i)));
       if (i != numTotal - 1 && widget.separatorWidget != null) {
         list.add(widget.separatorWidget!);
       }
@@ -523,8 +522,8 @@ class _CheckGroupState extends State<CheckGroup> {
                 padding: EdgeInsets.all(_Default.iconEdge),
                 child: _WidgetHelper.buildIcon(
                   widget.checkedColor,
-                  widget.selectedIcon,
-                  widget.unselectedIcon,
+                  widget.selectedIconBuilder,
+                  widget.unselectedIconBuilder,
                   theme,
                   selected,
                 ),
@@ -543,16 +542,30 @@ class _CheckGroupState extends State<CheckGroup> {
 
   _clicked(int index) {
     setState(() {
-      if (widget.disabled.length > index && !widget.disabled[index]) {
+      if (widget.disabled.length > index && widget.disabled[index]) {
+        // 选项disabled，直接返回
         return;
       }
       if (selectedIndices.contains(index)) {
-        selectedIndices.remove(index);
-      } else {
-        if (widget.selectLimit != null && selectedIndices.length >= widget.selectLimit!) {
+        // 选项已被选，则取消选择
+        if (widget.selectLimit != null && widget.selectLimit == 1 && selectedIndices.length == 1) {
+          // 若为单选，则不可取消
           return;
         }
-        selectedIndices.add(index);
+        selectedIndices.remove(index);
+      } else {
+        // 已选选项数已达限制
+        if (widget.selectLimit != null && selectedIndices.length >= widget.selectLimit!) {
+          if (widget.selectLimit == 1) {
+            // 若为单选，进行互斥选择
+            selectedIndices
+              ..clear()
+              ..add(index);
+          }
+        } else {
+          // 选项未被选且可选，则正常选择
+          selectedIndices.add(index);
+        }
       }
       final List<String> checked = [];
       for (int i in selectedIndices) {

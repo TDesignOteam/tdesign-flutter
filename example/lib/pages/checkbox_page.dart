@@ -93,8 +93,8 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       _buildTile(
         CheckBox(
           name: '2.2',
-          selectedIcon: Icon(TDIcons.notificationFilled, color: TDColors.blue),
-          unselectedIcon: Icon(TDIcons.notification),
+          selectedIconBuilder: (_) => Icon(TDIcons.notificationFilled, color: TDColors.blue),
+          unselectedIconBuilder: (_) => Icon(TDIcons.notification),
           title: '自定义图标',
         ),
       ),
