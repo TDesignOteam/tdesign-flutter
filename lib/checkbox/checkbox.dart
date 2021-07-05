@@ -32,9 +32,6 @@ abstract class _Default {
 
   // icon四周的padding宽度
   static const double iconEdge = 7;
-
-  // icon和文字之间的间隔宽度
-  static const double contentGap = 5;
 }
 
 typedef void OnChangeSingle(bool checked, String name);
@@ -199,7 +196,7 @@ abstract class _WidgetHelper {
           ),
         ),
         Container(
-          height: content == null ? 0 : _Default.contentGap,
+          height: content == null ? 0 : theme?.themeData.spacer ?? 6,
         ),
         Flexible(
           child: Offstage(
