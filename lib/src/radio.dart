@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
 
+// 默认配置项
 abstract class _Default {
   // 默认文本区域是否可点击
   static const contentDisabled = false;

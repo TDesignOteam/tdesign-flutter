@@ -499,7 +499,9 @@ class _CheckGroupState extends State<CheckGroup> {
   List<Widget> _childrenList() {
     List<Widget> list = <Widget>[];
     for (int i = 0; i < numTotal; i++) {
-      list.add(Opacity(opacity: (widget.disabled.length > i && widget.disabled[i]) ? _Default.disabledOpacity : 1, child: _checkbox(i)));
+      list.add(Opacity(
+          opacity: (widget.disabled.length > i && widget.disabled[i]) ? _Default.disabledOpacity : 1,
+          child: _checkbox(i)));
       if (i != numTotal - 1 && widget.separatorWidget != null) {
         list.add(widget.separatorWidget!);
       }
@@ -529,7 +531,14 @@ class _CheckGroupState extends State<CheckGroup> {
                 ),
               ),
               onTap: () => _clicked(index)),
-          Flexible(child: _WidgetHelper.buildText(title, content, widget.limitTitleRow, widget.limitContentRow, theme)),
+          Flexible(
+              child: _WidgetHelper.buildText(
+            title,
+            content,
+            widget.limitTitleRow,
+            widget.limitContentRow,
+            theme,
+          )),
         ],
       ),
       onTap: () {
