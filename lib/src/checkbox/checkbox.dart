@@ -395,7 +395,7 @@ class CheckGroup extends StatefulWidget {
   final Widget? separatorWidget;
 
   /// 最多可以选择群组内的几项，为空时无限制。
-  /// 全选操作不受约束。
+  /// 使用controller进行的外部控制操作不受约束。
   final int? selectLimit;
 
   const CheckGroup({
@@ -425,7 +425,7 @@ class CheckGroup extends StatefulWidget {
 
 class _CheckGroupState extends State<CheckGroup> {
   int numTotal = 0;
-  Set<int> selectedIndeces = Set();
+  Set<int> selectedIndices = Set();
   TDTheme? theme;
 
   @override
@@ -433,7 +433,7 @@ class _CheckGroupState extends State<CheckGroup> {
     numTotal = widget.names.length;
     for (int i = 0; i < widget.defaultSelected.length; i++) {
       if (i < numTotal && widget.defaultSelected[i]) {
-        selectedIndeces.add(i);
+        selectedIndices.add(i);
       }
     }
     widget.controller?._register(_toggleAll, _checkAll, _uncheckAll, _toggle, _check, _uncheck);
@@ -443,10 +443,10 @@ class _CheckGroupState extends State<CheckGroup> {
   _toggleAll() {
     setState(() {
       for (int i = 0; i < numTotal; i++) {
-        if (selectedIndeces.contains(i)) {
-          selectedIndeces.remove(i);
+        if (selectedIndices.contains(i)) {
+          selectedIndices.remove(i);
         } else {
-          selectedIndeces.add(i);
+          selectedIndices.add(i);
         }
       }
     });
@@ -454,37 +454,37 @@ class _CheckGroupState extends State<CheckGroup> {
 
   _checkAll() {
     setState(() {
-      selectedIndeces.clear();
+      selectedIndices.clear();
       for (int i = 0; i < numTotal; i++) {
-        selectedIndeces.add(i);
+        selectedIndices.add(i);
       }
     });
   }
 
   _uncheckAll() {
     setState(() {
-      selectedIndeces.clear();
+      selectedIndices.clear();
     });
   }
 
   _toggle(name) {
     final index = widget.names.indexOf(name);
-    if (selectedIndeces.contains(index)) {
-      selectedIndeces.remove(index);
+    if (selectedIndices.contains(index)) {
+      selectedIndices.remove(index);
     } else {
-      selectedIndeces.add(index);
+      selectedIndices.add(index);
     }
   }
 
   _check(String name) {
     setState(() {
-      selectedIndeces.add(widget.names.indexOf(name));
+      selectedIndices.add(widget.names.indexOf(name));
     });
   }
 
   _uncheck(String name) {
     setState(() {
-      selectedIndeces.remove(widget.names.indexOf(name));
+      selectedIndices.remove(widget.names.indexOf(name));
     });
   }
 
@@ -511,7 +511,7 @@ class _CheckGroupState extends State<CheckGroup> {
   Widget _checkbox(int index) {
     String? title = widget.titles.length > index ? widget.titles[index] : null;
     String? content = widget.contents.length > index ? widget.contents[index] : null;
-    bool selected = selectedIndeces.contains(index);
+    bool selected = selectedIndices.contains(index);
     return GestureDetector(
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -546,16 +546,16 @@ class _CheckGroupState extends State<CheckGroup> {
       if (widget.disabled.length > index && !widget.disabled[index]) {
         return;
       }
-      if (selectedIndeces.contains(index)) {
-        selectedIndeces.remove(index);
+      if (selectedIndices.contains(index)) {
+        selectedIndices.remove(index);
       } else {
-        if (widget.selectLimit != null && selectedIndeces.length >= widget.selectLimit!) {
+        if (widget.selectLimit != null && selectedIndices.length >= widget.selectLimit!) {
           return;
         }
-        selectedIndeces.add(index);
+        selectedIndices.add(index);
       }
       final List<String> checked = [];
-      for (int i in selectedIndeces) {
+      for (int i in selectedIndices) {
         checked.add(widget.names[i]);
       }
       widget.onChange?.call(checked);
