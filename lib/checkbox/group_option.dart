@@ -1,3 +1,13 @@
+/// `RadioGroup`和`CheckGroup`中的单个选项的数据类
+/// 使用示例：
+/// ``` dart
+/// CheckGroup(
+///   options: [
+///     GroupOption(name: '选项一', title: '选项一'),
+///     GroupOption(name: '选项二', title: '选项二'),
+///     GroupOption(name: '选项三', title: '选项三'),
+///   ])
+/// ```
 class GroupOption {
   /// 选项的值，即ID，必须传入。
   final String name;
