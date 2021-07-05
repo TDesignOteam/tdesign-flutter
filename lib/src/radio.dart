@@ -16,28 +16,23 @@ abstract class _Default {
   static const limitContentRow = 1;
 }
 
-
 /// 基础单选组合组件
-/// 
+///
 /// 基于CheckBox组件实现。
 /// 能力参考：[TDesign Mobile Radio](http://tdesign.woa.com/vue-mobile/components/radio)
-/// 
-/// ```dart
+///
+/// 使用示例：
+/// ``` dart
 /// RadioGroup(
-///   names: ['选项1', '选项2', '选项3'],
-///   titles: [
-///     '单行标题',
-///     '单行标题',
-///     '多行标题',
-///   ],
-/// ),
+///   options: [
+///     GroupOption(name: '选项一', title: '选项一'),
+///     GroupOption(name: '选项二', title: '选项二'),
+///     GroupOption(name: '选项三', title: '选项三'),
+///   ])
 /// ```
 class RadioGroup extends CheckGroup {
   RadioGroup({
-    required List<String> names,
-    required List<String> titles,
-    List<String> contents = const [],
-    List<bool> disabled = const [],
+    required List<GroupOption> options,
     bool contentDisabled = _Default.contentDisabled,
     int limitTitleRow = _Default.limitTitleRow,
     int limitContentRow = _Default.limitContentRow,
@@ -49,15 +44,12 @@ class RadioGroup extends CheckGroup {
     double? iconSize,
     Widget? separatorWidget,
   }) : super(
-          names: names,
-          titles: titles,
-          contents: contents,
-          disabled: disabled,
+          options: options,
           contentDisabled: contentDisabled,
           limitTitleRow: limitTitleRow,
           limitContentRow: limitContentRow,
           checkedColor: checkedColor,
-          defaultSelected: names.map((element) => element == defaultSelectedName).toList(),
+          defaultSelected: options.map((element) => element.name == defaultSelectedName).toList(),
           selectedIconBuilder: selectedIconBuilder ?? (theme) => _IconHelper.buildIcon(checkedColor, theme, true),
           unselectedIconBuilder: unselectedIconBuilder ?? (theme) => _IconHelper.buildIcon(checkedColor, theme, false),
           onChange: onChange,
