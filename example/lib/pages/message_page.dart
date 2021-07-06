@@ -21,8 +21,6 @@ class _MessagePageState extends State<MessagePage> {
     return ExamplePage(
       child: _widget(),
       title: 'Message',
-      backgroundColor: Colors.white,
-      titleColor: Colors.black,
     );
   }
 
