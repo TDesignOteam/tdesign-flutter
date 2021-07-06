@@ -1,7 +1,11 @@
+//  Created by lyrisli on 2021/6/20.
+//  Copyright © 2021年 Tencent Inc. All rights reserved.
+
 import 'package:flutter/material.dart';
+import 'package:tdesign/src/checkbox.dart';
 import 'package:tdesign/tdesign.dart';
 
-import '../td_icons.dart';
+import '../src/td_icons.dart';
 
 // 默认配置项
 abstract class _Default {
@@ -28,14 +32,13 @@ abstract class _Default {
 
   // icon四周的padding宽度
   static const double iconEdge = 7;
-
-  // icon和文字之间的间隔宽度
-  static const double contentGap = 5;
 }
 
 typedef void OnChangeSingle(bool checked, String name);
 
 typedef void OnChangeGroup(List<String> checked);
+
+typedef Widget IconBuilder(TDTheme? theme);
 
 /// 基础复选框组件
 ///
@@ -82,14 +85,11 @@ class CheckBox extends StatefulWidget {
   /// 默认的选中状态。默认为`false`。
   final bool defaultSelected;
 
-  /// 自定义选中时的左侧icon
-  final Widget? selectedIcon;
+  /// 自定义选中时的左侧icon的Builder
+  final IconBuilder? selectedIconBuilder;
 
-  /// 自定义未选中时的左侧icon
-  final Widget? unselectedIcon;
-
-  /// 左侧Icon大小
-  final double? iconSize;
+  /// 自定义未选中时的左侧icon的Builder
+  final IconBuilder? unselectedIconBuilder;
 
   /// 选项选中状态变化的回调
   final OnChangeSingle? onChange;
@@ -104,10 +104,9 @@ class CheckBox extends StatefulWidget {
     this.limitContentRow = _Default.limitContentRow,
     this.checkedColor,
     this.defaultSelected = _Default.defaultSelected,
-    this.selectedIcon,
-    this.unselectedIcon,
+    this.selectedIconBuilder,
+    this.unselectedIconBuilder,
     this.onChange,
-    this.iconSize,
   });
 
   @override
@@ -144,8 +143,8 @@ class _CheckBoxState extends State<CheckBox> {
               padding: EdgeInsets.all(_Default.iconEdge),
               child: _WidgetHelper.buildIcon(
                 widget.checkedColor,
-                widget.selectedIcon,
-                widget.unselectedIcon,
+                widget.selectedIconBuilder,
+                widget.unselectedIconBuilder,
                 theme,
                 selected,
               ),
@@ -177,7 +176,9 @@ class _CheckBoxState extends State<CheckBox> {
   }
 }
 
+// 辅助类，包含构建组件组成部分的帮助方法
 abstract class _WidgetHelper {
+  // 构建选项的文字部分
   static Widget buildText(String? title, String? content, int limitTitleRow, int limitContentRow, TDTheme? theme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,7 +196,7 @@ abstract class _WidgetHelper {
           ),
         ),
         Container(
-          height: content == null ? 0 : _Default.contentGap,
+          height: content == null ? 0 : theme?.themeData.spacer ?? 6,
         ),
         Flexible(
           child: Offstage(
@@ -215,10 +216,11 @@ abstract class _WidgetHelper {
     );
   }
 
+  // 构建选项的Icon部分
   static Widget buildIcon(
     Color? checkedColor,
-    Widget? selectedIcon,
-    Widget? unselectedIcon,
+    IconBuilder? selectedIconBuilder,
+    IconBuilder? unselectedIconBuilder,
     TDTheme? theme,
     bool selected,
   ) {
@@ -229,7 +231,7 @@ abstract class _WidgetHelper {
         children: [
           Opacity(
             opacity: selected ? 0 : 1,
-            child: unselectedIcon ??
+            child: unselectedIconBuilder?.call(theme) ??
                 Container(
                   width: size * 5 / 6,
                   height: size * 5 / 6,
@@ -244,7 +246,7 @@ abstract class _WidgetHelper {
           ),
           Opacity(
             opacity: selected ? 1 : 0,
-            child: selectedIcon ??
+            child: selectedIconBuilder?.call(theme) ??
                 Icon(
                   _Default.selectedIconData,
                   color: checkedColor ?? theme?.themeColor.primaryColor ?? TDColors.blue,
@@ -326,29 +328,16 @@ class CheckGroupController {
 /// 使用示例：
 /// ``` dart
 /// CheckGroup(
-///   names: ['1', '2', '3', '4'],
-///   titles: ['选项一', '选项二', '选项三', '选项四'],
-/// )
+///   options: [
+///     GroupOption(name: '选项一', title: '选项一'),
+///     GroupOption(name: '选项二', title: '选项二'),
+///     GroupOption(name: '选项三', title: '选项三'),
+///   ])
 /// ```
 class CheckGroup extends StatefulWidget {
-  /// 各选项的值，即ID，必须传入。
-  /// group内的选项数目由`names.length`决定。
-  final List<String> names;
-
-  /// 各选项的标题，必须传入。
-  /// 超出`names`数组长度的部分将不会显示。
-  /// 小于`names`数组长度，后续未设置的部分为空。
-  final List<String> titles;
-
-  /// 选项的内容，即解释文本。
-  /// 超出`names`数组长度的部分将不会显示。
-  /// 元素可为`null`。
-  final List<String?> contents;
-
-  /// 用一个布尔序列表示哪些选项被禁用。默认为全`false`。
-  /// 超出`names`数组长度的部分无效。
-  /// 小于`names`数组长度，后续未设置的部分默认为不禁用。
-  final List<bool> disabled;
+  /// 选项信息实例的列表，必须传入
+  /// 选项的数量由列表长度决定，长度不可为0。
+  final List<GroupOption> options;
 
   /// 用一个布尔序列表示各选项默认的选中状态。默认为全`false`。
   /// 超出`names`数组长度的部分无效。
@@ -374,15 +363,11 @@ class CheckGroup extends StatefulWidget {
 
   /// 自定义选中时的左侧icon
   /// 所有选项统一配置。
-  final Widget? selectedIcon;
+  final IconBuilder? selectedIconBuilder;
 
   /// 自定义未选中时的左侧icon
   /// 所有选项统一配置。
-  final Widget? unselectedIcon;
-
-  /// 左侧Icon大小
-  /// 所有选项统一配置。
-  final double? iconSize;
+  final IconBuilder? unselectedIconBuilder;
 
   /// 选项选中状态变化的回调
   /// 所有选项统一配置。
@@ -395,27 +380,23 @@ class CheckGroup extends StatefulWidget {
   final Widget? separatorWidget;
 
   /// 最多可以选择群组内的几项，为空时无限制。
-  /// 全选操作不受约束。
+  /// 使用controller进行的外部控制操作不受约束。
   final int? selectLimit;
 
   const CheckGroup({
-    required this.names,
-    this.titles = const [],
-    this.contents = const [],
-    this.disabled = const [],
+    required this.options,
     this.defaultSelected = const [],
     this.contentDisabled = _Default.contentDisabled,
     this.limitTitleRow = _Default.limitTitleRow,
     this.limitContentRow = _Default.limitContentRow,
     this.checkedColor,
-    this.selectedIcon,
-    this.unselectedIcon,
-    this.iconSize,
+    this.selectedIconBuilder,
+    this.unselectedIconBuilder,
     this.onChange,
     this.controller,
     this.separatorWidget,
     this.selectLimit,
-  }) : assert(names.length != 0);
+  }) : assert(options.length != 0);
 
   @override
   State<StatefulWidget> createState() {
@@ -425,15 +406,15 @@ class CheckGroup extends StatefulWidget {
 
 class _CheckGroupState extends State<CheckGroup> {
   int numTotal = 0;
-  Set<int> selectedIndeces = Set();
+  Set<int> selectedIndices = Set();
   TDTheme? theme;
 
   @override
   void initState() {
-    numTotal = widget.names.length;
+    numTotal = widget.options.length;
     for (int i = 0; i < widget.defaultSelected.length; i++) {
       if (i < numTotal && widget.defaultSelected[i]) {
-        selectedIndeces.add(i);
+        selectedIndices.add(i);
       }
     }
     widget.controller?._register(_toggleAll, _checkAll, _uncheckAll, _toggle, _check, _uncheck);
@@ -443,10 +424,10 @@ class _CheckGroupState extends State<CheckGroup> {
   _toggleAll() {
     setState(() {
       for (int i = 0; i < numTotal; i++) {
-        if (selectedIndeces.contains(i)) {
-          selectedIndeces.remove(i);
+        if (selectedIndices.contains(i)) {
+          selectedIndices.remove(i);
         } else {
-          selectedIndeces.add(i);
+          selectedIndices.add(i);
         }
       }
     });
@@ -454,38 +435,53 @@ class _CheckGroupState extends State<CheckGroup> {
 
   _checkAll() {
     setState(() {
-      selectedIndeces.clear();
+      selectedIndices.clear();
       for (int i = 0; i < numTotal; i++) {
-        selectedIndeces.add(i);
+        selectedIndices.add(i);
       }
     });
   }
 
   _uncheckAll() {
     setState(() {
-      selectedIndeces.clear();
+      selectedIndices.clear();
     });
   }
 
-  _toggle(name) {
-    final index = widget.names.indexOf(name);
-    if (selectedIndeces.contains(index)) {
-      selectedIndeces.remove(index);
+  _toggle(String name) {
+    int index = _indexOfName(name);
+    if (selectedIndices.contains(index)) {
+      selectedIndices.remove(index);
     } else {
-      selectedIndeces.add(index);
+      selectedIndices.add(index);
     }
   }
 
   _check(String name) {
     setState(() {
-      selectedIndeces.add(widget.names.indexOf(name));
+      int index = _indexOfName(name);
+      if (index >= 0 && index < numTotal) {
+        selectedIndices.add(index);
+      }
     });
   }
 
   _uncheck(String name) {
     setState(() {
-      selectedIndeces.remove(widget.names.indexOf(name));
+      int index = _indexOfName(name);
+      if (index >= 0 && index < numTotal) {
+        selectedIndices.remove(widget.options[index]);
+      }
     });
+  }
+
+  int _indexOfName(String name) {
+    for (int i = 0; i < widget.options.length; i++) {
+      if (name == widget.options[i].name) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   @override
@@ -500,7 +496,7 @@ class _CheckGroupState extends State<CheckGroup> {
   List<Widget> _childrenList() {
     List<Widget> list = <Widget>[];
     for (int i = 0; i < numTotal; i++) {
-      list.add(_checkbox(i));
+      list.add(Opacity(opacity: widget.options[i].disabled ? _Default.disabledOpacity : 1, child: _checkbox(i)));
       if (i != numTotal - 1 && widget.separatorWidget != null) {
         list.add(widget.separatorWidget!);
       }
@@ -509,9 +505,9 @@ class _CheckGroupState extends State<CheckGroup> {
   }
 
   Widget _checkbox(int index) {
-    String? title = widget.titles.length > index ? widget.titles[index] : null;
-    String? content = widget.contents.length > index ? widget.contents[index] : null;
-    bool selected = selectedIndeces.contains(index);
+    String? title = widget.options[index].title;
+    String? content = widget.options[index].content;
+    bool selected = selectedIndices.contains(index);
     return GestureDetector(
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -523,14 +519,21 @@ class _CheckGroupState extends State<CheckGroup> {
                 padding: EdgeInsets.all(_Default.iconEdge),
                 child: _WidgetHelper.buildIcon(
                   widget.checkedColor,
-                  widget.selectedIcon,
-                  widget.unselectedIcon,
+                  widget.selectedIconBuilder,
+                  widget.unselectedIconBuilder,
                   theme,
                   selected,
                 ),
               ),
               onTap: () => _clicked(index)),
-          Flexible(child: _WidgetHelper.buildText(title, content, widget.limitTitleRow, widget.limitContentRow, theme)),
+          Flexible(
+              child: _WidgetHelper.buildText(
+            title,
+            content,
+            widget.limitTitleRow,
+            widget.limitContentRow,
+            theme,
+          )),
         ],
       ),
       onTap: () {
@@ -543,20 +546,34 @@ class _CheckGroupState extends State<CheckGroup> {
 
   _clicked(int index) {
     setState(() {
-      if (widget.disabled.length > index && !widget.disabled[index]) {
+      if (widget.options[index].disabled) {
+        // 选项disabled，直接返回
         return;
       }
-      if (selectedIndeces.contains(index)) {
-        selectedIndeces.remove(index);
-      } else {
-        if (widget.selectLimit != null && selectedIndeces.length >= widget.selectLimit!) {
+      if (selectedIndices.contains(index)) {
+        // 选项已被选，则取消选择
+        if (widget.selectLimit != null && widget.selectLimit == 1 && selectedIndices.length == 1) {
+          // 若为单选，则不可取消
           return;
         }
-        selectedIndeces.add(index);
+        selectedIndices.remove(index);
+      } else {
+        // 已选选项数已达限制
+        if (widget.selectLimit != null && selectedIndices.length >= widget.selectLimit!) {
+          if (widget.selectLimit == 1) {
+            // 若为单选，进行互斥选择
+            selectedIndices
+              ..clear()
+              ..add(index);
+          }
+        } else {
+          // 选项未被选且可选，则正常选择
+          selectedIndices.add(index);
+        }
       }
       final List<String> checked = [];
-      for (int i in selectedIndeces) {
-        checked.add(widget.names[i]);
+      for (int i in selectedIndices) {
+        checked.add(widget.options[i].name);
       }
       widget.onChange?.call(checked);
     });

@@ -9,6 +9,8 @@ import 'pages/message_page.dart';
 import 'pages/rate_page.dart';
 import 'pages/tags_page.dart';
 import 'pages/toast_page.dart';
+import 'pages/message_page.dart';
+import 'pages/radio_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -68,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Message', (context) => _push(context, MessagePage())),
     ListItem('CheckBox', (context) => _push(context, CheckBoxPage())),
     ListItem('Dialog', (context) => _push(context, DialogPage())),
+    ListItem('Radio', (context) => _push(context, RadioPage())),
   ];
 
   Widget build(BuildContext context) {

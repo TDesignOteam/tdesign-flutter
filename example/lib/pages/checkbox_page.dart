@@ -93,8 +93,8 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       _buildTile(
         CheckBox(
           name: '2.2',
-          selectedIcon: Icon(TDIcons.notificationFilled, color: TDColors.blue),
-          unselectedIcon: Icon(TDIcons.notification),
+          selectedIconBuilder: (_) => Icon(TDIcons.notificationFilled, color: TDColors.blue),
+          unselectedIconBuilder: (_) => Icon(TDIcons.notification),
           title: '自定义图标',
         ),
       ),
@@ -149,8 +149,11 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       ),
       PageUtil.buildSubTitle('选项框群组 - 最多选两项'),
       _buildTile(CheckGroup(
-          names: ['选项一', '选项二', '选项三'],
-          titles: ['选项一', '选项二', '选项三'],
+          options: [
+            GroupOption(name: '选项一', title: '选项一'),
+            GroupOption(name: '选项二', title: '选项二'),
+            GroupOption(name: '选项三', title: '选项三'),
+          ],
           selectLimit: 2,
           onChange: (selected) {
             setState(() {
@@ -163,9 +166,12 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       )),
       PageUtil.buildSubTitle('选项框群组 - 控制'),
       _buildTile(CheckGroup(
-        names: ['1', '2', '3', '4'],
-        titles: ['选项一', '选项二', '选项三', '选项四'],
-        contents: ['使用controller从外部控制选项。', '控制包括：选择、取消、反选单个选项，选择、取消、反选全部选项', '还可以传入自定义分割Widget。'],
+        options: [
+          GroupOption(name: '1', title: '选项一', content: '使用controller从外部控制选项。'),
+          GroupOption(name: '2', title: '选项二', content: '控制包括：选择、取消、反选单个选项，选择、取消、反选全部选项'),
+          GroupOption(name: '3', title: '选项三', content: '还可以传入自定义分割Widget。'),
+          GroupOption(name: '4', title: '选项四'),
+        ],
         limitContentRow: 3,
         defaultSelected: [true, false, true, false],
         controller: controller,
