@@ -171,17 +171,17 @@ class _TagsPageState extends State<TagsPage> {
     ]);
   }
 
-  final GlobalKey<TagPanelState> _tagPanelKey1 = GlobalKey<TagPanelState>();
-  final GlobalKey<TagPanelState> _tagPanelKey2 = GlobalKey<TagPanelState>();
-  final GlobalKey<TagPanelState> _tagPanelKey3 = GlobalKey<TagPanelState>();
-  final GlobalKey<TagPanelState> _tagPanelKey4 = GlobalKey<TagPanelState>();
+  final GlobalKey<TDTagPanelState> _tagPanelKey1 = GlobalKey<TDTagPanelState>();
+  final GlobalKey<TDTagPanelState> _tagPanelKey2 = GlobalKey<TDTagPanelState>();
+  final GlobalKey<TDTagPanelState> _tagPanelKey3 = GlobalKey<TDTagPanelState>();
+  final GlobalKey<TDTagPanelState> _tagPanelKey4 = GlobalKey<TDTagPanelState>();
 
-  final GlobalKey<TagPanelState> _tagPanelKey5 = GlobalKey<TagPanelState>();
-  final GlobalKey<TagPanelState> _tagPanelKey6 = GlobalKey<TagPanelState>();
-  final GlobalKey<TagPanelState> _tagPanelKey7 = GlobalKey<TagPanelState>();
+  final GlobalKey<TDTagPanelState> _tagPanelKey5 = GlobalKey<TDTagPanelState>();
+  final GlobalKey<TDTagPanelState> _tagPanelKey6 = GlobalKey<TDTagPanelState>();
+  final GlobalKey<TDTagPanelState> _tagPanelKey7 = GlobalKey<TDTagPanelState>();
 
   Widget get _tagPanel1 {
-    return TagPanel(
+    return TDTagPanel(
       key: _tagPanelKey1,
       heightHorizontalScroll: 60,
       itemCount: _tagTitles1.length,
@@ -189,7 +189,7 @@ class _TagsPageState extends State<TagsPage> {
         final item = _tagTitles1[index];
         _tagPanelKey1.currentState?.appendATag(item);
 
-        return TagItem(
+        return TDTagItem(
           key: Key(index.toString()),
           index: index,
           title: item,
@@ -204,7 +204,7 @@ class _TagsPageState extends State<TagsPage> {
   }
 
   Widget get _tagPanel2 {
-    return TagPanel(
+    return TDTagPanel(
       key: _tagPanelKey2,
       heightHorizontalScroll: 60,
       itemCount: _tagTitles2.length,
@@ -212,7 +212,7 @@ class _TagsPageState extends State<TagsPage> {
         final item = _tagTitles2[index];
         _tagPanelKey2.currentState?.appendATag(item);
 
-        return TagItem(
+        return TDTagItem(
           key: Key(index.toString()),
           index: index,
           title: item,
@@ -229,7 +229,7 @@ class _TagsPageState extends State<TagsPage> {
   }
 
   Widget get _tagPanel3 {
-    return TagPanel(
+    return TDTagPanel(
       key: _tagPanelKey3,
       heightHorizontalScroll: 60,
       itemCount: _tagTitles3.length,
@@ -237,7 +237,7 @@ class _TagsPageState extends State<TagsPage> {
         final item = _tagTitles3[index];
         _tagPanelKey3.currentState?.appendATag(item);
 
-        return TagItem(
+        return TDTagItem(
           key: Key(index.toString()),
           index: index,
           title: item,
@@ -253,7 +253,7 @@ class _TagsPageState extends State<TagsPage> {
   }
 
   Widget get _tagPanel4 {
-    return TagPanel(
+    return TDTagPanel(
       key: _tagPanelKey4,
       heightHorizontalScroll: 60,
       itemCount: _tagTitles4.length,
@@ -261,7 +261,7 @@ class _TagsPageState extends State<TagsPage> {
         final item = _tagTitles4[index];
         _tagPanelKey4.currentState?.appendATag(item);
 
-        return TagItem(
+        return TDTagItem(
           key: Key(index.toString()),
           index: index,
           title: item,
@@ -278,7 +278,7 @@ class _TagsPageState extends State<TagsPage> {
   }
 
   Widget get _tagPanel5 {
-    return TagPanel(
+    return TDTagPanel(
       key: _tagPanelKey5,
       heightHorizontalScroll: 60,
       itemCount: _tagTitles5.length,
@@ -292,7 +292,7 @@ class _TagsPageState extends State<TagsPage> {
           _clickable = false;
         }
 
-        return TagItem(
+        return TDTagItem(
           key: Key(index.toString()),
           index: index,
           title: item,
@@ -312,7 +312,7 @@ class _TagsPageState extends State<TagsPage> {
   }
 
   Widget get _tagPanel6 {
-    return TagPanel(
+    return TDTagPanel(
       key: _tagPanelKey6,
       heightHorizontalScroll: 60,
       itemCount: _tagTitles5.length,
@@ -326,7 +326,7 @@ class _TagsPageState extends State<TagsPage> {
           _clickable = false;
         }
 
-        return TagItem(
+        return TDTagItem(
           key: Key(index.toString()),
           index: index,
           title: item,
@@ -346,7 +346,7 @@ class _TagsPageState extends State<TagsPage> {
   }
 
   Widget get _tagPanel7 {
-    return TagPanel(
+    return TDTagPanel(
       key: _tagPanelKey7,
       heightHorizontalScroll: 60,
       itemCount: _tagTitles7.length,
@@ -362,7 +362,7 @@ class _TagsPageState extends State<TagsPage> {
           _removable = false;
         }
 
-        return TagItem(
+        return TDTagItem(
           key: Key(index.toString()),
           index: index,
           title: item,

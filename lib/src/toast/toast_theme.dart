@@ -53,12 +53,9 @@ class ToastTheme {
   static ToastPosition get toastPosition => TDToast.instance.toastPosition;
 
   /// toast position
-  static AlignmentGeometry alignment(ToastPosition? position) =>
-      position == ToastPosition.bottom
-          ? AlignmentDirectional.bottomCenter
-          : (position == ToastPosition.top
-              ? AlignmentDirectional.topCenter
-              : AlignmentDirectional.center);
+  static AlignmentGeometry alignment(ToastPosition? position) => position == ToastPosition.bottom
+      ? AlignmentDirectional.bottomCenter
+      : (position == ToastPosition.top ? AlignmentDirectional.topCenter : AlignmentDirectional.center);
 
   /// display duration
   static Duration get displayDuration => TDToast.instance.displayDuration;

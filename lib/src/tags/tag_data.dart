@@ -31,21 +31,16 @@ class TagPanelInherited extends InheritedWidget {
   // static TagPanelInherited of(BuildContext context) =>
   //     context.inheritFromWidgetOfExactType(TagPanelInherited);
   static TagPanelInherited of(BuildContext context) {
-    var _tagPanelIn =
-        context.dependOnInheritedWidgetOfExactType<TagPanelInherited>();
+    var _tagPanelIn = context.dependOnInheritedWidgetOfExactType<TagPanelInherited>();
     assert(_tagPanelIn != null);
     return _tagPanelIn!;
   }
 }
 
 /// TagItem Data: 向外暴露的标签状态数据
-class TagItemData {
-  TagItemData(
-      {required this.index,
-      required this.title,
-      required this.disabled,
-      required this.checked,
-      this.customData});
+class TDTagItemData {
+  TDTagItemData(
+      {required this.index, required this.title, required this.disabled, required this.checked, this.customData});
   final int index;
   final String title;
   final dynamic customData;
@@ -59,13 +54,9 @@ class TagItemData {
 }
 
 /// TagItem Context: 内部扩展 TagItemData，变更时通知标签更新
-class TagItemContext extends ValueNotifier implements TagItemData {
+class TagItemContext extends ValueNotifier implements TDTagItemData {
   TagItemContext(
-      {required this.index,
-      required this.title,
-      bool disabled = false,
-      bool checked = false,
-      this.customData})
+      {required this.index, required this.title, bool disabled = false, bool checked = false, this.customData})
       : _checked = checked,
         this.disabled = disabled,
         super(checked);

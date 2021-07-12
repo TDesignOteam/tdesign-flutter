@@ -31,17 +31,14 @@ class ToastContainer extends StatefulWidget {
   ToastContainerState createState() => ToastContainerState();
 }
 
-class ToastContainerState extends State<ToastContainer>
-    with SingleTickerProviderStateMixin {
+class ToastContainerState extends State<ToastContainer> with SingleTickerProviderStateMixin {
   String? _message;
   Color? _maskColor;
   late AnimationController _animationController;
   late AlignmentGeometry _alignment;
   late bool _dismissOnTap, _ignoring;
 
-  bool get isPersistentCallbacks =>
-      SchedulerBinding.instance?.schedulerPhase ==
-      SchedulerPhase.persistentCallbacks;
+  bool get isPersistentCallbacks => SchedulerBinding.instance?.schedulerPhase == SchedulerPhase.persistentCallbacks;
 
   @override
   void initState() {
@@ -73,8 +70,8 @@ class ToastContainerState extends State<ToastContainer>
   Future<void> show(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-      SchedulerBinding.instance?.addPostFrameCallback((_) => completer
-          .complete(_animationController.forward(from: animation ? 0 : 1)));
+      SchedulerBinding.instance
+          ?.addPostFrameCallback((_) => completer.complete(_animationController.forward(from: animation ? 0 : 1)));
       return completer.future;
     } else {
       return _animationController.forward(from: animation ? 0 : 1);
@@ -84,8 +81,8 @@ class ToastContainerState extends State<ToastContainer>
   Future<void> dismiss(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-      SchedulerBinding.instance?.addPostFrameCallback((_) => completer
-          .complete(_animationController.reverse(from: animation ? 1 : 0)));
+      SchedulerBinding.instance
+          ?.addPostFrameCallback((_) => completer.complete(_animationController.reverse(from: animation ? 1 : 0)));
       return completer.future;
     } else {
       return _animationController.reverse(from: animation ? 1 : 0);
@@ -215,9 +212,7 @@ class _Indicator extends StatelessWidget {
           children: <Widget>[
             if (indicator != null)
               Container(
-                margin: message?.isNotEmpty == true
-                    ? ToastTheme.textPadding
-                    : EdgeInsets.zero,
+                margin: message?.isNotEmpty == true ? ToastTheme.textPadding : EdgeInsets.zero,
                 child: indicator,
               ),
             if (message?.isNotEmpty == true)
