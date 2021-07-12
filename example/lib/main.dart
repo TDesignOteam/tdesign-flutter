@@ -83,12 +83,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
 
 void _push(BuildContext context, Widget widget) {
   DetailModel.showPage(context, widget, null);
-  // Navigator.push(
-  //   context,
-  //   MaterialPageRoute(
-  //     builder: (context) => widget,
-  //   ),
-  // );
 }
 
 class MyHomePage extends StatefulWidget {

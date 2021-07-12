@@ -232,7 +232,7 @@ class _BadgeState extends State<Badge> {
       child: Container(
         width: _config.dotSize,
         height: _config.dotSize,
-        color: widget.color ?? theme?.themeColor.errorColor,
+        color: widget.color ?? theme?.themeColor.errorColor ?? TDColors.red,
       ),
       borderRadius: BorderRadius.all(
         Radius.circular(_config.dotSize / 2),
