@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tdesign/tdesign.dart';
 
-import 'pages/dialog_page.dart';
 import 'pages/icons_page.dart';
-import 'pages/message_page.dart';
 import 'pages/rate_page.dart';
 import 'pages/tags_page.dart';
 import 'pages/toast_page.dart';
+import 'pages/message_page.dart';
+import 'pages/dialog_page.dart';
+import 'pages/popup_page.dart';
 import 'pages/radio_page.dart';
 import 'responsive_layout/responsive_layout.dart';
 
@@ -28,6 +29,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
     final model = StyleModel();
     final toastBuilder = Toast.init();
     final messageBuilder = Message.init();
+    final popupBuilder = Popup.init();
     return TDTheme(
       child: MaterialApp(
         title: 'TDesign Example',
@@ -74,6 +76,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         builder: (context, child) {
           child = toastBuilder(context, child);
           child = messageBuilder(context, child);
+          child = popupBuilder(context, child);
           return child;
         },
       ),
@@ -98,8 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Tags', (context) => _push(context, TagsPage())),
     ListItem('Toast', (context) => _push(context, ToastPage())),
     ListItem('Message', (context) => _push(context, MessagePage())),
-    ListItem('CheckBox', (context) => _push(context, CheckBoxPage())),
     ListItem('Dialog', (context) => _push(context, DialogPage())),
+    ListItem('Popup', (context) => _push(context, PopupPage())),
+    ListItem('CheckBox', (context) => _push(context, CheckBoxPage())),
     ListItem('Radio', (context) => _push(context, RadioPage())),
   ];
 
