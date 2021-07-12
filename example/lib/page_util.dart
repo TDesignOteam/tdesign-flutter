@@ -28,13 +28,12 @@ class ExamplePageState extends State<ExamplePage> with TickerProviderStateMixin 
     return Consumer<StyleModel>(
       builder: (context, style, _) => Scaffold(
         appBar: AppBar(
-          leading: Offstage(
-            offstage: style.layout == LayoutStyle.single,
-            child: GestureDetector(
-            child: Icon(TDIcons.swap),
-            onTap: () => Provider.of<StyleModel>(ResponsiveConfig.key.currentContext!, listen: false)
-                .toggleDetail(ResponsiveConfig.key.currentContext, this),
-          ),),
+          leading: 
+            GestureDetector(
+            child: style.layout != LayoutStyle.single ? Icon(TDIcons.swap) : Icon(TDIcons.arrowLeft),
+            onTap: style.layout != LayoutStyle.single ? () => Provider.of<StyleModel>(ResponsiveConfig.key.currentContext!, listen: false)
+                .toggleDetail(ResponsiveConfig.key.currentContext, this) : () => DetailModel.pop(context, this)
+          ),
           backgroundColor: widget.backgroundColor,
           iconTheme: IconThemeData(color: widget.titleColor),
           title: Text(
@@ -42,7 +41,7 @@ class ExamplePageState extends State<ExamplePage> with TickerProviderStateMixin 
             style: TextStyle(color: widget.titleColor),
           ),
         ),
-        body: SafeArea(bottom: false, child: widget.child),
+        body: widget.child,
       ),
     );
   }

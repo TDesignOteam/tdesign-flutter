@@ -17,8 +17,7 @@ class ResponsiveWidgetModel with ChangeNotifier {
     if (!isSamePage) {
       notifyListeners();
     }
-
-    debugPrint('debugPrint $runtimeType same $isSamePage switchPage $page');
+    debugPrint('switch page: isSamePage - $isSamePage / switch to - $page');
   }
 }
 

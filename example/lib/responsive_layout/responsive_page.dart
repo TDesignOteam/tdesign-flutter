@@ -46,15 +46,13 @@ class ResponsivePageState extends State<ResponsivePage> with TickerProviderState
   }
 
   Widget _body() {
-    return SafeArea(
-      top: false,
-      bottom: false,
+    return Container(
       child: Consumer4<HomeAnimated, DetailAnimated, DetailModel, StyleModel>(
         builder: (ctx, home, detail, dModel, style, _) {
           final isSplit = style.layout == LayoutStyle.split;
           final isHomeFull = style.fullScreen == FullScreenStyle.home;
           final mediaData = MediaQuery.of(context);
-          final width = mediaData.size.width - mediaData.padding.left - mediaData.padding.right;
+          final width = mediaData.size.width;
           final double hw = isSplit ? ResponsiveConfig.splitHomeWidth.ceilToDouble() : width;
           final double dw = isSplit
               ? ResponsiveConfig.splitDetailWidth(context, width.floorToDouble())
@@ -62,7 +60,6 @@ class ResponsivePageState extends State<ResponsivePage> with TickerProviderState
           final bool isShowHome = style.layout == LayoutStyle.single && (dModel.widget == null || isHomeFull);
           final double hValue = isSplit ? home.value : 0;
           final double dValue = isSplit ? detail.value : 0;
-          ResponsiveConfig.log('Responsive layout $hw $dw -- $width / ${mediaData.size.width}  h:$hValue d:$dValue');
           return Stack(children: <Widget>[
             Offstage(
               offstage: (isShowHome || isSplit) ? false : true,

@@ -44,11 +44,6 @@ class ResponsiveConfig {
     return width - splitHomeWidth;
   }
 
-  /// 全屏按钮的icon
-  static FullScreenIconBuilder fullScreenIconBuilder = (style) {
-    return Icon(style.fullScreen == FullScreenStyle.home ? Icons.view_column : Icons.view_list, size: 20);
-  };
-
   /// 默认开启全屏切换动画
   static bool isOpenAnimation = true;
   static var animationDuration = Duration(milliseconds: 300);
@@ -58,17 +53,6 @@ class ResponsiveConfig {
 
   /// 初始化的时候的类型
   static LayoutStyle firstTestLayout = LayoutStyle.single;
-
-  /// 各个页面根据自身宽度获取左右两边的缩进值
-  static double padding(double width) {
-    if (width <= 320) {
-      return 16;
-    } else if (width <= 640) {
-      return 20;
-    } else {
-      return 40;
-    }
-  }
 
   /// 详情页可能push的路由，可以外界覆盖用自己的路由
   static ResponsivePageBuilder pageBuilder = (page) => CupertinoPageRoute(builder: (_) => page);
