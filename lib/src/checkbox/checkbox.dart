@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:tdesign/src/checkbox.dart';
 import 'package:tdesign/tdesign.dart';
 
-import '../src/td_icons.dart';
-
 // 默认配置项
 abstract class _Default {
   // 默认是否禁用选项
