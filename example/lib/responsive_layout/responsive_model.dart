@@ -210,7 +210,6 @@ class ResponsiveAnimatedModel with ChangeNotifier {
       final CurvedAnimation curve = CurvedAnimation(parent: _controller!, curve: Curves.linear);
       _animation = Tween<double>(begin: 0, end: 1).animate(curve)
         ..addListener(() {
-          debugPrint('debugPrint ${this.runtimeType} start ${_animation?.value}');
           notifyListeners();
         })
         ..addStatusListener((status) {
