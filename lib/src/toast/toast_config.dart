@@ -10,7 +10,7 @@ class ToastConfig {
   // static ToastThemeStyle themeStyle = ToastThemeStyle.dark;
 
   /// toast position.
-  static ToastPosition toastPosition = ToastPosition.middle;
+  static TDToastPosition toastPosition = TDToastPosition.middle;
 
   /// animation duration of indicator.
   static Duration animationDuration = const Duration(milliseconds: 200);

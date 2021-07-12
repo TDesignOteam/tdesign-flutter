@@ -25,10 +25,8 @@ class _ToastPageState extends State<ToastPage> {
     return ListView(children: [
       PageUtil.buildSubTitle('文本轻提示'),
       PageUtil.outlinedButton('短文本轻提示', () => TDToast.toast('轻提示内容')),
-      PageUtil.outlinedButton(
-          '长文本轻提示', () => TDToast.toast('色不异空空不异色色即是空空即是色色不异空空不异色色即是空空即是色')),
-      PageUtil.outlinedButton('超长文本轻提示',
-          () => TDToast.toast('色不异空，空不异色，色即是空，空即是色。色不异空，空不异色，色即是空，空即是色。')),
+      PageUtil.outlinedButton('长文本轻提示', () => TDToast.toast('色不异空空不异色色即是空空即是色色不异空空不异色色即是空空即是色')),
+      PageUtil.outlinedButton('超长文本轻提示', () => TDToast.toast('色不异空，空不异色，色即是空，空即是色。色不异空，空不异色，色即是空，空即是色。')),
       PageUtil.buildSubTitle('图标轻提示'),
       PageUtil.outlinedButton('成功', () => TDToast.success()),
       PageUtil.outlinedButton('警告', () => TDToast.fail()),
@@ -41,15 +39,11 @@ class _ToastPageState extends State<ToastPage> {
       PageUtil.outlinedButton('自定义图标', () => TDToast.info(message: '自定义图标')),
       PageUtil.outlinedButton('超长警告', () => TDToast.fail(message: '般若波罗蜜多心经')),
       PageUtil.buildSubTitle('提示位置'),
-      PageUtil.outlinedButton(
-          '顶部Top', () => TDToast.success(toastPosition: ToastPosition.top)),
-      PageUtil.outlinedButton('中间Middle',
-          () => TDToast.success(toastPosition: ToastPosition.middle)),
-      PageUtil.outlinedButton('底部Bottom',
-          () => TDToast.success(toastPosition: ToastPosition.bottom)),
+      PageUtil.outlinedButton('顶部Top', () => TDToast.success(toastPosition: TDToastPosition.top)),
+      PageUtil.outlinedButton('中间Middle', () => TDToast.success(toastPosition: TDToastPosition.middle)),
+      PageUtil.outlinedButton('底部Bottom', () => TDToast.success(toastPosition: TDToastPosition.bottom)),
       PageUtil.buildSubTitle('z遮罩'),
-      PageUtil.outlinedButton(
-          '带背景遮罩', () => TDToast.toast('轻提示内容', showOverlay: true)),
+      PageUtil.outlinedButton('带背景遮罩', () => TDToast.toast('轻提示内容', showOverlay: true)),
     ]);
   }
 }

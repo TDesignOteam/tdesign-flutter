@@ -8,11 +8,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tdesign/src/message/config.dart';
+import 'package:tdesign/src/message/message_config.dart';
 
-import 'widgets/container.dart';
-import 'widgets/overlayentry.dart';
-import 'widgets/messagewidget.dart';
+import 'widgets/message_container.dart';
+import 'widgets/message_overlayentry.dart';
+import 'widgets/message_widget.dart';
 
 /// message theme style
 // enum MessageThemeStyle {
@@ -22,7 +22,7 @@ import 'widgets/messagewidget.dart';
 // }
 
 /// message position
-enum MessageType {
+enum TDMessageType {
   info,
   success,
   warning,
@@ -32,19 +32,19 @@ enum MessageType {
 }
 
 /// message position
-enum MessagePosition {
+enum TDMessagePosition {
   top,
   bottom,
 }
 
 /// message position
-enum MessageAlignment {
+enum TDMessageAlignment {
   left,
   center,
   right,
 }
 
-class Message {
+class TDMessage {
   /// message theme style.
   // late MessageThemeStyle themeStyle;
 
@@ -52,13 +52,13 @@ class Message {
   late bool showIcon;
 
   /// message type.
-  late MessageType msgType;
+  late TDMessageType msgType;
 
   /// message position.
-  late MessagePosition msgPosition;
+  late TDMessagePosition msgPosition;
 
   /// message alignment.
-  late MessageAlignment msgAlignment;
+  late TDMessageAlignment msgAlignment;
 
   /// animation duration of indicator.
   late Duration animationDuration;
@@ -105,10 +105,10 @@ class Message {
   MessageOverlayEntry? overlayEntry;
   Timer? _timer;
 
-  factory Message() => _instance;
-  static final Message _instance = Message._internal();
+  factory TDMessage() => _instance;
+  static final TDMessage _instance = TDMessage._internal();
 
-  Message._internal() {
+  TDMessage._internal() {
     /// set deafult value
     msgType = MessageConfig.msgType;
     msgPosition = MessageConfig.msgPosition;
@@ -134,7 +134,7 @@ class Message {
     dismissOnTap = MessageConfig.dismissOnTap;
   }
 
-  static Message get instance => _instance;
+  static TDMessage get instance => _instance;
   static bool get isShow => _instance.w != null;
 
   /// init FlutterMessage which build Material with Overlay(OverlayEntry)
@@ -154,9 +154,9 @@ class Message {
   static Future<void> show(
     String message, {
     bool showIcon = true,
-    MessageType? msgType,
-    MessagePosition? msgPosition,
-    MessageAlignment? msgAlignment,
+    TDMessageType? msgType,
+    TDMessagePosition? msgPosition,
+    TDMessageAlignment? msgAlignment,
     Duration? duration,
     bool? dismissOnTap,
   }) {
@@ -184,9 +184,9 @@ class Message {
   Future<void> _show({
     required String message,
     required bool showIcon,
-    required MessageType msgType,
-    required MessagePosition msgPosition,
-    required MessageAlignment msgAlignment,
+    required TDMessageType msgType,
+    required TDMessagePosition msgPosition,
+    required TDMessageAlignment msgAlignment,
     Duration? duration,
     bool? dismissOnTap,
   }) async {

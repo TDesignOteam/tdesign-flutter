@@ -4,8 +4,8 @@
 import 'package:flutter/material.dart';
 
 import 'message.dart';
-import 'config.dart';
-import 'widgets/animation.dart';
+import 'message_config.dart';
+import 'widgets/message_animation.dart';
 import 'package:tdesign/tdesign.dart'; // TDColors
 
 // 考虑适配主题
@@ -13,17 +13,17 @@ class MessageTheme {
   /// background color of message
   static Color get backgroundColor {
     Color backColor = MessageConfig.backgroundColor; // default
-    switch (Message.instance.msgType) {
-      case MessageType.info:
+    switch (TDMessage.instance.msgType) {
+      case TDMessageType.info:
         backColor = TDColors.blue;
         break;
-      case MessageType.success:
+      case TDMessageType.success:
         backColor = TDColors.green;
         break;
-      case MessageType.warning:
+      case TDMessageType.warning:
         backColor = TDColors.orange;
         break;
-      case MessageType.error:
+      case TDMessageType.error:
         backColor = TDColors.red;
         break;
     }
@@ -47,42 +47,39 @@ class MessageTheme {
   }
 
   /// font size of message
-  static double get fontSize => Message.instance.fontSize;
+  static double get fontSize => TDMessage.instance.fontSize;
 
   /// message alignment
-  static MessageAlignment get msgAlignment => Message.instance.msgAlignment;
+  static TDMessageAlignment get msgAlignment => TDMessage.instance.msgAlignment;
 
   /// message position
-  static AlignmentGeometry alignment(MessagePosition? position) =>
-      position == MessagePosition.bottom
-          ? AlignmentDirectional.bottomCenter
-          : (position == MessagePosition.top
-              ? AlignmentDirectional.topCenter
-              : AlignmentDirectional.center);
+  static AlignmentGeometry alignment(TDMessagePosition? position) => position == TDMessagePosition.bottom
+      ? AlignmentDirectional.bottomCenter
+      : (position == TDMessagePosition.top ? AlignmentDirectional.topCenter : AlignmentDirectional.center);
 
   /// display duration
-  static Duration get displayDuration => Message.instance.displayDuration;
+  static Duration get displayDuration => TDMessage.instance.displayDuration;
 
   /// animation duration
-  static Duration get animationDuration => Message.instance.animationDuration;
+  static Duration get animationDuration => TDMessage.instance.animationDuration;
 
   /// contentPadding of loading
-  static EdgeInsets get contentPadding => Message.instance.contentPadding;
+  static EdgeInsets get contentPadding => TDMessage.instance.contentPadding;
 
   /// padding of message
-  static EdgeInsets get textPadding => Message.instance.textPadding;
+  static EdgeInsets get textPadding => TDMessage.instance.textPadding;
 
   /// textAlign of message
-  static TextAlign get textAlign => Message.instance.textAlign;
+  static TextAlign get textAlign => TDMessage.instance.textAlign;
 
   /// textStyle of message
-  static TextStyle? get textStyle => Message.instance.textStyle;
+  static TextStyle? get textStyle => TDMessage.instance.textStyle;
 
   /// radius of loading
-  static double get radius => Message.instance.radius;
+  static double get radius => TDMessage.instance.radius;
 
   /// should dismiss on user tap
-  static bool? get dismissOnTap => Message.instance.dismissOnTap;
+  static bool? get dismissOnTap => TDMessage.instance.dismissOnTap;
 
   /// 当显示背景遮罩时，禁止背景点击和滚动
   static bool get ignoring => true;

@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 import '../message.dart';
-import 'overlayentry.dart';
+import 'message_overlayentry.dart';
 
 class FlutterMessage extends StatefulWidget {
   final Widget? child;
@@ -26,9 +26,9 @@ class _FlutterMessageState extends State<FlutterMessage> {
   void initState() {
     super.initState();
     _overlayEntry = MessageOverlayEntry(
-      builder: (BuildContext context) => Message.instance.w ?? Container(),
+      builder: (BuildContext context) => TDMessage.instance.w ?? Container(),
     );
-    Message.instance.overlayEntry = _overlayEntry;
+    TDMessage.instance.overlayEntry = _overlayEntry;
   }
 
   @override
