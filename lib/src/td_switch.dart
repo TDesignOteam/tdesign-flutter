@@ -181,12 +181,12 @@ class TDSwitch extends StatelessWidget {
   Widget _buildSwitch(BuildContext context) {
     return Listener(
         child: IgnorePointer(
-          ignoring: _Default.typeSpecConfig[type]!.disable,
-          child: Stack(
-            alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-            children: _buildSwitchWidgets(context),
-          ),
-        ));
+      ignoring: _Default.typeSpecConfig[type]!.disable,
+      child: Stack(
+        alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+        children: _buildSwitchWidgets(context),
+      ),
+    ));
   }
 
   List<Widget> _buildSwitchWidgets(BuildContext context) {
