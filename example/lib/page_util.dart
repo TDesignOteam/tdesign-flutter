@@ -10,6 +10,7 @@ class ExamplePage extends StatefulWidget {
   final String title;
   final Color backgroundColor;
   final Color titleColor;
+
   ExamplePage(
       {required this.child,
       required this.title,
@@ -28,12 +29,12 @@ class ExamplePageState extends State<ExamplePage> with TickerProviderStateMixin 
     return Consumer<StyleModel>(
       builder: (context, style, _) => Scaffold(
         appBar: AppBar(
-          leading: 
-            GestureDetector(
-            child: style.layout != LayoutStyle.single ? Icon(TDIcons.swap) : Icon(TDIcons.arrowLeft),
-            onTap: style.layout != LayoutStyle.single ? () => Provider.of<StyleModel>(ResponsiveConfig.key.currentContext!, listen: false)
-                .toggleDetail(ResponsiveConfig.key.currentContext, this) : () => DetailModel.pop(context, this)
-          ),
+          leading: GestureDetector(
+              child: style.layout != LayoutStyle.single ? Icon(TDIcons.swap) : Icon(TDIcons.arrowLeft),
+              onTap: style.layout != LayoutStyle.single
+                  ? () => Provider.of<StyleModel>(ResponsiveConfig.key.currentContext!, listen: false)
+                      .toggleDetail(ResponsiveConfig.key.currentContext, this)
+                  : () => DetailModel.pop(context, this)),
           backgroundColor: widget.backgroundColor,
           iconTheme: IconThemeData(color: widget.titleColor),
           title: Text(

@@ -11,6 +11,7 @@ import 'pages/rate_page.dart';
 import 'pages/tags_page.dart';
 import 'pages/toast_page.dart';
 import 'pages/radio_page.dart';
+import 'pages/switch_page.dart';
 import 'responsive_layout/responsive_layout.dart';
 
 void main() {
@@ -101,6 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('CheckBox', (context) => _push(context, CheckBoxPage())),
     ListItem('Dialog', (context) => _push(context, DialogPage())),
     ListItem('Radio', (context) => _push(context, RadioPage())),
+    ListItem('Switch', (context) => _push(context, SwitchPage())),
   ];
 
   Widget build(BuildContext context) {
@@ -138,5 +140,6 @@ class ListItem<T> {
   final ActionFunc action;
   bool isSelected = false;
   T data;
+
   ListItem(this.data, this.action);
 }
