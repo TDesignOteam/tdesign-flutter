@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final model = StyleModel();
-    final toastBuilder = Toast.init();
+    final toastBuilder = TDToast.init();
     final messageBuilder = Message.init();
     final popupBuilder = Popup.init();
     return TDTheme(

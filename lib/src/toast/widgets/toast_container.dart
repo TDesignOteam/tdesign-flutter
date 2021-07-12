@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-import '../theme.dart';
+import '../toast_theme.dart';
 import '../toast.dart';
 
 class ToastContainer extends StatefulWidget {
@@ -94,7 +94,7 @@ class ToastContainerState extends State<ToastContainer>
 
   void _onTap() async {
     if (_dismissOnTap) {
-      await Toast.clear();
+      await TDToast.clear();
     }
   }
 
