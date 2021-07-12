@@ -4,17 +4,17 @@
 import 'package:flutter/material.dart';
 
 import 'toast.dart';
-import 'config.dart';
-import 'widgets/animation.dart';
+import 'toast_config.dart';
+import 'widgets/toast_animation.dart';
 
 // 考虑适配主题：indicatorColor => Toast.instance.themeStyle == ToastThemeStyle.dark ? Colors.white : Colors.black;
 class ToastTheme {
   /// color of indicator
-  static Color get indicatorColor => Toast.instance.indicatorColor;
+  static Color get indicatorColor => TDToast.instance.indicatorColor;
 
   /// background color of toast
   static Color get backgroundColor {
-    if (Toast.instance.showOverlay == true) {
+    if (TDToast.instance.showOverlay == true) {
       return Colors.black.withOpacity(0.6);
     } else {
       return ToastConfig.backgroundColor; // default
@@ -26,7 +26,7 @@ class ToastTheme {
 
   /// mask color of message
   static Color get maskColor {
-    if (Toast.instance.showOverlay == true) {
+    if (TDToast.instance.showOverlay == true) {
       return ToastConfig.backgroundColor;
     } else {
       // false or null
@@ -41,16 +41,16 @@ class ToastTheme {
   }
 
   /// font size of message
-  static double get fontSize => Toast.instance.fontSize;
+  static double get fontSize => TDToast.instance.fontSize;
 
   /// size of indicator
-  static double get indicatorSize => Toast.instance.indicatorSize;
+  static double get indicatorSize => TDToast.instance.indicatorSize;
 
   /// width of indicator
-  static double get indicatorLineWidth => Toast.instance.indicatorLineWidth;
+  static double get indicatorLineWidth => TDToast.instance.indicatorLineWidth;
 
   /// toast position
-  static ToastPosition get toastPosition => Toast.instance.toastPosition;
+  static ToastPosition get toastPosition => TDToast.instance.toastPosition;
 
   /// toast position
   static AlignmentGeometry alignment(ToastPosition? position) =>
@@ -61,29 +61,29 @@ class ToastTheme {
               : AlignmentDirectional.center);
 
   /// display duration
-  static Duration get displayDuration => Toast.instance.displayDuration;
+  static Duration get displayDuration => TDToast.instance.displayDuration;
 
   /// animation duration
-  static Duration get animationDuration => Toast.instance.animationDuration;
+  static Duration get animationDuration => TDToast.instance.animationDuration;
 
   /// contentPadding of loading
-  static EdgeInsets get contentPadding => Toast.instance.contentPadding;
+  static EdgeInsets get contentPadding => TDToast.instance.contentPadding;
 
   /// padding of message
-  static EdgeInsets get textPadding => Toast.instance.textPadding;
+  static EdgeInsets get textPadding => TDToast.instance.textPadding;
 
   /// textAlign of message
-  static TextAlign get textAlign => Toast.instance.textAlign;
+  static TextAlign get textAlign => TDToast.instance.textAlign;
 
   /// textStyle of message
-  static TextStyle? get textStyle => Toast.instance.textStyle;
+  static TextStyle? get textStyle => TDToast.instance.textStyle;
 
   /// radius of loading
-  static double get radius => Toast.instance.radius;
+  static double get radius => TDToast.instance.radius;
 
   /// should dismiss on user tap
-  static bool? get dismissOnTap => Toast.instance.dismissOnTap;
+  static bool? get dismissOnTap => TDToast.instance.dismissOnTap;
 
   /// 当显示背景遮罩时，禁止背景点击和滚动
-  static bool get ignoring => !Toast.instance.showOverlay;
+  static bool get ignoring => !TDToast.instance.showOverlay;
 }

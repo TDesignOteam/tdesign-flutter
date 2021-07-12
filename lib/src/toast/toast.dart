@@ -8,13 +8,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tdesign/src/toast/config.dart';
+import 'package:tdesign/src/toast/toast_config.dart';
 
-import 'widgets/container.dart';
-import 'widgets/indicator.dart';
-import 'widgets/overlayentry.dart';
-import 'widgets/toastwidget.dart';
-import 'theme.dart';
+import 'widgets/toast_container.dart';
+import 'widgets/toast_indicator.dart';
+import 'widgets/toast_overlayentry.dart';
+import 'widgets/toast_widget.dart';
+import 'toast_theme.dart';
 
 /// toast theme style
 // enum ToastThemeStyle {
@@ -30,7 +30,7 @@ enum ToastPosition {
   bottom,
 }
 
-class Toast {
+class TDToast {
   /// toast theme style.
   // late ToastThemeStyle themeStyle;
 
@@ -106,10 +106,10 @@ class Toast {
   ToastOverlayEntry? overlayEntry;
   Timer? _timer;
 
-  factory Toast() => _instance;
-  static final Toast _instance = Toast._internal();
+  factory TDToast() => _instance;
+  static final TDToast _instance = TDToast._internal();
 
-  Toast._internal() {
+  TDToast._internal() {
     /// set deafult value
     toastPosition = ToastConfig.toastPosition;
 
@@ -139,7 +139,7 @@ class Toast {
     dismissOnTap = ToastConfig.dismissOnTap;
   }
 
-  static Toast get instance => _instance;
+  static TDToast get instance => _instance;
   static bool get isShow => _instance.w != null;
 
   /// init FlutterToast which build Material with Overlay(OverlayEntry)

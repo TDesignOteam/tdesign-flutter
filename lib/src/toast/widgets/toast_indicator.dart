@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../theme.dart';
+import '../toast_theme.dart';
 
 class ToastIndicator extends StatefulWidget {
   const ToastIndicator({
