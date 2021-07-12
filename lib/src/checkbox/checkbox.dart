@@ -229,27 +229,33 @@ abstract class _WidgetHelper {
         children: [
           Opacity(
             opacity: selected ? 0 : 1,
-            child: unselectedIconBuilder?.call(theme) ??
-                Container(
-                  width: size * 5 / 6,
-                  height: size * 5 / 6,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: theme?.themeColor.bgIconFade ?? Colors.grey,
-                      width: size / 24,
+            child: Container(
+              key: Key('unselected_icon'),
+              child: unselectedIconBuilder?.call(theme) ??
+                  Container(
+                    width: size * 5 / 6,
+                    height: size * 5 / 6,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: theme?.themeColor.bgIconFade ?? Colors.grey,
+                        width: size / 24,
+                      ),
+                      shape: BoxShape.circle,
                     ),
-                    shape: BoxShape.circle,
                   ),
-                ),
+            ),
           ),
           Opacity(
             opacity: selected ? 1 : 0,
-            child: selectedIconBuilder?.call(theme) ??
-                Icon(
-                  _Default.selectedIconData,
-                  color: checkedColor ?? theme?.themeColor.primaryColor ?? TDColors.blue,
-                  size: size,
-                ),
+            child: Container(
+              key: Key('selected_icon'),
+              child: selectedIconBuilder?.call(theme) ??
+                  Icon(
+                    _Default.selectedIconData,
+                    color: checkedColor ?? theme?.themeColor.primaryColor ?? TDColors.blue,
+                    size: size,
+                  ),
+            ),
           ),
         ],
       ),
@@ -429,6 +435,7 @@ class _CheckGroupState extends State<CheckGroup> {
         }
       }
     });
+    _callbackOnChange();
   }
 
   _checkAll() {
@@ -438,21 +445,26 @@ class _CheckGroupState extends State<CheckGroup> {
         selectedIndices.add(i);
       }
     });
+    _callbackOnChange();
   }
 
   _uncheckAll() {
     setState(() {
       selectedIndices.clear();
     });
+    _callbackOnChange();
   }
 
   _toggle(String name) {
-    int index = _indexOfName(name);
-    if (selectedIndices.contains(index)) {
-      selectedIndices.remove(index);
-    } else {
-      selectedIndices.add(index);
-    }
+    setState(() {
+      int index = _indexOfName(name);
+      if (selectedIndices.contains(index)) {
+        selectedIndices.remove(index);
+      } else {
+        selectedIndices.add(index);
+      }
+    });
+    _callbackOnChange();
   }
 
   _check(String name) {
@@ -462,15 +474,17 @@ class _CheckGroupState extends State<CheckGroup> {
         selectedIndices.add(index);
       }
     });
+    _callbackOnChange();
   }
 
   _uncheck(String name) {
     setState(() {
       int index = _indexOfName(name);
       if (index >= 0 && index < numTotal) {
-        selectedIndices.remove(widget.options[index]);
+        selectedIndices.remove(index);
       }
     });
+    _callbackOnChange();
   }
 
   int _indexOfName(String name) {
@@ -480,6 +494,14 @@ class _CheckGroupState extends State<CheckGroup> {
       }
     }
     return -1;
+  }
+
+  void _callbackOnChange() {
+    List<String> checked = [];
+    for (int i in selectedIndices) {
+      checked.add(widget.options[i].name);
+    }
+    widget.onChange?.call(checked);
   }
 
   @override
