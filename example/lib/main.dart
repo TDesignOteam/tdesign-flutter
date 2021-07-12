@@ -1,18 +1,19 @@
 import 'package:example/pages/badge_page.dart';
 import 'package:example/pages/checkbox_page.dart';
+import 'package:example/pages/picker_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tdesign/tdesign.dart';
 
-import 'pages/icons_page.dart';
-import 'pages/rate_page.dart';
-import 'pages/tags_page.dart';
-import 'pages/toast_page.dart';
-import 'pages/message_page.dart';
 import 'pages/dialog_page.dart';
+import 'pages/icons_page.dart';
+import 'pages/message_page.dart';
 import 'pages/popup_page.dart';
 import 'pages/radio_page.dart';
+import 'pages/rate_page.dart';
 import 'pages/switch_page.dart';
+import 'pages/tags_page.dart';
+import 'pages/toast_page.dart';
 import 'responsive_layout/responsive_layout.dart';
 
 void main() {
@@ -113,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Popup', (context) => _push(context, PopupPage())),
     ListItem('CheckBox', (context) => _push(context, CheckBoxPage())),
     ListItem('Radio', (context) => _push(context, RadioPage())),
+    ListItem('Picker', (context) => _push(context, PickerPage())),
     ListItem('Switch', (context) => _push(context, SwitchPage())),
   ];
 
