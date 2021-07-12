@@ -273,13 +273,13 @@ class _BadgeState extends State<Badge> {
             alignment: Alignment.center,
             width: width,
             height: size.height,
-            color: widget.color ?? theme?.themeColor.errorColor,
+            color: widget.color ?? theme?.themeColor.errorColor ?? TDColors.red,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: _config.sidePadding),
               child: Text(
                 _getText(),
                 style: TextStyle(
-                  color: widget.textColor ?? theme?.themeColor.textAntiPrimaryColor,
+                  color: widget.textColor ?? theme?.themeColor.textAntiPrimaryColor ?? TDColors.fontBlack,
                   fontSize: _config.textSize,
                 ),
               ),
