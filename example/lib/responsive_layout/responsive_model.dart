@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -52,7 +51,6 @@ class DetailModel extends ResponsiveWidgetModel {
 
   /// 关闭详情页，会自动处理当前状态
   static pop(BuildContext context, TickerProvider? ticker) {
-
     if (context.findAncestorWidgetOfExactType<ResponsivePage>() != null) {
       final style = Provider.of<StyleModel>(context, listen: false);
       if (style.layout == LayoutStyle.single) {
@@ -103,6 +101,7 @@ class StyleModel with ChangeNotifier {
 
   /// 当前布局样式
   LayoutStyle get layout => _layout;
+
   /// 当前全屏状态
   FullScreenStyle get fullScreen => _fullScreen;
 

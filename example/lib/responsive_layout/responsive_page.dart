@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +30,6 @@ class _MaskAnimated extends ResponsiveAnimatedModel {
 
 /// 响应式布局的根部state
 class ResponsivePageState extends State<ResponsivePage> with TickerProviderStateMixin {
-  double? _splitDragBeginDx;
   final _maskAnimated = _MaskAnimated(Duration(milliseconds: 100));
   @override
   Widget build(BuildContext context) {
@@ -58,10 +55,10 @@ class ResponsivePageState extends State<ResponsivePage> with TickerProviderState
           final isHomeFull = style.fullScreen == FullScreenStyle.home;
           final mediaData = MediaQuery.of(context);
           final width = mediaData.size.width - mediaData.padding.left - mediaData.padding.right;
-          final double hw =
-              isSplit ? ResponsiveConfig.splitHomeWidth.ceilToDouble() : width;
-          final double dw =
-              isSplit ? ResponsiveConfig.splitDetailWidth(context, width.floorToDouble()) : ((dModel.widget == null || isHomeFull) ? 0 : width);
+          final double hw = isSplit ? ResponsiveConfig.splitHomeWidth.ceilToDouble() : width;
+          final double dw = isSplit
+              ? ResponsiveConfig.splitDetailWidth(context, width.floorToDouble())
+              : ((dModel.widget == null || isHomeFull) ? 0 : width);
           final bool isShowHome = style.layout == LayoutStyle.single && (dModel.widget == null || isHomeFull);
           final double hValue = isSplit ? home.value : 0;
           final double dValue = isSplit ? detail.value : 0;
@@ -104,7 +101,6 @@ class ResponsivePageState extends State<ResponsivePage> with TickerProviderState
                 ),
               ],
             ),
-
           ]);
         },
       ),
