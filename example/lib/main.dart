@@ -39,14 +39,10 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         home: MultiProvider(
           providers: [
             ChangeNotifierProvider<StyleModel>(create: (context) => model),
-            ChangeNotifierProvider<HomeModel>(
-                create: (context) => HomeModel(MyHomePage())),
-            ChangeNotifierProvider<DetailModel>(
-                create: (_) => DetailModel(null)),
-            ChangeNotifierProvider<HomeAnimated>(
-                create: (_) => HomeAnimated(model)),
-            ChangeNotifierProvider<DetailAnimated>(
-                create: (_) => DetailAnimated(model)),
+            ChangeNotifierProvider<HomeModel>(create: (context) => HomeModel(MyHomePage())),
+            ChangeNotifierProvider<DetailModel>(create: (_) => DetailModel(null)),
+            ChangeNotifierProvider<HomeAnimated>(create: (_) => HomeAnimated(model)),
+            ChangeNotifierProvider<DetailAnimated>(create: (_) => DetailAnimated(model)),
           ],
           child: ResponsivePage(
             emptyWidget: Stack(
@@ -65,12 +61,9 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                               child: Center(
                                 child: TextButton(
                                   child: Text('返回'),
-                                  onPressed: () => Provider.of<StyleModel>(
-                                          ResponsiveConfig.key.currentContext!,
-                                          listen: false)
-                                      .toggleDetail(
-                                          ResponsiveConfig.key.currentContext,
-                                          this),
+                                  onPressed: () =>
+                                      Provider.of<StyleModel>(ResponsiveConfig.key.currentContext!, listen: false)
+                                          .toggleDetail(ResponsiveConfig.key.currentContext, this),
                                 ),
                               ),
                             ),
@@ -130,9 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (context, index) {
           return Container(
             margin: EdgeInsets.symmetric(vertical: 4),
-            color: list[index].isSelected
-                ? Colors.red[100]
-                : Theme.of(context).dialogBackgroundColor,
+            color: list[index].isSelected ? Colors.red[100] : Theme.of(context).dialogBackgroundColor,
             child: TextButton(
               onPressed: () {
                 ListItem item = this.list[index];

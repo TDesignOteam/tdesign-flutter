@@ -20,8 +20,7 @@ class TDTextStyle {
   TextStyle m16Primary(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
     Color? primaryColor = theme?.themeColor.primaryColor;
-    return TextStyle(
-        fontSize: 16, color: primaryColor, fontWeight: FontWeight.w500);
+    return TextStyle(fontSize: 16, color: primaryColor, fontWeight: FontWeight.w500);
   }
 
   TextStyle r14Primary(BuildContext context) {
@@ -42,10 +41,7 @@ class TDTextStyle {
   }
 
   TextStyle m16Text(BuildContext context, {int textLevel = 1}) {
-    return TextStyle(
-        fontSize: 16,
-        color: _textColor(context, textLevel),
-        fontWeight: FontWeight.w500);
+    return TextStyle(fontSize: 16, color: _textColor(context, textLevel), fontWeight: FontWeight.w500);
   }
 
   TextStyle r14Text(BuildContext context, {int textLevel = 1}) {
@@ -53,10 +49,7 @@ class TDTextStyle {
   }
 
   TextStyle m14Text(BuildContext context, {int textLevel = 1}) {
-    return TextStyle(
-        fontSize: 14,
-        color: _textColor(context, textLevel),
-        fontWeight: FontWeight.w500);
+    return TextStyle(fontSize: 14, color: _textColor(context, textLevel), fontWeight: FontWeight.w500);
   }
 
   Color? _textColor(BuildContext context, int textLevel) {
@@ -88,8 +81,7 @@ class TDTextStyle {
   TextStyle m16Error(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
     Color? errorColor = theme?.themeColor.errorColor;
-    return TextStyle(
-        fontSize: 16, color: errorColor, fontWeight: FontWeight.w500);
+    return TextStyle(fontSize: 16, color: errorColor, fontWeight: FontWeight.w500);
   }
 
   TextStyle r14Error(BuildContext context) {

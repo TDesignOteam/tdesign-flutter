@@ -8,10 +8,10 @@ import 'package:tdesign/tdesign.dart';
 import 'dart:math' as math;
 
 /// Badge支持的预设尺寸枚举
-enum BadgeSize { medium, small }
+enum TDBadgeSize { medium, small }
 
 /// Badge的形状枚举
-enum BadgeShape { circle, rounded, ribbon }
+enum TDBadgeShape { circle, rounded, ribbon }
 
 // 会基于Badge尺寸变化的特定配置
 class _BadgeSizeSpecConfig {
@@ -50,8 +50,8 @@ class _BadgeSizeSpecConfig {
 // 默认配置
 abstract class _Default {
   // 不同`size`的Badge所对应的默认配置
-  static const Map<BadgeSize, _BadgeSizeSpecConfig> sizeSpecConfig = {
-    BadgeSize.medium: _BadgeSizeSpecConfig(
+  static const Map<TDBadgeSize, _BadgeSizeSpecConfig> sizeSpecConfig = {
+    TDBadgeSize.medium: _BadgeSizeSpecConfig(
       roundedBorderRadius: 4,
       textSize: 14,
       sidePadding: 3,
@@ -60,7 +60,7 @@ abstract class _Default {
       ribbonOut: 45,
       ribbonOffset: 9.5,
     ),
-    BadgeSize.small: _BadgeSizeSpecConfig(
+    TDBadgeSize.small: _BadgeSizeSpecConfig(
       roundedBorderRadius: 3,
       textSize: 11,
       sidePadding: 2,
@@ -78,10 +78,10 @@ abstract class _Default {
   static const maxCount = 99;
 
   // Badge大小未设置时的的默认值
-  static const size = BadgeSize.medium;
+  static const size = TDBadgeSize.medium;
 
   // Badge形状未设置时的默认形状
-  static const shape = BadgeShape.circle;
+  static const shape = TDBadgeShape.circle;
 
   // Badge显示数字时是否显示0的默认值
   static const showZero = false;
@@ -108,8 +108,8 @@ abstract class _Default {
 ///   child: ListTile(title: Text('ListTile')),
 /// )
 /// ```
-class Badge extends StatefulWidget {
-  const Badge({
+class TDBadge extends StatefulWidget {
+  const TDBadge({
     this.child,
     this.dot = _Default.dot,
     this.color,
@@ -157,12 +157,12 @@ class Badge extends StatefulWidget {
   /// Badge的尺寸
   ///
   /// 默认为`BadgeSize.medium`。
-  final BadgeSize size;
+  final TDBadgeSize size;
 
   /// Badge的形状
   ///
   /// 默认为`BadgeShape.circle`。
-  final BadgeShape shape;
+  final TDBadgeShape shape;
 
   /// 在显示`count`的情况下，当`count = 0`时是否要显示Badge
   ///
@@ -178,9 +178,9 @@ class Badge extends StatefulWidget {
   State<StatefulWidget> createState() => _BadgeState();
 }
 
-class _BadgeState extends State<Badge> {
+class _BadgeState extends State<TDBadge> {
   TDTheme? theme;
-  
+
   @override
   Widget build(BuildContext context) {
     theme = TDTheme.of(context);
@@ -198,7 +198,7 @@ class _BadgeState extends State<Badge> {
       return _buildDot(_config);
     }
     // 类型为ribbon
-    if (widget.shape == BadgeShape.ribbon) {
+    if (widget.shape == TDBadgeShape.ribbon) {
       if (_noChild) {
         return Container();
       }
@@ -286,7 +286,7 @@ class _BadgeState extends State<Badge> {
             ),
           ),
           borderRadius: BorderRadius.all(
-            Radius.circular(widget.shape == BadgeShape.circle ? size.height / 2 : _config.roundedBorderRadius),
+            Radius.circular(widget.shape == TDBadgeShape.circle ? size.height / 2 : _config.roundedBorderRadius),
           ),
         ),
       ),
@@ -346,7 +346,7 @@ class _RibbonPainter extends CustomPainter {
     required this.color,
     required this.textColor,
     required this.config,
-  })   : inLength = config.ribbonIn,
+  })  : inLength = config.ribbonIn,
         outLength = config.ribbonOut;
   @override
   void paint(Canvas canvas, Size size) {

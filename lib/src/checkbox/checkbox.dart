@@ -54,7 +54,7 @@ typedef Widget IconBuilder(TDTheme? theme);
 ///   },
 /// )
 /// ```
-class CheckBox extends StatefulWidget {
+class TDCheckBox extends StatefulWidget {
   /// 选项的值，即ID，必须传入。
   final String name;
 
@@ -92,7 +92,7 @@ class CheckBox extends StatefulWidget {
   /// 选项选中状态变化的回调
   final OnChangeSingle? onChange;
 
-  const CheckBox({
+  const TDCheckBox({
     required this.name,
     required this.title,
     this.content,
@@ -113,7 +113,7 @@ class CheckBox extends StatefulWidget {
   }
 }
 
-class _CheckBoxState extends State<CheckBox> {
+class _CheckBoxState extends State<TDCheckBox> {
   bool selected = false;
   TDTheme? theme;
 
@@ -267,7 +267,7 @@ typedef void _ToggleListener(String name);
 
 /// 复选框群组控制器
 /// 允许在外部控制复选框群组中选项的选择与否。
-class CheckGroupController {
+class TDCheckGroupController {
   // 反选所有选项的调用
   VoidCallback? _toggleAll;
 
@@ -338,7 +338,7 @@ class CheckGroupController {
 ///     GroupOption(name: '选项三', title: '选项三'),
 ///   ])
 /// ```
-class CheckGroup extends StatefulWidget {
+class TDCheckGroup extends StatefulWidget {
   /// 选项信息实例的列表，必须传入
   /// 选项的数量由列表长度决定，长度不可为0。
   final List<GroupOption> options;
@@ -378,7 +378,7 @@ class CheckGroup extends StatefulWidget {
   final OnChangeGroup? onChange;
 
   /// 控制器，用于从使用侧控制全选和全部取消。
-  final CheckGroupController? controller;
+  final TDCheckGroupController? controller;
 
   /// 可选的选项之间的分割widget。
   final Widget? separatorWidget;
@@ -387,7 +387,7 @@ class CheckGroup extends StatefulWidget {
   /// 使用controller进行的外部控制操作不受约束。
   final int? selectLimit;
 
-  const CheckGroup({
+  const TDCheckGroup({
     required this.options,
     this.defaultSelected = const [],
     this.contentDisabled = _Default.contentDisabled,
@@ -408,7 +408,7 @@ class CheckGroup extends StatefulWidget {
   }
 }
 
-class _CheckGroupState extends State<CheckGroup> {
+class _CheckGroupState extends State<TDCheckGroup> {
   int numTotal = 0;
   Set<int> selectedIndices = Set();
   TDTheme? theme;

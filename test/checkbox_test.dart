@@ -7,7 +7,7 @@ void main() {
   List<String> selectedList = [];
   testWidgets('测试CheckBox正常显示和操作', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: CheckBox(
+      home: TDCheckBox(
         name: '1.1',
         title: '单行标题',
         onChange: (checked, _) {
@@ -25,7 +25,7 @@ void main() {
 
   testWidgets('测试CheckBox disable', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: CheckBox(
+      home: TDCheckBox(
         name: '1.1',
         title: '单行标题',
         disabled: true,
@@ -41,7 +41,7 @@ void main() {
 
   testWidgets('测试CheckBox文字不可点选', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: CheckBox(
+      home: TDCheckBox(
         name: '1.1',
         title: '单行标题',
         contentDisabled: true,
@@ -59,7 +59,7 @@ void main() {
 
   testWidgets('测试CheckBox自定义图标', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: CheckBox(
+      home: TDCheckBox(
         name: '1.1',
         title: '单行标题',
         selectedIconBuilder: (_) => Icon(TDIcons.add, key: Key('custom_selected_icon')),
@@ -72,7 +72,7 @@ void main() {
 
   testWidgets('测试CheckGroup正常显示和操作', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: CheckGroup(
+      home: TDCheckGroup(
         options: [
           GroupOption(name: '选项1', title: '选项一'),
           GroupOption(name: '选项2', title: '选项二'),
@@ -96,7 +96,7 @@ void main() {
 
   testWidgets('测试CheckGroup最多可选', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: CheckGroup(
+      home: TDCheckGroup(
         options: [
           GroupOption(name: '选项1', title: '选项一'),
           GroupOption(name: '选项2', title: '选项二'),
@@ -121,9 +121,9 @@ void main() {
   });
 
   testWidgets('测试CheckGroup Controller控制', (WidgetTester tester) async {
-    CheckGroupController controller = new CheckGroupController();
+    TDCheckGroupController controller = new TDCheckGroupController();
     await tester.pumpWidget(MaterialApp(
-      home: CheckGroup(
+      home: TDCheckGroup(
         options: [
           GroupOption(name: '选项1', title: '选项一'),
           GroupOption(name: '选项2', title: '选项二'),

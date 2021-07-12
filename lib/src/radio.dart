@@ -30,8 +30,8 @@ abstract class _Default {
 ///     GroupOption(name: '选项三', title: '选项三'),
 ///   ])
 /// ```
-class RadioGroup extends CheckGroup {
-  RadioGroup({
+class TDRadioGroup extends TDCheckGroup {
+  TDRadioGroup({
     required List<GroupOption> options,
     bool contentDisabled = _Default.contentDisabled,
     int limitTitleRow = _Default.limitTitleRow,

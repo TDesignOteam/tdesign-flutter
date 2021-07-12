@@ -66,13 +66,13 @@ class RatingIconConfig {
 ///   count: 5,
 /// )
 /// ```
-class Rate extends StatefulWidget {
+class TDRate extends StatefulWidget {
   /// 构造 [Rate]
   ///
   /// 图标配置方式有两种：(当这两个参数都不设置时，使用默认的)
   /// - 在创建 [Rate] 时就通过 [ratingIcons] 来配置
   /// - 在运行时，通过设置的 [itemBuilder] 来获取
-  const Rate({
+  const TDRate({
     RatingIconConfig? ratingIcons,
     IndexedWidgetBuilder? itemBuilder,
     this.onRatingUpdate,
@@ -147,8 +147,8 @@ class Rate extends StatefulWidget {
   _RateState createState() => _RateState();
 }
 
-class _RateState extends State<Rate> {
-  double _rating = 0.0;   // 用来记录分值
+class _RateState extends State<TDRate> {
+  double _rating = 0.0; // 用来记录分值
   bool _isRTL = false;
 
   late double _minRating, _maxRating;
@@ -162,7 +162,7 @@ class _RateState extends State<Rate> {
   }
 
   @override
-  void didUpdateWidget(Rate oldWidget) {
+  void didUpdateWidget(TDRate oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value) {
       _rating = widget.value;
@@ -212,8 +212,7 @@ class _RateState extends State<Rate> {
 extension _RateStateRating on _RateState {
   // 创建指定位置的RateIcon
   Widget _buildRating(BuildContext context, int index) {
-    final itemBuilder =
-        widget._itemBuilder ?? _Default.itemBuilder(widget.color);
+    final itemBuilder = widget._itemBuilder ?? _Default.itemBuilder(widget.color);
     final builderIcon = itemBuilder(context, index);
 
     Widget ratingIcon = _buildRatingIcon(widget._ratingIcons, builderIcon, index);

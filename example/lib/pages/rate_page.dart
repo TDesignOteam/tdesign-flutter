@@ -55,11 +55,11 @@ class _RatePageState extends State<RatePage> {
   }
 
   Widget _defaultIconRate() {
-    return Rate(value: 2, count: 5);
+    return TDRate(value: 2, count: 5);
   }
 
   Widget _allowHalf() {
-    return Rate(
+    return TDRate(
       value: 2.5,
       count: 5,
       allowHalf: true,
@@ -67,7 +67,7 @@ class _RatePageState extends State<RatePage> {
   }
 
   Widget _rateByItemBuilder() {
-    return Rate(
+    return TDRate(
       value: 2,
       count: 5,
       itemBuilder: (context, _) => Padding(
@@ -84,17 +84,17 @@ class _RatePageState extends State<RatePage> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Rate(value: 0, count: 4, size: 30),
+        TDRate(value: 0, count: 4, size: 30),
         Divider(),
-        Rate(value: 3, count: 8, size: 20),
+        TDRate(value: 3, count: 8, size: 20),
         Divider(),
-        Rate(value: 4, count: 5, size: 50)
+        TDRate(value: 4, count: 5, size: 50)
       ]),
     );
   }
 
   Widget _rateByConfig() {
-    return Rate(
+    return TDRate(
       value: 2.5,
       allowHalf: true,
       count: 5,
@@ -110,7 +110,7 @@ class _RatePageState extends State<RatePage> {
   }
 
   Widget _withHelperText() {
-    return Rate(
+    return TDRate(
       value: 2,
       count: 5,
       allowHalf: false,

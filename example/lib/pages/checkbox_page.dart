@@ -12,7 +12,7 @@ class CheckBoxPage extends StatefulWidget {
 class _CheckBoxPageState extends State<CheckBoxPage> {
   bool selected = false;
   List<String> selectedInGroup = [];
-  CheckGroupController controller = CheckGroupController();
+  TDCheckGroupController controller = TDCheckGroupController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
   Widget _widget() {
     return ListView(children: [
       _buildTile(
-        CheckBox(
+        TDCheckBox(
           name: '1.1',
           title: '单行标题',
           onChange: (selected, name) {
@@ -38,11 +38,11 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       )),
       Divider(height: 0),
       _buildTile(
-        CheckBox(name: '1.2', title: '默认选中', defaultSelected: true),
+        TDCheckBox(name: '1.2', title: '默认选中', defaultSelected: true),
       ),
       Divider(height: 0),
       _buildTile(
-        CheckBox(
+        TDCheckBox(
           name: '1.3',
           title: '多行标题，最大行数可以控制。\n这是一个标题行数限制在3行以内的选项，长文本自动换行，超出内容将被折叠成点点点点点点点点点点点点点点点。',
           defaultSelected: true,
@@ -51,7 +51,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       ),
       Divider(height: 0),
       _buildTile(
-        CheckBox(
+        TDCheckBox(
           name: '1.4',
           title: '单行标题',
           disabled: true,
@@ -59,7 +59,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       ),
       Divider(height: 0),
       _buildTile(
-        CheckBox(
+        TDCheckBox(
           name: '1.5',
           title: '默认选中',
           defaultSelected: true,
@@ -68,7 +68,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       ),
       Divider(height: 0),
       _buildTile(
-        CheckBox(
+        TDCheckBox(
           name: '1.6',
           title: '多行标题，最大行数可以控制。\n这是一个标题行数限制在3行以内的选项，长文本自动换行，超出内容将被折叠成点点点点点点点点点点点点点点点。',
           limitTitleRow: 3,
@@ -78,11 +78,11 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       ),
       Divider(height: 0),
       _buildTile(
-        CheckBox(name: '1.7', title: '本行文字部分点击无效', contentDisabled: true),
+        TDCheckBox(name: '1.7', title: '本行文字部分点击无效', contentDisabled: true),
       ),
       PageUtil.buildSubTitle('自定义图标和颜色'),
       _buildTile(
-        CheckBox(
+        TDCheckBox(
           name: '2.1',
           checkedColor: TDColors.green,
           title: '自定义颜色',
@@ -91,7 +91,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       ),
       Divider(height: 0),
       _buildTile(
-        CheckBox(
+        TDCheckBox(
           name: '2.2',
           selectedIconBuilder: (_) => Icon(TDIcons.notificationFilled, color: TDColors.blue),
           unselectedIconBuilder: (_) => Icon(TDIcons.notification),
@@ -100,7 +100,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       ),
       PageUtil.buildSubTitle('带辅助信息多选框'),
       _buildTile(
-        CheckBox(
+        TDCheckBox(
           name: '3.1',
           title: '单行标题',
           content: '我的思想随着这些闪耀的绿叶而闪耀；我的心灵因了这日光的抚触而歌唱；我的生命因为偕了万物一同浮泛在空间的蔚蓝，时间的墨黑而感到欢快。',
@@ -108,7 +108,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       ),
       Divider(height: 0),
       _buildTile(
-        CheckBox(
+        TDCheckBox(
           name: '3.2',
           title: '单行标题',
           limitContentRow: 5,
@@ -118,7 +118,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       ),
       Divider(height: 0),
       _buildTile(
-        CheckBox(
+        TDCheckBox(
           name: '3.3',
           title: '单行标题',
           limitContentRow: 5,
@@ -129,7 +129,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       ),
       Divider(height: 0),
       _buildTile(
-        CheckBox(
+        TDCheckBox(
           name: '2.4',
           title: '标题和内容都可以很长，会自动换行，可以给定最大行数限制，默认的行数都是1。超出行数的部分会被折叠。',
           limitTitleRow: 5,
@@ -140,7 +140,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
         ),
       ),
       _buildTile(
-        CheckBox(
+        TDCheckBox(
           name: '2.4',
           title: '标题和内容都可以很长，会自动换行，可以给定最大行数限制，默认的行数都是1。超出行数的部分会被折叠。',
           content: '我们的生命就似渡过一个大海，我们都相聚在这个狭小的舟中。死时，我们便到了岸，各往各的世界去了。',
@@ -148,7 +148,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
         ),
       ),
       PageUtil.buildSubTitle('选项框群组 - 最多选两项'),
-      _buildTile(CheckGroup(
+      _buildTile(TDCheckGroup(
           options: [
             GroupOption(name: '选项一', title: '选项一'),
             GroupOption(name: '选项二', title: '选项二'),
@@ -165,7 +165,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
         style: TextStyle(color: Colors.grey),
       )),
       PageUtil.buildSubTitle('选项框群组 - 控制'),
-      _buildTile(CheckGroup(
+      _buildTile(TDCheckGroup(
         options: [
           GroupOption(name: '1', title: '选项一', content: '使用controller从外部控制选项。'),
           GroupOption(name: '2', title: '选项二', content: '控制包括：选择、取消、反选单个选项，选择、取消、反选全部选项'),
