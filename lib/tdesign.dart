@@ -12,5 +12,6 @@ export 'src/toast.dart';
 export 'src/message.dart';
 export 'src/checkbox.dart';
 export 'src/radio.dart';
+export 'src/td_switch.dart';
 export 'theme/td_colors.dart';
 export 'theme/td_theme.dart';
