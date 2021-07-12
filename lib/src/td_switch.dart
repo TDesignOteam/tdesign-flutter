@@ -7,6 +7,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tdesign/tdesign.dart';
 
 /// Switch支持的类型枚举
 enum SwitchType { normal, loading, disable }
@@ -33,17 +34,8 @@ abstract class _Default {
   // switch当前的类型
   static const SwitchType type = SwitchType.normal;
 
-  // switch处于开启状态时的底色
-  static const activeColor = Color(0xFF2962FF);
-
-  // switch处于关闭状态时的底色
-  static const inactiveColor = Colors.grey;
-
   // switch与描述之间的间距
   static const descPadding = 10.0;
-
-  // 描述文字的默认颜色
-  static const textColor = Colors.grey;
 
   // 描述文字的默认字体大小
   static const textSize = 16.0;
@@ -75,11 +67,11 @@ class TDSwitch extends StatelessWidget {
     required this.value,
     required this.onChanged,
     this.type = _Default.type,
-    this.activeColor = _Default.activeColor,
-    this.inactiveColor = _Default.inactiveColor,
+    this.activeColor,
+    this.inactiveColor,
     this.text,
+    this.textColor,
     this.descPadding = _Default.descPadding,
-    this.textColor = _Default.textColor,
     this.textSize = _Default.textSize,
   })  : assert(descPadding > 0, 'the padding between switch and description text must be greater than 0 !'),
         assert(textSize > 0, 'textSize must be greater than 0 !'),
@@ -112,13 +104,13 @@ class TDSwitch extends StatelessWidget {
 
   /// switch开启时的底色。
   ///
-  /// 默认值为`Color(0xFF2962FF)`
-  final Color activeColor;
+  /// 默认值为`Theme.themeColor.primaryColor`
+  final Color? activeColor;
 
   /// switch关闭时的底色。
   ///
-  /// 默认值为`Colors.grey`
-  final Color inactiveColor;
+  /// 默认值为`Theme.themeColor.bgIconFade`
+  final Color? inactiveColor;
 
   /// switch的描述文字。
   ///
@@ -134,8 +126,8 @@ class TDSwitch extends StatelessWidget {
 
   /// 描述文字的颜色。
   ///
-  /// 默认值为`Colors.grey`，仅当[text]不为null时有效。
-  final Color textColor;
+  /// 默认值为`Theme.themeColor.textColorL2`，仅当[text]不为null时有效。
+  final Color? textColor;
 
   /// 描述文字的字体大小。
   ///
@@ -166,12 +158,13 @@ class TDSwitch extends StatelessWidget {
   }
 
   Widget _buildText(BuildContext context) {
+    var theme = TDTheme.of(context);
     return FittedBox(
       fit: BoxFit.contain,
       child: Text(
         text ?? "描述文字",
         style: TextStyle(
-          color: textColor,
+          color: textColor ?? theme?.themeColor.textColorL2 ?? TDColors.fontWhite[4],
           fontSize: textSize,
         ),
       ),
@@ -190,12 +183,13 @@ class TDSwitch extends StatelessWidget {
   }
 
   List<Widget> _buildSwitchWidgets(BuildContext context) {
+    var theme = TDTheme.of(context);
     var switchWidgets = <Widget>[];
     // 添加switch主体部分
     switchWidgets.add(CupertinoSwitch(
       value: value,
-      activeColor: activeColor,
-      trackColor: inactiveColor,
+      activeColor: activeColor ?? theme?.themeColor.primaryColor ?? TDColors.blue,
+      trackColor: inactiveColor ?? theme?.themeColor.bgIconFade ?? TDColors.fontWhite[4],
       onChanged: onChanged,
     ));
     // 添加switch的loading小圆圈
@@ -209,7 +203,7 @@ class TDSwitch extends StatelessWidget {
           height: _Default.loadingIndicatorSize,
           child: CircularProgressIndicator(
             backgroundColor: Colors.transparent,
-            valueColor: AlwaysStoppedAnimation(activeColor),
+            valueColor: AlwaysStoppedAnimation(activeColor ?? theme?.themeColor.primaryColor ?? TDColors.blue),
           ),
         ),
       ));
