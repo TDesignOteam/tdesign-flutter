@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'tag_data.dart';
 
-/// Used by [TagItem.onClick].
-typedef OnClickCallback = void Function(TagItemData i);
+/// Used by [TDTagItem.onClick].
+typedef OnClickCallback = void Function(TDTagItemData i);
 
-/// Used by [TagItem.OnLongPressed].
-typedef OnLongPressCallback = void Function(TagItemData i);
+/// Used by [TDTagItem.OnLongPressed].
+typedef OnLongPressCallback = void Function(TDTagItemData i);
 
-/// Used by [TagItem.onRemove].
+/// Used by [TDTagItem.onRemove].
 typedef OnRemoveCallback = void Function();
 
 /// 主题效果：TagItemTheme.natural #F9F9F9, #DFEFFF, #FFFFFF with mark shape
@@ -43,8 +43,8 @@ enum TagItemShape {
   mark // border: 1px, solid, #0052D9
 }
 
-class TagItem extends StatefulWidget {
-  TagItem(
+class TDTagItem extends StatefulWidget {
+  TDTagItem(
       {Key? key,
       required this.index,
       required this.title,
@@ -68,74 +68,74 @@ class TagItem extends StatefulWidget {
       this.onLongPress})
       : super(key: key);
 
-  /// Id of [TagItem] - required
+  /// Id of [TDTagItem] - required
   final int index;
 
-  /// Title of [TagItem] - required
+  /// Title of [TDTagItem] - required
   final String title;
 
   /// Possibility to add any custom value in customData field, you can retrieve this later. A good example: store an id from Firestore document.
   final dynamic customData;
 
-  /// theme of [TagItem]
+  /// theme of [TDTagItem]
   final TagItemTheme theme;
 
-  /// style of [TagItem]
+  /// style of [TDTagItem]
   final TagItemStyle style;
 
-  /// size of [TagItem]
+  /// size of [TDTagItem]
   final TagItemSize size;
 
-  /// shape of [TagItem]
+  /// shape of [TDTagItem]
   final TagItemShape shape;
 
-  /// BoxShadow of the [TagItem]
+  /// BoxShadow of the [TDTagItem]
   final double elevation;
 
-  /// padding of the [TagItem]
+  /// padding of the [TDTagItem]
   final EdgeInsets padding;
 
-  /// highlight Color [TagItem]
+  /// highlight Color [TDTagItem]
   final Color? highlightColor;
 
-  /// Splash color [TagItem]
+  /// Splash color [TDTagItem]
   final Color? splashColor;
 
   /// when you want only one tag selected. same as radio-button
   final bool singleSelection;
 
-  /// Disable State [TagItem], only for TagItemStyle.natural
+  /// Disable State [TDTagItem], only for TagItemStyle.natural
   /// if disabled, neither removable nor clickable
   final bool disabled;
 
-  /// Check State of [TagItem], only for TagItemStyle.natural
+  /// Check State of [TDTagItem], only for TagItemStyle.natural
   final bool checked;
 
-  /// Removable of [TagItem], aka closable, prior to clickable
+  /// Removable of [TDTagItem], aka closable, prior to clickable
   /// enableUserInteraction = removable || clickable
   final bool removable;
 
-  /// Remove Callback of [TagItem], aka close
+  /// Remove Callback of [TDTagItem], aka close
   final OnRemoveCallback? onRemove;
 
-  /// Clickable of [TagItem], lower priority than removable
+  /// Clickable of [TDTagItem], lower priority than removable
   /// enableUserInteraction = removable || clickable
   final bool clickable;
 
   /// callback
   final OnClickCallback? onClick;
 
-  /// Scale Factor of [TagItem] - double
+  /// Scale Factor of [TDTagItem] - double
   final double textScaleFactor;
 
   /// callback
   final OnLongPressCallback? onLongPress;
 
   @override
-  _TagItemState createState() => _TagItemState();
+  _TDTagItemState createState() => _TDTagItemState();
 }
 
-class _TagItemState extends State<TagItem> {
+class _TDTagItemState extends State<TDTagItem> {
   late TagPanelInherited _tagPanelIn;
   TagItemContext? _tagItemCxt;
 
@@ -193,17 +193,14 @@ class _TagItemState extends State<TagItem> {
       //shadowColor: _tagItemCxt.highlights? Colors.red : Colors.blue,
       child: InkWell(
         borderRadius: BorderRadius.circular(_borderRadius),
-        highlightColor:
-            widget.clickable ? widget.highlightColor : Colors.transparent,
+        highlightColor: widget.clickable ? widget.highlightColor : Colors.transparent,
         splashColor: widget.clickable ? widget.splashColor : Colors.transparent,
         child: Container(
             constraints: BoxConstraints(
               minWidth: _tagSize.width,
               maxWidth: _maxWidth,
             ),
-            decoration: BoxDecoration(
-                border: _border,
-                borderRadius: BorderRadius.circular(_borderRadius)),
+            decoration: BoxDecoration(border: _border, borderRadius: BorderRadius.circular(_borderRadius)),
             padding: widget.padding,
             height: _tagSize.height,
             child: _buildTagItem()),
@@ -215,7 +212,7 @@ class _TagItemState extends State<TagItem> {
                 _tagItemCxt!.checked = !_tagItemCxt!.checked;
 
                 if (widget.onClick != null)
-                  widget.onClick!(TagItemData(
+                  widget.onClick!(TDTagItemData(
                       index: widget.index,
                       title: _tagItemCxt!.title,
                       disabled: _tagItemCxt!.disabled,
@@ -224,7 +221,7 @@ class _TagItemState extends State<TagItem> {
               }
             : null,
         onLongPress: widget.onLongPress != null
-            ? () => widget.onLongPress!(TagItemData(
+            ? () => widget.onLongPress!(TDTagItemData(
                 index: widget.index,
                 title: _tagItemCxt!.title,
                 disabled: _tagItemCxt!.disabled,
@@ -264,35 +261,32 @@ class _TagItemState extends State<TagItem> {
         }));
 
     if (widget.removable)
-      return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Flexible(fit: FlexFit.loose, flex: 2, child: row),
-            Flexible(
-              flex: 0,
-              child: FittedBox(
-                alignment: Alignment.centerRight,
-                fit: BoxFit.fill,
-                child: GestureDetector(
-                  child: Container(
-                    margin: EdgeInsets.only(left: _removeLeftMargin),
-                    padding: EdgeInsets.all(2),
-                    child: Icon(
-                      Icons.clear,
-                      color: Colors.white,
-                      size: 12,
-                    ),
-                  ),
-                  onTap: () {
-                    if (widget.onRemove != null) {
-                      widget.onRemove!();
-                    }
-                  },
+      return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, mainAxisSize: MainAxisSize.min, children: <Widget>[
+        Flexible(fit: FlexFit.loose, flex: 2, child: row),
+        Flexible(
+          flex: 0,
+          child: FittedBox(
+            alignment: Alignment.centerRight,
+            fit: BoxFit.fill,
+            child: GestureDetector(
+              child: Container(
+                margin: EdgeInsets.only(left: _removeLeftMargin),
+                padding: EdgeInsets.all(2),
+                child: Icon(
+                  Icons.clear,
+                  color: Colors.white,
+                  size: 12,
                 ),
               ),
-            )
-          ]);
+              onTap: () {
+                if (widget.onRemove != null) {
+                  widget.onRemove!();
+                }
+              },
+            ),
+          ),
+        )
+      ]);
 
     return row;
   }
@@ -333,9 +327,7 @@ class _TagItemState extends State<TagItem> {
       // ignore widget.theme
     }
 
-    return widget.clickable
-        ? (_tagItemCxt!.checked ? _activeBackgroundColor : _backgroundColor)
-        : _backgroundColor;
+    return widget.clickable ? (_tagItemCxt!.checked ? _activeBackgroundColor : _backgroundColor) : _backgroundColor;
   }
 
   /// TextStyle, determined by effect, theme
@@ -360,9 +352,7 @@ class _TagItemState extends State<TagItem> {
     /// 根据主题和样式综合设置字体颜色
     if (widget.theme == TagItemTheme.dark) {
       if (widget.style == TagItemStyle.natural) {
-        _textColor = widget.disabled
-            ? Colors.black.withOpacity(0.16)
-            : Colors.black.withOpacity(0.6);
+        _textColor = widget.disabled ? Colors.black.withOpacity(0.16) : Colors.black.withOpacity(0.6);
         _textActiveColor = Colors.white;
       } else {
         // no _textActiveColor
@@ -376,9 +366,7 @@ class _TagItemState extends State<TagItem> {
 
     return TextStyle(
       fontSize: _fontSize,
-      color: widget.clickable
-          ? (_tagItemCxt!.checked ? _textActiveColor : _textColor)
-          : _textColor,
+      color: widget.clickable ? (_tagItemCxt!.checked ? _textActiveColor : _textColor) : _textColor,
     );
   }
 
@@ -456,8 +444,7 @@ class _TagItemState extends State<TagItem> {
   }
 
   /// Deactivate other active TagItems
-  void _deactivateOtherItems(
-      TagPanelInherited panelIn, TagItemContext itemCxt) {
+  void _deactivateOtherItems(TagPanelInherited panelIn, TagItemContext itemCxt) {
     panelIn.cxtList.where((tg) {
       return tg.checked == true && tg != itemCxt;
     }).forEach((tg) => tg.checked = false);

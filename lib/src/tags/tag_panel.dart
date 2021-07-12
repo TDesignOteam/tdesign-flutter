@@ -11,13 +11,9 @@ import 'tag_data.dart';
 
 typedef Widget ItemBuilder(int index);
 
-class TagPanel extends StatefulWidget {
-  TagPanel(
-      {Key? key,
-      this.itemCount = 0,
-      required this.itemBuilder,
-      this.heightHorizontalScroll = 60,
-      this.horSpacing = 6})
+class TDTagPanel extends StatefulWidget {
+  TDTagPanel(
+      {Key? key, this.itemCount = 0, required this.itemBuilder, this.heightHorizontalScroll = 60, this.horSpacing = 6})
       : assert(itemCount >= 0),
         super(key: key);
 
@@ -38,15 +34,15 @@ class TagPanel extends StatefulWidget {
   final double horSpacing;
 
   @override
-  TagPanelState createState() => TagPanelState();
+  TDTagPanelState createState() => TDTagPanelState();
 }
 
-class TagPanelState extends State<TagPanel> {
+class TDTagPanelState extends State<TDTagPanel> {
   // 内部继承扩展 TagItemData，支持 KVO 通知单个标签刷新
   final List<TagItemContext> _cxtList = [];
 
   // 向外暴露基类状态数据 TagItemData 列表，以便遍历标签状态
-  List<TagItemData> get getAllItemData => _cxtList.toList();
+  List<TDTagItemData> get getAllItemData => _cxtList.toList();
 
   void appendATag(String title) {
     int index = _cxtList.length;
