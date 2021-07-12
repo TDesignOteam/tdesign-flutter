@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 import '../toast.dart';
-import 'overlayentry.dart';
+import 'toast_overlayentry.dart';
 
 class FlutterToast extends StatefulWidget {
   final Widget? child;
@@ -26,9 +26,9 @@ class _FlutterToastState extends State<FlutterToast> {
   void initState() {
     super.initState();
     _overlayEntry = ToastOverlayEntry(
-      builder: (BuildContext context) => Toast.instance.w ?? Container(),
+      builder: (BuildContext context) => TDToast.instance.w ?? Container(),
     );
-    Toast.instance.overlayEntry = _overlayEntry;
+    TDToast.instance.overlayEntry = _overlayEntry;
   }
 
   @override
