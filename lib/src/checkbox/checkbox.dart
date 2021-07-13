@@ -341,7 +341,7 @@ class TDCheckGroupController {
 class TDCheckGroup extends StatefulWidget {
   /// 选项信息实例的列表，必须传入
   /// 选项的数量由列表长度决定，长度不可为0。
-  final List<GroupOption> options;
+  final List<TDGroupOption> options;
 
   /// 用一个布尔序列表示各选项默认的选中状态。默认为全`false`。
   /// 超出`names`数组长度的部分无效。

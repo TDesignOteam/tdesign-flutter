@@ -8,7 +8,7 @@
 ///     GroupOption(name: '选项三', title: '选项三'),
 ///   ])
 /// ```
-class GroupOption {
+class TDGroupOption {
   /// 选项的值，即ID，必须传入。
   final String name;
 
@@ -21,7 +21,7 @@ class GroupOption {
   /// 选项是否被禁用，即是否只读(readonly)，默认为`false`。
   final bool disabled;
 
-  const GroupOption({
+  const TDGroupOption({
     required this.name,
     required this.title,
     this.content,

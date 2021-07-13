@@ -150,9 +150,9 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       PageUtil.buildSubTitle('选项框群组 - 最多选两项'),
       _buildTile(TDCheckGroup(
           options: [
-            GroupOption(name: '选项一', title: '选项一'),
-            GroupOption(name: '选项二', title: '选项二'),
-            GroupOption(name: '选项三', title: '选项三'),
+            TDGroupOption(name: '选项一', title: '选项一'),
+            TDGroupOption(name: '选项二', title: '选项二'),
+            TDGroupOption(name: '选项三', title: '选项三'),
           ],
           selectLimit: 2,
           onChange: (selected) {
@@ -167,10 +167,10 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
       PageUtil.buildSubTitle('选项框群组 - 控制'),
       _buildTile(TDCheckGroup(
         options: [
-          GroupOption(name: '1', title: '选项一', content: '使用controller从外部控制选项。'),
-          GroupOption(name: '2', title: '选项二', content: '控制包括：选择、取消、反选单个选项，选择、取消、反选全部选项'),
-          GroupOption(name: '3', title: '选项三', content: '还可以传入自定义分割Widget。'),
-          GroupOption(name: '4', title: '选项四'),
+          TDGroupOption(name: '1', title: '选项一', content: '使用controller从外部控制选项。'),
+          TDGroupOption(name: '2', title: '选项二', content: '控制包括：选择、取消、反选单个选项，选择、取消、反选全部选项'),
+          TDGroupOption(name: '3', title: '选项三', content: '还可以传入自定义分割Widget。'),
+          TDGroupOption(name: '4', title: '选项四'),
         ],
         limitContentRow: 3,
         defaultSelected: [true, false, true, false],
