@@ -74,9 +74,9 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: TDCheckGroup(
         options: [
-          GroupOption(name: '选项1', title: '选项一'),
-          GroupOption(name: '选项2', title: '选项二'),
-          GroupOption(name: '选项3', title: '选项三'),
+          TDGroupOption(name: '选项1', title: '选项一'),
+          TDGroupOption(name: '选项2', title: '选项二'),
+          TDGroupOption(name: '选项3', title: '选项三'),
         ],
         onChange: (checked) => selectedList = checked,
       ),
@@ -98,9 +98,9 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: TDCheckGroup(
         options: [
-          GroupOption(name: '选项1', title: '选项一'),
-          GroupOption(name: '选项2', title: '选项二'),
-          GroupOption(name: '选项3', title: '选项三'),
+          TDGroupOption(name: '选项1', title: '选项一'),
+          TDGroupOption(name: '选项2', title: '选项二'),
+          TDGroupOption(name: '选项3', title: '选项三'),
         ],
         onChange: (checked) => selectedList = checked,
         selectLimit: 2,
@@ -125,9 +125,9 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: TDCheckGroup(
         options: [
-          GroupOption(name: '选项1', title: '选项一'),
-          GroupOption(name: '选项2', title: '选项二'),
-          GroupOption(name: '选项3', title: '选项三'),
+          TDGroupOption(name: '选项1', title: '选项一'),
+          TDGroupOption(name: '选项2', title: '选项二'),
+          TDGroupOption(name: '选项3', title: '选项三'),
         ],
         onChange: (checked) => selectedList = checked,
         controller: controller,
