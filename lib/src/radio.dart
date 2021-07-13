@@ -32,7 +32,7 @@ abstract class _Default {
 /// ```
 class TDRadioGroup extends TDCheckGroup {
   TDRadioGroup({
-    required List<GroupOption> options,
+    required List<TDGroupOption> options,
     bool contentDisabled = _Default.contentDisabled,
     int limitTitleRow = _Default.limitTitleRow,
     int limitContentRow = _Default.limitContentRow,
