@@ -50,12 +50,12 @@ class ToastTheme {
   static double get indicatorLineWidth => TDToast.instance.indicatorLineWidth;
 
   /// toast position
-  static ToastPosition get toastPosition => TDToast.instance.toastPosition;
+  static TDToastPosition get toastPosition => TDToast.instance.toastPosition;
 
   /// toast position
-  static AlignmentGeometry alignment(ToastPosition? position) => position == ToastPosition.bottom
+  static AlignmentGeometry alignment(TDToastPosition? position) => position == TDToastPosition.bottom
       ? AlignmentDirectional.bottomCenter
-      : (position == ToastPosition.top ? AlignmentDirectional.topCenter : AlignmentDirectional.center);
+      : (position == TDToastPosition.top ? AlignmentDirectional.topCenter : AlignmentDirectional.center);
 
   /// display duration
   static Duration get displayDuration => TDToast.instance.displayDuration;

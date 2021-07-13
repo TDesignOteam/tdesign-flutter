@@ -13,7 +13,7 @@ class ToastContainer extends StatefulWidget {
   final Widget? indicator;
   final String? message;
   final bool? dismissOnTap;
-  final ToastPosition? toastPosition;
+  final TDToastPosition? toastPosition;
   final Completer<void>? completer;
   final bool animation;
 

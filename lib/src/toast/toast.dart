@@ -24,7 +24,7 @@ import 'toast_theme.dart';
 // }
 
 /// toast position
-enum ToastPosition {
+enum TDToastPosition {
   top,
   middle,
   bottom,
@@ -35,7 +35,7 @@ class TDToast {
   // late ToastThemeStyle themeStyle;
 
   /// toast position.
-  late ToastPosition toastPosition;
+  late TDToastPosition toastPosition;
 
   /// animation duration of indicator.
   late Duration animationDuration;
@@ -159,7 +159,7 @@ class TDToast {
   static Future<void> toast(
     String message, {
     Duration? duration,
-    ToastPosition? toastPosition,
+    TDToastPosition? toastPosition,
     bool? dismissOnTap,
     bool? showOverlay,
   }) {
@@ -177,7 +177,7 @@ class TDToast {
   static Future<void> loading({
     String? message,
     Duration? duration,
-    ToastPosition? toastPosition,
+    TDToastPosition? toastPosition,
     Widget? indicator,
     bool? dismissOnTap,
     bool? showOverlay,
@@ -198,7 +198,7 @@ class TDToast {
   static Future<void> success({
     String? message,
     Duration? duration,
-    ToastPosition? toastPosition,
+    TDToastPosition? toastPosition,
     bool? dismissOnTap,
     bool? showOverlay,
   }) {
@@ -223,7 +223,7 @@ class TDToast {
   static Future<void> fail({
     String? message,
     Duration? duration,
-    ToastPosition? toastPosition,
+    TDToastPosition? toastPosition,
     bool? dismissOnTap,
     bool? showOverlay,
   }) {
@@ -248,7 +248,7 @@ class TDToast {
   static Future<void> info({
     String? message,
     Duration? duration,
-    ToastPosition? toastPosition,
+    TDToastPosition? toastPosition,
     bool? dismissOnTap,
     bool? showOverlay,
   }) {
@@ -284,14 +284,14 @@ class TDToast {
     String? message,
     Duration? duration,
     bool? dismissOnTap,
-    ToastPosition? toastPosition,
+    TDToastPosition? toastPosition,
   }) async {
     assert(
       overlayEntry != null,
       'You should call Toast.init() in your MaterialApp',
     );
 
-    toastPosition ??= ToastPosition.middle;
+    toastPosition ??= TDToastPosition.middle;
     bool animation = _w == null;
     if (_key != null) await clear(animation: false);
 

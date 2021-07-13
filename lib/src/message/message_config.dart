@@ -10,13 +10,13 @@ class MessageConfig {
   // static MessageThemeStyle themeStyle = MessageThemeStyle.dark;
 
   /// message type.
-  static MessageType msgType = MessageType.info;
+  static TDMessageType msgType = TDMessageType.info;
 
   /// message position.
-  static MessagePosition msgPosition = MessagePosition.top;
+  static TDMessagePosition msgPosition = TDMessagePosition.top;
 
   /// message alignment.
-  static MessageAlignment msgAlignment = MessageAlignment.left;
+  static TDMessageAlignment msgAlignment = TDMessageAlignment.left;
 
   /// animation duration of indicator.
   static Duration animationDuration = const Duration(milliseconds: 200);

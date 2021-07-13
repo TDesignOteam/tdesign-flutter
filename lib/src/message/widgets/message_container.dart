@@ -6,15 +6,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-import '../theme.dart';
+import '../message_theme.dart';
 import '../message.dart';
 
 class MessageContainer extends StatefulWidget {
   final bool showIcon;
   final String message;
-  final MessageType msgType;
-  final MessagePosition msgPosition;
-  final MessageAlignment msgAlignment;
+  final TDMessageType msgType;
+  final TDMessagePosition msgPosition;
+  final TDMessageAlignment msgAlignment;
   final bool? dismissOnTap;
   final Completer<void>? completer;
   final bool animation;
@@ -35,17 +35,14 @@ class MessageContainer extends StatefulWidget {
   MessageContainerState createState() => MessageContainerState();
 }
 
-class MessageContainerState extends State<MessageContainer>
-    with SingleTickerProviderStateMixin {
+class MessageContainerState extends State<MessageContainer> with SingleTickerProviderStateMixin {
   String? _message;
   Color? _maskColor;
   late AnimationController _animationController;
   late AlignmentGeometry _alignment;
   late bool _dismissOnTap, _ignoring;
 
-  bool get isPersistentCallbacks =>
-      SchedulerBinding.instance?.schedulerPhase ==
-      SchedulerPhase.persistentCallbacks;
+  bool get isPersistentCallbacks => SchedulerBinding.instance?.schedulerPhase == SchedulerPhase.persistentCallbacks;
 
   @override
   void initState() {
@@ -77,8 +74,8 @@ class MessageContainerState extends State<MessageContainer>
   Future<void> show(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-      SchedulerBinding.instance?.addPostFrameCallback((_) => completer
-          .complete(_animationController.forward(from: animation ? 0 : 1)));
+      SchedulerBinding.instance
+          ?.addPostFrameCallback((_) => completer.complete(_animationController.forward(from: animation ? 0 : 1)));
       return completer.future;
     } else {
       return _animationController.forward(from: animation ? 0 : 1);
@@ -88,8 +85,8 @@ class MessageContainerState extends State<MessageContainer>
   Future<void> dismiss(bool animation) {
     if (isPersistentCallbacks) {
       Completer<void> completer = Completer<void>();
-      SchedulerBinding.instance?.addPostFrameCallback((_) => completer
-          .complete(_animationController.reverse(from: animation ? 1 : 0)));
+      SchedulerBinding.instance
+          ?.addPostFrameCallback((_) => completer.complete(_animationController.reverse(from: animation ? 1 : 0)));
       return completer.future;
     } else {
       return _animationController.reverse(from: animation ? 1 : 0);
@@ -98,7 +95,7 @@ class MessageContainerState extends State<MessageContainer>
 
   void _onTap() async {
     if (_dismissOnTap) {
-      await Message.clear();
+      await TDMessage.clear();
     }
   }
 
@@ -106,53 +103,48 @@ class MessageContainerState extends State<MessageContainer>
     if (widget.showIcon) {
       MainAxisAlignment rowAlign = MainAxisAlignment.start;
       switch (widget.msgAlignment) {
-        case MessageAlignment.left:
+        case TDMessageAlignment.left:
           rowAlign = MainAxisAlignment.start;
           break;
-        case MessageAlignment.center:
+        case TDMessageAlignment.center:
           rowAlign = MainAxisAlignment.center;
           break;
-        case MessageAlignment.right:
+        case TDMessageAlignment.right:
           rowAlign = MainAxisAlignment.end;
           break;
       }
 
-      return Row(
-          mainAxisAlignment: rowAlign,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Icon(
-              widget.msgType == MessageType.success
-                  ? Icons.check_circle
-                  : Icons.info,
-              size: 20,
-              color: Colors.white,
+      return Row(mainAxisAlignment: rowAlign, mainAxisSize: MainAxisSize.max, children: [
+        Icon(
+          widget.msgType == TDMessageType.success ? Icons.check_circle : Icons.info,
+          size: 20,
+          color: Colors.white,
+        ),
+        Flexible(
+          child: new Container(
+            padding: new EdgeInsets.only(left: 12.0),
+            child: Text(
+              _message!,
+              style: MessageTheme.textStyle ??
+                  TextStyle(
+                    color: MessageTheme.textColor,
+                    fontSize: MessageTheme.fontSize,
+                  ),
+              overflow: TextOverflow.ellipsis,
             ),
-            Flexible(
-              child: new Container(
-                padding: new EdgeInsets.only(left: 12.0),
-                child: Text(
-                  _message!,
-                  style: MessageTheme.textStyle ??
-                      TextStyle(
-                        color: MessageTheme.textColor,
-                        fontSize: MessageTheme.fontSize,
-                      ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ),
-          ]);
+          ),
+        ),
+      ]);
     } else {
       Alignment textAlign = Alignment.centerLeft;
       switch (widget.msgAlignment) {
-        case MessageAlignment.left:
+        case TDMessageAlignment.left:
           textAlign = Alignment.centerLeft;
           break;
-        case MessageAlignment.center:
+        case TDMessageAlignment.center:
           textAlign = Alignment.center;
           break;
-        case MessageAlignment.right:
+        case TDMessageAlignment.right:
           textAlign = Alignment.centerRight;
           break;
       }
@@ -207,8 +199,7 @@ class MessageContainerState extends State<MessageContainer>
           builder: (BuildContext context, Widget? child) {
             return MessageTheme.messageAnimation.buildWidget(
               Padding(
-                padding: const EdgeInsets.only(
-                    top: 44.0, left: 16.0, right: 16.0), // 容器两侧边距
+                padding: const EdgeInsets.only(top: 44.0, left: 16.0, right: 16.0), // 容器两侧边距
                 child: Container(
                   // width: MediaQuery.of(context).size.width - 2 * 16,
                   height: 48.0,
