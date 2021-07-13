@@ -20,18 +20,18 @@ class _SwitchPageState extends State<SwitchPage> {
   Widget _widget() {
     return ListView(children: [
       PageUtil.buildSubTitle('基础开关'),
-      _buildTile(_buildSwitch(0, SwitchType.normal)),
+      _buildTile(_buildSwitch(0, TDSwitchType.normal)),
       Divider(height: 0),
-      _buildTile(_buildSwitch(1, SwitchType.disable)),
+      _buildTile(_buildSwitch(1, TDSwitchType.disable)),
       Divider(height: 0),
-      _buildTile(_buildSwitch(2, SwitchType.loading)),
+      _buildTile(_buildSwitch(2, TDSwitchType.loading)),
       Divider(height: 0),
       PageUtil.buildSubTitle('带描述开关'),
-      _buildTile(_buildSwitch(3, SwitchType.normal, 'Normal')),
+      _buildTile(_buildSwitch(3, TDSwitchType.normal, 'Normal')),
       Divider(height: 0),
-      _buildTile(_buildSwitch(4, SwitchType.disable, 'Disable')),
+      _buildTile(_buildSwitch(4, TDSwitchType.disable, 'Disable')),
       Divider(height: 0),
-      _buildTile(_buildSwitch(5, SwitchType.loading, 'Loading')),
+      _buildTile(_buildSwitch(5, TDSwitchType.loading, 'Loading')),
       Divider(height: 0),
     ]);
   }
@@ -48,7 +48,7 @@ class _SwitchPageState extends State<SwitchPage> {
     );
   }
 
-  List<Widget> _buildSwitch(int index, SwitchType type, [String? text]) {
+  List<Widget> _buildSwitch(int index, TDSwitchType type, [String? text]) {
     return [
       Text('标题'),
       Spacer(),

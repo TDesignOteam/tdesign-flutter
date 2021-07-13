@@ -25,13 +25,13 @@ class _TDIconsData extends IconData {
 ///      fonts:
 ///        - asset: packages/tdesign/fonts/td_icons.ttf
 /// ```
-/// 
+///
 /// 通过TDIcons来引用相应图标资源即可：`TDIcons.arrowUp`
-/// 
+///
 @immutable
 class TDIcons {
   TDIcons._();
-  
+
   static const IconData addCircle = _TDIconsData(0xe000);
   static const IconData addRectangle = _TDIconsData(0xe001);
   static const IconData add = _TDIconsData(0xe002);

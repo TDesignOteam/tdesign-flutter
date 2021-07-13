@@ -6,7 +6,7 @@ import 'utils.dart';
 void main() {
   group('rate', () {
     testWidgets('默认 | 状态验证', (WidgetTester tester) async {
-      await tester.pumpWidget(boilerplate(Rate(value: 2)));
+      await tester.pumpWidget(boilerplate(TDRate(value: 2)));
 
       // 默认存在5个star类型的图标
       expect(tester.iconCount(Icons.star), 5);
@@ -21,7 +21,7 @@ void main() {
     });
 
     testWidgets('Builder | 状态验证', (WidgetTester tester) async {
-      await tester.pumpWidget(boilerplate(Rate(
+      await tester.pumpWidget(boilerplate(TDRate(
         value: 2,
         itemBuilder: (context, index) => Icon(Icons.ac_unit),
       )));
@@ -30,7 +30,7 @@ void main() {
     });
 
     testWidgets('Config | 状态验证', (WidgetTester tester) async {
-      await tester.pumpWidget(boilerplate(Rate(
+      await tester.pumpWidget(boilerplate(TDRate(
         value: 2,
         ratingIcons: RatingIconConfig(
           empty: Icon(Icons.star_border),
@@ -44,7 +44,7 @@ void main() {
     });
 
     testWidgets('默认 | 切换逻辑验证', (WidgetTester tester) async {
-      await tester.pumpWidget(boilerplate(Rate(value: 2)));
+      await tester.pumpWidget(boilerplate(TDRate(value: 2)));
 
       // 点击了最后一个图标，就会打5星，颜色混合组件就会消失
       await tester.tap(find.byType(IgnorePointer).at(4));
@@ -54,7 +54,7 @@ void main() {
     });
 
     testWidgets('默认 | 支持半星 | 状态验证', (WidgetTester tester) async {
-      await tester.pumpWidget(boilerplate(Rate(value: 2.5, allowHalf: true)));
+      await tester.pumpWidget(boilerplate(TDRate(value: 2.5, allowHalf: true)));
 
       // 半星图标需要用到ClipRect，有且只有一个
       expect(tester.typeCount(ClipRect), 1);
@@ -67,7 +67,7 @@ void main() {
     });
 
     testWidgets('Config | 支持半星 | 状态验证', (WidgetTester tester) async {
-      await tester.pumpWidget(boilerplate(Rate(
+      await tester.pumpWidget(boilerplate(TDRate(
         value: 2.5,
         allowHalf: true,
         ratingIcons: RatingIconConfig(
@@ -84,7 +84,7 @@ void main() {
     });
 
     testWidgets('默认 | 支持半星 | 首个星星 | 操作逻辑验证', (WidgetTester tester) async {
-      await tester.pumpWidget(boilerplate(Rate(value: 2.5, allowHalf: true)));
+      await tester.pumpWidget(boilerplate(TDRate(value: 2.5, allowHalf: true)));
 
       // 获取首个图标的finder
       final first = find.byType(IgnorePointer).at(0);
@@ -112,7 +112,7 @@ void main() {
     });
 
     testWidgets('默认 | 支持半星 | 非首个星星 | 操作逻辑验证', (WidgetTester tester) async {
-      await tester.pumpWidget(boilerplate(Rate(value: 2.5, allowHalf: true)));
+      await tester.pumpWidget(boilerplate(TDRate(value: 2.5, allowHalf: true)));
 
       // 获取中间图标的finder
       final mid = find.byType(IgnorePointer).at(2);
@@ -127,9 +127,9 @@ void main() {
       await tester.pumpAndSettle();
       expect(tester.typeCount(ClipRect), 1);
     });
-    
+
     testWidgets('Config | 支持半星 | 非首个星星 | 操作逻辑验证', (WidgetTester tester) async {
-      await tester.pumpWidget(boilerplate(Rate(
+      await tester.pumpWidget(boilerplate(TDRate(
         value: 2.5,
         allowHalf: true,
         ratingIcons: RatingIconConfig(

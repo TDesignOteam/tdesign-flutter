@@ -21,21 +21,21 @@ class _BadgePageState extends State<BadgePage> {
   Widget _widget() {
     return ListView(children: [
       PageUtil.buildSubTitle('覆盖于组件的徽标'),
-      _buildTile(_badgesOnButtonList(BadgeSize.small)),
+      _buildTile(_badgesOnButtonList(TDBadgeSize.small)),
       Divider(height: 0),
-      _buildTile(_badgesOnButtonList(BadgeSize.medium)),
+      _buildTile(_badgesOnButtonList(TDBadgeSize.medium)),
       Divider(height: 0),
       _buildTile(_badgeOnIconList()),
       PageUtil.buildSubTitle('缎带型徽标'),
       _ribbonExample(),
       PageUtil.buildSubTitle('独立存在的徽标'),
-      _tileWithIsolateBadge(Badge(dot: true)),
+      _tileWithIsolateBadge(TDBadge(dot: true)),
       Divider(height: 0),
-      _tileWithIsolateBadge(Badge(count: 15)),
+      _tileWithIsolateBadge(TDBadge(count: 15)),
       Divider(height: 0),
-      _tileWithIsolateBadge(Badge(
+      _tileWithIsolateBadge(TDBadge(
         content: 'NEW',
-        shape: BadgeShape.rounded,
+        shape: TDBadgeShape.rounded,
       )),
       Divider(height: 0),
     ]);
@@ -70,42 +70,42 @@ class _BadgePageState extends State<BadgePage> {
 
   List<Widget> _badgeOnIconList() {
     return [
-      Badge(
+      TDBadge(
         dot: true,
         child: Icon(TDIcons.refresh, size: TDTheme.of(context)?.themeData.iconDefault),
       ),
-      Badge(
+      TDBadge(
         color: TDColors.green,
         count: 20,
         child: Icon(TDIcons.mail, size: TDTheme.of(context)?.themeData.iconDefault),
       ),
-      Badge(
+      TDBadge(
         color: TDColors.orange,
-        shape: BadgeShape.rounded,
+        shape: TDBadgeShape.rounded,
         count: 30,
         child: Icon(TDIcons.usergroup, size: TDTheme.of(context)?.themeData.iconDefault),
       ),
-      Badge(
+      TDBadge(
         color: Colors.yellow,
         textColor: Colors.black45,
-        shape: BadgeShape.rounded,
+        shape: TDBadgeShape.rounded,
         content: 'NEW',
         child: Icon(TDIcons.shop, size: TDTheme.of(context)?.themeData.iconDefault),
       ),
     ];
   }
 
-  List<Widget> _badgesOnButtonList(BadgeSize size) {
+  List<Widget> _badgesOnButtonList(TDBadgeSize size) {
     return [
-      Text(size == BadgeSize.small ? '小型' : '中型'),
-      Badge(size: size, child: _exampleButton('红点'), dot: true),
-      Badge(
+      Text(size == TDBadgeSize.small ? '小型' : '中型'),
+      TDBadge(size: size, child: _exampleButton('红点'), dot: true),
+      TDBadge(
         size: size,
         child: GestureDetector(
           child: _exampleButton('点我+1'),
           onTap: () {
             setState(() {
-              if (size == BadgeSize.small) {
+              if (size == TDBadgeSize.small) {
                 _smallBadgeValue++;
               } else {
                 _mediumBadgeValue++;
@@ -113,14 +113,14 @@ class _BadgePageState extends State<BadgePage> {
             });
           },
         ),
-        count: size == BadgeSize.small ? _smallBadgeValue : _mediumBadgeValue,
+        count: size == TDBadgeSize.small ? _smallBadgeValue : _mediumBadgeValue,
       ),
-      Badge(
+      TDBadge(
         child: _exampleButton('文字'),
         content: 'NEW',
         size: size,
       ),
-      Badge(
+      TDBadge(
         child: _exampleButton('max:99'),
         count: 100,
         maxCount: 99,
@@ -130,15 +130,15 @@ class _BadgePageState extends State<BadgePage> {
   }
 
   Widget _ribbonExample() {
-    return Badge(
-      shape: BadgeShape.ribbon,
+    return TDBadge(
+      shape: TDBadgeShape.ribbon,
       content: 'NEW',
       child: ListTile(
         tileColor: Theme.of(context).dialogBackgroundColor,
-        leading: Badge(
+        leading: TDBadge(
           content: 'NEW',
-          shape: BadgeShape.ribbon,
-          size: BadgeSize.small,
+          shape: TDBadgeShape.ribbon,
+          size: TDBadgeSize.small,
           child: _exampleButton('', height: 40, width: 40),
         ),
         title: Text('缎带型徽标'),

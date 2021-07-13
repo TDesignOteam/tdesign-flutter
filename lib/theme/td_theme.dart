@@ -42,9 +42,7 @@ class TDTheme extends InheritedWidget {
 
   /// 返回当前所处应用主题环境是否是黑暗模式
   static bool isDarkMode(BuildContext? context) {
-    return context == null
-        ? false
-        : MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+    return context == null ? false : MediaQuery.platformBrightnessOf(context) == Brightness.dark;
   }
 }
 
@@ -331,8 +329,7 @@ class TDThemeColor {
       warningColorActive: warningColorActive ?? TDColors.red.shade7,
       warningColorDisabled: warningColorDisabled ?? TDColors.red.shade2,
       maskActive: maskActive ?? Color.fromARGB((255 * 0.6).round(), 0, 0, 0),
-      maskDisabled:
-          maskDisabled ?? Color.fromARGB((255 * 0.6).round(), 255, 255, 255),
+      maskDisabled: maskDisabled ?? Color.fromARGB((255 * 0.6).round(), 255, 255, 255),
       bgColor: bgColor ?? Color(0xFFFBFBFB),
       bgColorFade: bgColorFade ?? Color(0xFFFBFBFB),
       bgColorHover: bgColorHover ?? Color(0xFFF5F5F5),
@@ -400,8 +397,7 @@ class TDThemeColor {
       warningColorActive: warningColorActive ?? TDColors.red.shade7,
       warningColorDisabled: warningColorDisabled ?? TDColors.red.shade2,
       maskActive: maskActive ?? Color.fromARGB((255 * 0.6).round(), 0, 0, 0),
-      maskDisabled:
-          maskDisabled ?? Color.fromARGB((255 * 0.6).round(), 255, 255, 255),
+      maskDisabled: maskDisabled ?? Color.fromARGB((255 * 0.6).round(), 255, 255, 255),
       bgColor: bgColor ?? Color(0xFFFBFBFB),
       bgColorFade: bgColorFade ?? Color(0xFFFBFBFB),
       bgColorHover: bgColorHover ?? Color(0xFFF5F5F5),

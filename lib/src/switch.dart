@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:tdesign/tdesign.dart';
 
 /// Switch支持的类型枚举
-enum SwitchType { normal, loading, disable }
+enum TDSwitchType { normal, loading, disable }
 
 // 会基于Switch类型变化的特定配置
 class _SwitchTypeSpecConfig {
@@ -25,14 +25,14 @@ class _SwitchTypeSpecConfig {
 
 // 配置默认项
 abstract class _Default {
-  static const Map<SwitchType, _SwitchTypeSpecConfig> typeSpecConfig = {
-    SwitchType.normal: _SwitchTypeSpecConfig._switchTypeSpecConfig(disable: false, loading: false),
-    SwitchType.disable: _SwitchTypeSpecConfig._switchTypeSpecConfig(disable: true, loading: false),
-    SwitchType.loading: _SwitchTypeSpecConfig._switchTypeSpecConfig(disable: true, loading: true),
+  static const Map<TDSwitchType, _SwitchTypeSpecConfig> typeSpecConfig = {
+    TDSwitchType.normal: _SwitchTypeSpecConfig._switchTypeSpecConfig(disable: false, loading: false),
+    TDSwitchType.disable: _SwitchTypeSpecConfig._switchTypeSpecConfig(disable: true, loading: false),
+    TDSwitchType.loading: _SwitchTypeSpecConfig._switchTypeSpecConfig(disable: true, loading: true),
   };
 
   // switch当前的类型
-  static const SwitchType type = SwitchType.normal;
+  static const TDSwitchType type = TDSwitchType.normal;
 
   // switch与描述之间的间距
   static const descPadding = 10.0;
@@ -100,7 +100,7 @@ class TDSwitch extends StatelessWidget {
   /// 决定switch的类型，会影响switch [disable] 和 [loading] 的值。
   ///
   /// 默认值为`SwitchType.normal`
-  final SwitchType type;
+  final TDSwitchType type;
 
   /// switch开启时的底色。
   ///

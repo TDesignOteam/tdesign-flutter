@@ -22,6 +22,20 @@ tdesign:
        - asset: packages/tdesign/fonts/td_icons.ttf
 ```
 
+使用时，在应用的根节点包裹TDTheme。
+
+如果需要配置个性化主题，还可以在构造参数中传入`themeColorBright`, `themeColorDark`和`ThemeData`。
+
+``` dart
+  Widget build(BuildContext context) {
+    return TDTheme(
+      child: MaterialApp(
+        ...
+      ),
+    );
+  }
+```
+
 ### 在线Demo
 
 [TDesign-Mobile-Flutter 在线示例](http://tdflutter.woa.com:8085/)

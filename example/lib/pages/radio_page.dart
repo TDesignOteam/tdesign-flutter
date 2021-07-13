@@ -13,7 +13,7 @@ class RadioPage extends StatelessWidget {
     return ListView(children: [
       PageUtil.buildSubTitle('单选群组-标题'),
       _buildTile(
-        RadioGroup(
+        TDRadioGroup(
           options: [
             GroupOption(name: '选项1', title: '单行标题'),
             GroupOption(name: '选项2', title: '单行标题'),
@@ -27,7 +27,7 @@ class RadioPage extends StatelessWidget {
       ),
       PageUtil.buildSubTitle('单选群组-无分割'),
       _buildTile(
-        RadioGroup(
+        TDRadioGroup(
           options: [
             GroupOption(name: '选项1', title: '分割组件可以自定义'),
             GroupOption(name: '选项2', title: '本组未传入'),
@@ -40,7 +40,7 @@ class RadioPage extends StatelessWidget {
       ),
       PageUtil.buildSubTitle('单选群组-标题-不可选'),
       _buildTile(
-        RadioGroup(
+        TDRadioGroup(
           options: [
             GroupOption(name: '选项1', title: '单行标题', disabled: true),
             GroupOption(name: '选项2', title: '单行标题', disabled: true),
@@ -54,7 +54,7 @@ class RadioPage extends StatelessWidget {
       ),
       PageUtil.buildSubTitle('单选群组-标题-文本-可选'),
       _buildTile(
-        RadioGroup(
+        TDRadioGroup(
           options: [
             GroupOption(
               name: '选项1',
@@ -78,7 +78,7 @@ class RadioPage extends StatelessWidget {
       ),
       PageUtil.buildSubTitle('单选群组-标题-文本-部分不可选'),
       _buildTile(
-        RadioGroup(
+        TDRadioGroup(
           options: [
             GroupOption(name: '选项1', title: '单行标题'),
             GroupOption(name: '选项2', title: '单行标题', disabled: true),
@@ -92,7 +92,7 @@ class RadioPage extends StatelessWidget {
       ),
       PageUtil.buildSubTitle('单选群组-替换颜色'),
       _buildTile(
-        RadioGroup(
+        TDRadioGroup(
           options: [
             GroupOption(name: '1', title: '选中Icon颜色可传入'),
             GroupOption(name: '2', title: 'TDTheme中的主色'),
@@ -105,7 +105,7 @@ class RadioPage extends StatelessWidget {
       ),
       PageUtil.buildSubTitle('单选群组-替换Icon'),
       _buildTile(
-        RadioGroup(
+        TDRadioGroup(
           options: [
             GroupOption(name: '1', title: '单行标题'),
             GroupOption(name: '2', title: '单行标题'),
@@ -119,7 +119,7 @@ class RadioPage extends StatelessWidget {
       ),
       PageUtil.buildSubTitle('单选群组-文本部分不可点击'),
       _buildTile(
-        RadioGroup(
+        TDRadioGroup(
           options: [
             GroupOption(name: '1', title: '单行标题', content: '本组文本部分点击无效'),
             GroupOption(name: '2', title: '单行标题', content: '只有点击Icon才有效'),
