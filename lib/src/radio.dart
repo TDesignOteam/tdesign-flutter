@@ -78,6 +78,7 @@ abstract class _IconHelper {
 
   static Widget _outlineCircle(double size, TDTheme? theme) {
     return Container(
+      key: Key('radio_unselected_icon'),
       width: size,
       height: size,
       decoration: BoxDecoration(
@@ -92,6 +93,7 @@ abstract class _IconHelper {
 
   static Widget _filledCircle(double size, TDTheme? theme, Color? color) {
     return Container(
+      key: Key('radio_selected_icon'),
       width: size * 0.65,
       height: size * 0.65,
       decoration: BoxDecoration(
