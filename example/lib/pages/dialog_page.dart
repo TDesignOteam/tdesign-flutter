@@ -23,32 +23,10 @@ class _DialogPageState extends State<DialogPage> {
     );
   }
 
-  Widget _outlinedButton(
-    String btnTitle,
-    VoidCallback callback,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 12.0, left: 16.0, right: 16.0),
-      child: OutlinedButton(
-          child: Text(
-            btnTitle,
-            style: TextStyle(
-                color: Colors.black.withOpacity(0.9),
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                height: 1.5),
-          ),
-          style: ButtonStyle(
-              fixedSize: MaterialStateProperty.resolveWith(
-                  (states) => Size.fromHeight(48))),
-          onPressed: callback),
-    );
-  }
-
   Widget _widget(BuildContext context) {
     return ListView(children: [
       PageUtil.buildSubTitle('反馈类对话框'),
-      _outlinedButton('单行标题', () {
+      PageUtil.outlinedButton('单行标题', () {
         tdDialogBase.showCenterDialog(
             dialog: TDAlertDialog(
               title: '对话框标题',
@@ -56,7 +34,7 @@ class _DialogPageState extends State<DialogPage> {
             ),
             context: context);
       }),
-      _outlinedButton('多行标题最大高度', () {
+      PageUtil.outlinedButton('多行标题最大高度', () {
         tdDialogBase.showCenterDialog(
             dialog: TDAlertDialog(
               title: '对话框标题告知当前状态、信息和解决方法，等内容。描述文案尽可能控制在三行内',
@@ -64,7 +42,7 @@ class _DialogPageState extends State<DialogPage> {
             ),
             context: context);
       }),
-      _outlinedButton('带说明文本', () {
+      PageUtil.outlinedButton('带说明文本', () {
         tdDialogBase.showCenterDialog(
             dialog: TDAlertDialog(
               title: '对话框标题',
@@ -73,7 +51,7 @@ class _DialogPageState extends State<DialogPage> {
             ),
             context: context);
       }),
-      _outlinedButton('带说明文本最大高度', () {
+      PageUtil.outlinedButton('带说明文本最大高度', () {
         tdDialogBase.showCenterDialog(
             dialog: TDAlertDialog(
               title: '对话框带文本最大高度',
@@ -93,7 +71,7 @@ class _DialogPageState extends State<DialogPage> {
             context: context);
       }),
       PageUtil.buildSubTitle('确认类对话框'),
-      _outlinedButton('双按钮', () {
+      PageUtil.outlinedButton('双按钮', () {
         tdDialogBase.showCenterDialog(
             dialog: TDConfirmDialog(
               title: '对话框标题',
@@ -103,7 +81,7 @@ class _DialogPageState extends State<DialogPage> {
             ),
             context: context);
       }),
-      _outlinedButton('带警示按钮', () {
+      PageUtil.outlinedButton('带警示按钮', () {
         tdDialogBase.showCenterDialog(
             dialog: TDConfirmDialog(
               primary: false,
@@ -114,7 +92,7 @@ class _DialogPageState extends State<DialogPage> {
             ),
             context: context);
       }),
-      _outlinedButton('双按钮文字过长', () {
+      PageUtil.outlinedButton('双按钮文字过长', () {
         tdDialogBase.showCenterDialog(
             dialog: TDActionDialog(
               list: ['按钮文案文字内容较长'],
@@ -126,7 +104,7 @@ class _DialogPageState extends State<DialogPage> {
             ),
             context: context);
       }),
-      _outlinedButton('多按钮', () {
+      PageUtil.outlinedButton('多按钮', () {
         tdDialogBase.showCenterDialog(
             dialog: TDActionDialog(
               list: ['按钮文案文字内容较长', '单行按钮最多十五个字符文案内容'],
@@ -139,7 +117,7 @@ class _DialogPageState extends State<DialogPage> {
             context: context);
       }),
       PageUtil.buildSubTitle('输入类对话框'),
-      _outlinedButton('单行标题', () {
+      PageUtil.outlinedButton('单行标题', () {
         tdDialogBase
             .showCenterDialog(
                 dialog: TDInputDialog(
@@ -153,7 +131,7 @@ class _DialogPageState extends State<DialogPage> {
                 context: context)
             .then((value) {});
       }),
-      _outlinedButton('带说明文本', () {
+      PageUtil.outlinedButton('带说明文本', () {
         tdDialogBase
             .showCenterDialog(
                 dialog: TDInputDialog(
