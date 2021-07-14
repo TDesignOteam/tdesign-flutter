@@ -33,21 +33,13 @@ class PickerFooter extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                cancel ??
-                    _buildButton(
-                        context: context,
-                        text: cancelText ?? '取消',
-                        isConfirm: false),
+                _buildButton(context: context, isConfirm: false),
                 Container(
                   width: 1,
                   height: height,
                   color: tdDialogBase.divideColor(context),
                 ),
-                confirm ??
-                    _buildButton(
-                        context: context,
-                        text: confirmText ?? '确认',
-                        isConfirm: true),
+                _buildButton(context: context, isConfirm: true),
               ],
             ),
           ),
@@ -56,24 +48,30 @@ class PickerFooter extends StatelessWidget {
     );
   }
 
-  Widget _buildButton(
-      {required BuildContext context,
-      required String text,
-      bool isConfirm = false}) {
+  Widget _buildButton({required BuildContext context, bool isConfirm = false}) {
+    var widget = isConfirm ? confirm : cancel;
+    var textStyle = isConfirm ? tdTextStyle.r16Primary(context) : tdTextStyle.r16Text(context, textLevel: 3);
+    VoidCallback onClick = () {
+      Navigator.pop(context);
+      if (isConfirm) {
+        if (onConfirm != null) {
+          onConfirm!();
+        }
+      }
+    };
+    if (widget != null) {
+      widget = DefaultTextStyle(style: textStyle, child: widget);
+      return onConfirm != null
+          ? GestureDetector(
+              onTap: onClick,
+              child: widget,
+            )
+          : widget;
+    }
+
+    var text = isConfirm ? (confirmText ?? '确认') : (cancelText ?? '取消');
     return Expanded(
-      child: TTextButton(
-          text: text,
-          textStyle: isConfirm
-              ? tdTextStyle.r16Primary(context)
-              : tdTextStyle.r16Text(context, textLevel: 3),
-          onClick: () {
-            Navigator.pop(context);
-            if (isConfirm) {
-              if (onConfirm != null) {
-                onConfirm!();
-              }
-            }
-          }),
+      child: TDTextButton(text: text, textStyle: textStyle, onClick: onClick),
     );
   }
 }

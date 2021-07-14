@@ -14,13 +14,7 @@ class TDAlertDialog extends StatelessWidget with WidgetsBindingObserver {
   final String? describe;
   final VoidCallback? onConfirm;
 
-  TDAlertDialog(
-      {this.confirmText,
-      required this.title,
-      this.describe,
-      this.onConfirm,
-      Key? key})
-      : super(key: key);
+  TDAlertDialog({this.confirmText, required this.title, this.describe, this.onConfirm, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +22,8 @@ class TDAlertDialog extends StatelessWidget with WidgetsBindingObserver {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          TDialogBody(title: title, describe: describe),
-          TTextButton(
+          TDDialogBody(title: title, describe: describe),
+          TDTextButton(
               size: TButtonSize.large,
               onClick: () {
                 if (onConfirm != null) {

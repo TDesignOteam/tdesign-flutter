@@ -20,13 +20,7 @@ class TDInputDialog extends StatelessWidget {
   final OnWhetherClick? onWhetherClick;
   final TextEditingController _controller = TextEditingController();
 
-  TDInputDialog(
-      {this.confirm,
-      required this.title,
-      this.cancel,
-      this.describe,
-      this.onWhetherClick,
-      Key? key})
+  TDInputDialog({this.confirm, required this.title, this.cancel, this.describe, this.onWhetherClick, Key? key})
       : super(key: key);
 
   @override
@@ -38,7 +32,7 @@ class TDInputDialog extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          TDialogBody(title: title, describe: describe, hasDivider: false),
+          TDDialogBody(title: title, describe: describe, hasDivider: false),
           //编辑框
           Row(
             children: [
@@ -62,10 +56,8 @@ class TDInputDialog extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border(
                           right: BorderSide(
-                              color: tdDialogBase.divideColor(context),
-                              width: 1,
-                              style: BorderStyle.solid))),
-                  child: TTextButton(
+                              color: tdDialogBase.divideColor(context), width: 1, style: BorderStyle.solid))),
+                  child: TDTextButton(
                     size: TButtonSize.large,
                     onClick: () {
                       if (onWhetherClick != null) {
@@ -80,7 +72,7 @@ class TDInputDialog extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: TTextButton(
+                child: TDTextButton(
                     size: TButtonSize.large,
                     onClick: () {
                       if (onWhetherClick != null) {

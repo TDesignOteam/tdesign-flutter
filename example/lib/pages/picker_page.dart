@@ -176,25 +176,24 @@ class _PickerPageState extends State<PickerPage> {
               }),
           _buildSection(title: '设置项'),
           _buildUISetting(
-              title: '居中弹框',
-              position: TDPickerPosition.center,
-              pickerController: TDPickerController(children: [])),
+              title: '居中弹框', position: TDPickerPosition.center, pickerController: TDPickerController(children: [])),
+          _buildUISetting(title: '循环滚动', pickerController: TDPickerController(looping: true, children: [])),
           _buildUISetting(
               title: '自定义标题(文本)',
-              pickerController:
-                  TDPickerController(titleText: '我是自定义标题', children: [])),
-          _buildUISetting(
-              title: '自定义标题(Widget)',
               pickerController: TDPickerController(
-                  title: Center(child: Text('Center Widget')), children: [])),
+                  titleText: '我是自定义标题我是自定义标题我是自定义标题我是自定义标题我是自定义标题我是自定义标题我是自定义标题我是自定义标题我是自定义标题', children: [])),
+          _buildUISetting(
+              title: '自定义标题(Widget)', pickerController: TDPickerController(title: Text('Center Widget'), children: [])),
           _buildUISetting(
               title: '自定义按钮(文本)',
-              pickerController: TDPickerController(
-                  cancelText: '取消按钮', confirmText: '确认按钮', children: [])),
+              pickerController: TDPickerController(cancelText: '取消按钮', confirmText: '确认按钮', children: [])),
           _buildUISetting(
-              title: '自定义按钮(文本)',
+              title: '自定义按钮(Widget)',
               pickerController: TDPickerController(
-                  cancel: Text('取消Widget'),
+                  cancel: Text(
+                    '取消Widget',
+                    style: TextStyle(color: Colors.red),
+                  ),
                   confirm: Text('确认Widget'),
                   children: [])),
           _buildUISetting(
@@ -239,6 +238,7 @@ class _PickerPageState extends State<PickerPage> {
           TDPicker.show(
               context,
               TDPickerController.pickerData(
+                  looping: pickerController.looping,
                   title: pickerController.title,
                   cancel: pickerController.cancel,
                   confirm: pickerController.confirm,
@@ -251,6 +251,7 @@ class _PickerPageState extends State<PickerPage> {
                   onConfirm: (controller, _) {
                     setState(() {
                       _yearAndSeason = controller.selectsDescription;
+                      TDToast.toast('当前选择的: ' + _yearAndSeason!);
                     });
                   }),
               position: position);
@@ -261,11 +262,7 @@ class _PickerPageState extends State<PickerPage> {
     return PageUtil.buildSubTitle(title);
   }
 
-  Widget _buildRow(
-      {required String title,
-      String? text,
-      String? desc,
-      required VoidCallback onClick}) {
+  Widget _buildRow({required String title, String? text, String? desc, required VoidCallback onClick}) {
     var textStyle = tdTextStyle.r16Text(context, textLevel: 1);
     var placeStyle = tdTextStyle.r16Text(context, textLevel: 3);
     return GestureDetector(
@@ -313,7 +310,6 @@ class _PickerPageState extends State<PickerPage> {
         ),
       ),
     );
-    return PageUtil.outlinedButton(title, onClick);
   }
 }
 

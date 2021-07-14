@@ -35,9 +35,8 @@ class TDActionDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     var childList = <Widget>[];
     if (title != null) {
-      childList.add(TDialogBody(title: title!, describe: describe));
-      childList
-          .add(Divider(height: 1, color: tdDialogBase.divideColor(context)));
+      childList.add(TDDialogBody(title: title!, describe: describe));
+      childList.add(Divider(height: 1, color: tdDialogBase.divideColor(context)));
     }
     //增加item和取消  带下分割线
     var index = 0;
@@ -46,7 +45,7 @@ class TDActionDialog extends StatelessWidget {
       childList.add(Row(
         children: [
           Expanded(
-              child: TTextButton(
+              child: TDTextButton(
             size: TButtonSize.large,
             onClick: () {
               onItemClick(currentIndex);
@@ -55,15 +54,14 @@ class TDActionDialog extends StatelessWidget {
           ))
         ],
       ));
-      childList
-          .add(Divider(height: 1, color: tdDialogBase.divideColor(context)));
+      childList.add(Divider(height: 1, color: tdDialogBase.divideColor(context)));
       index++;
     });
     //添加取消
     childList.add(Row(
       children: [
         Expanded(
-            child: TTextButton(
+            child: TDTextButton(
           size: TButtonSize.large,
           onClick: () {
             if (onCancelClick != null) {

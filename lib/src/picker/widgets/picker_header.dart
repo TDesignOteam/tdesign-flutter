@@ -43,13 +43,9 @@ class PickerHeader extends StatelessWidget {
               height: height - 1,
               child: Row(
                 children: [
-                  cancel ??
-                      _buildButton(
-                          context: context, text: cancelText, isConfirm: false),
+                  _buildButton(context: context, isConfirm: false),
                   Expanded(child: _buildTitle(context), flex: 1),
-                  confirm ??
-                      _buildButton(
-                          context: context, text: confirmText, isConfirm: true),
+                  _buildButton(context: context, isConfirm: true),
                 ],
               ),
             ),
@@ -61,40 +57,45 @@ class PickerHeader extends StatelessWidget {
   }
 
   Widget _buildTitle(BuildContext context) {
-    return title ??
-        Center(
-          child: Text(
-            titleText ?? '',
-            style: tdTextStyle.r16Text(context),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+    var style = tdTextStyle.r16Text(context);
+    var child = title;
+    if (title == null) {
+      child = Text(titleText ?? '');
+    }
+
+    return DefaultTextStyle(
+        style: style, textAlign: TextAlign.center, overflow: TextOverflow.ellipsis, maxLines: 2, child: child!);
   }
 
-  Widget _buildButton(
-      {required BuildContext context, String? text, bool isConfirm = false}) {
-    var widget;
+  Widget _buildButton({required BuildContext context, bool isConfirm = false}) {
+    var widget = isConfirm ? confirm : cancel;
+    var textStyle = isConfirm ? tdTextStyle.r16Primary(context) : tdTextStyle.r16Text(context, textLevel: 3);
+    VoidCallback onClick = () {
+      Navigator.pop(context);
+      if (isConfirm) {
+        if (onConfirm != null) {
+          onConfirm!();
+        }
+      }
+    };
+    if (widget != null) {
+      widget = DefaultTextStyle(style: textStyle, child: widget);
+      return onConfirm != null
+          ? GestureDetector(
+              onTap: onClick,
+              child: widget,
+            )
+          : widget;
+    }
+
+    var text = isConfirm ? confirmText : cancelText;
     if (text?.isNotEmpty != true) {
       widget = Container();
     } else {
       widget = Container(
         // constraints: BoxConstraints(minWidth: 75, maxWidth: 150),
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: TTextButton(
-            text: text,
-            textStyle: isConfirm
-                ? tdTextStyle.r16Primary(context)
-                : tdTextStyle.r16Text(context, textLevel: 3),
-            onClick: () {
-              Navigator.pop(context);
-              if (isConfirm) {
-                if (onConfirm != null) {
-                  onConfirm!();
-                }
-              }
-            }),
+        child: TDTextButton(text: text, textStyle: textStyle, onClick: onClick),
       );
     }
 
