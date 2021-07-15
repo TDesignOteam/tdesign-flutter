@@ -49,7 +49,8 @@ class TDRadioGroup extends TDCheckGroup {
           limitTitleRow: limitTitleRow,
           limitContentRow: limitContentRow,
           checkedColor: checkedColor,
-          defaultSelected: options.map((element) => element.name == defaultSelectedName).toList(),
+          defaultSelected:
+              options.where((element) => element.name == defaultSelectedName).map((option) => option.name).toList(),
           selectedIconBuilder: selectedIconBuilder ?? (theme) => _IconHelper.buildIcon(checkedColor, theme, true),
           unselectedIconBuilder: unselectedIconBuilder ?? (theme) => _IconHelper.buildIcon(checkedColor, theme, false),
           onChange: onChange,

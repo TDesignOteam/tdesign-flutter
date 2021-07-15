@@ -346,7 +346,7 @@ class TDCheckGroup extends StatefulWidget {
   /// 用一个布尔序列表示各选项默认的选中状态。默认为全`false`。
   /// 超出`names`数组长度的部分无效。
   /// 小于`names`数组长度，后续未设置的部分默认为不选中。
-  final List<bool> defaultSelected;
+  final List<String> defaultSelected;
 
   /// 文本区域能否被点击。默认为`false`。
   /// 所有选项统一配置。
@@ -416,9 +416,9 @@ class _CheckGroupState extends State<TDCheckGroup> {
   @override
   void initState() {
     numTotal = widget.options.length;
-    for (int i = 0; i < widget.defaultSelected.length; i++) {
-      if (i < numTotal && widget.defaultSelected[i]) {
-        selectedIndices.add(i);
+    for (TDGroupOption option in widget.options) {
+      if (widget.defaultSelected.contains(option.name) && !selectedIndices.contains(option.name)) {
+        selectedIndices.add(widget.options.indexOf(option));
       }
     }
     widget.controller?._register(_toggleAll, _checkAll, _uncheckAll, _toggle, _check, _uncheck);

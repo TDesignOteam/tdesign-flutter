@@ -173,7 +173,7 @@ class _CheckBoxPageState extends State<CheckBoxPage> {
           TDGroupOption(name: '4', title: '选项四'),
         ],
         limitContentRow: 3,
-        defaultSelected: [true, false, true, false],
+        defaultSelected: ['1', '3'],
         controller: controller,
         separatorWidget: Divider(height: 10),
       )),
