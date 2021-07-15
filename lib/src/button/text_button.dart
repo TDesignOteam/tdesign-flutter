@@ -10,7 +10,7 @@ import 'package:tdesign/theme/td_text_style.dart';
 import '../../tdesign.dart';
 import 'button_base.dart';
 
-class TTextButton extends StatelessWidget {
+class TDTextButton extends StatelessWidget {
   ///点击效果
   final VoidCallback onClick;
 
@@ -26,13 +26,7 @@ class TTextButton extends StatelessWidget {
   ///文字大小
   final TButtonSize size;
 
-  TTextButton(
-      {required this.onClick,
-      Key? key,
-      this.text,
-      this.icon,
-      this.textStyle,
-      this.size = TButtonSize.mid})
+  TDTextButton({required this.onClick, Key? key, this.text, this.icon, this.textStyle, this.size = TButtonSize.mid})
       : super(key: key);
 
   @override
@@ -69,8 +63,7 @@ class TTextButton extends StatelessWidget {
         //radius 0 关闭水波纹
         radius: 0.0,
         //加按压颜色
-        highlightColor:
-            textStyle?.color?.withAlpha(40) ?? primaryColor!.withAlpha(40),
+        highlightColor: textStyle?.color?.withAlpha(40) ?? primaryColor!.withAlpha(40),
         highlightShape: BoxShape.rectangle,
         child: Padding(
           padding: tdButtonBase.getEdgeBySize(size),

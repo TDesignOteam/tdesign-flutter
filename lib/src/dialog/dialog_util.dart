@@ -13,42 +13,32 @@ class TDDialogBase {
   static TDDialogBase _instance = TDDialogBase._internal();
   TDDialogBase._internal();
 
-  Future showCenterDialog(
-      {required Widget dialog, required BuildContext context}) {
+  Future showCenterDialog({required Widget dialog, required BuildContext context}) {
     return showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-            clipBehavior: Clip.antiAlias,
-            content: dialog,
-            contentPadding: EdgeInsets.all(0.0)));
+        builder: (context) =>
+            AlertDialog(clipBehavior: Clip.antiAlias, content: dialog, contentPadding: EdgeInsets.all(0.0)));
   }
 
   /// 普通show一个底部可滑动的布局
   Future showBottomSheet(
-      {required BuildContext context,
-      required Widget sheet,
-      double? heightPercent,
-      double? offset}) {
+      {required BuildContext context, required Widget sheet, double? heightPercent, double? offset}) {
     return showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
         builder: (BuildContext context) {
           return _buildWrapSheet(context, sheet, heightPercent, offset);
         });
   }
 
-  Widget _buildWrapSheet(BuildContext context, Widget sheetContent,
-      double? heightPercent, double? offset) {
+  Widget _buildWrapSheet(BuildContext context, Widget sheetContent, double? heightPercent, double? offset) {
     return Container(
       constraints: BoxConstraints(
         minHeight: 100, //设置最小高度（必要）
-        maxHeight:
-            (MediaQuery.of(context).size.height * (heightPercent ?? 0.66)) -
-                (offset ?? 0), //设置最大高度（必要）
+        maxHeight: (MediaQuery.of(context).size.height * (heightPercent ?? 0.66)) - (offset ?? 0), //设置最大高度（必要）
       ),
       color: Colors.white,
       child: SafeArea(child: sheetContent),

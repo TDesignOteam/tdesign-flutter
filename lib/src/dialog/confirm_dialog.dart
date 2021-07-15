@@ -21,13 +21,7 @@ class TDConfirmDialog extends StatelessWidget {
   final OnWhetherClick? onWhetherClick;
 
   TDConfirmDialog(
-      {this.confirm,
-      required this.title,
-      this.cancel,
-      this.primary,
-      this.describe,
-      this.onWhetherClick,
-      Key? key})
+      {this.confirm, required this.title, this.cancel, this.primary, this.describe, this.onWhetherClick, Key? key})
       : super(key: key);
 
   @override
@@ -36,7 +30,7 @@ class TDConfirmDialog extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          TDialogBody(title: title, describe: describe),
+          TDDialogBody(title: title, describe: describe),
           Row(
             children: [
               //取消按钮
@@ -45,10 +39,8 @@ class TDConfirmDialog extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border(
                           right: BorderSide(
-                              color: tdDialogBase.divideColor(context),
-                              width: 1,
-                              style: BorderStyle.solid))),
-                  child: TTextButton(
+                              color: tdDialogBase.divideColor(context), width: 1, style: BorderStyle.solid))),
+                  child: TDTextButton(
                     size: TButtonSize.large,
                     onClick: () {
                       if (onWhetherClick != null) {
@@ -63,7 +55,7 @@ class TDConfirmDialog extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: TTextButton(
+                child: TDTextButton(
                     size: TButtonSize.large,
                     onClick: () {
                       if (onWhetherClick != null) {
@@ -73,9 +65,7 @@ class TDConfirmDialog extends StatelessWidget {
                       }
                     },
                     text: confirm ?? '确认',
-                    textStyle: primary ?? true
-                        ? tdTextStyle.m16Primary(context)
-                        : tdTextStyle.m16Error(context)),
+                    textStyle: primary ?? true ? tdTextStyle.m16Primary(context) : tdTextStyle.m16Error(context)),
               ),
               //确认
             ],

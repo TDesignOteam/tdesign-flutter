@@ -5,16 +5,9 @@ import 'package:tdesign/src/picker/widgets/picker_item.dart';
 import '../../../tdesign.dart';
 
 ///确认按钮回调
-typedef TDPickerSelectedCallback = void Function(
-    TDPickerController pickerController, List<int>? selects);
+typedef TDPickerSelectedCallback = void Function(TDPickerController pickerController, List<int>? selects);
 
 class TDPickerController {
-  /// 前一级修改, 后面是否变更到第一个
-  final changeToFirst;
-
-  /// 是否是级联数据 (切换选中项后 动态变化)
-  final isLinkageData;
-
   ///标题 取消按钮 确认按钮
   final Widget? title;
   final Widget? cancel;
@@ -33,8 +26,16 @@ class TDPickerController {
   static const double kTDPickerHeight = 228;
   static const double kTDPickerDiameterRatio = 3; //UI要求
   static const double kTDPickerItemExtent = 44;
-  static const double kTDPickerOffAxisFraction =
-      0.0; //(column - columnCount / 2) * 0.5
+  static const double kTDPickerOffAxisFraction = 0.0; //(column - columnCount / 2) * 0.5
+
+  ///是否循环滚动
+  final bool looping;
+
+  /// 前一级修改, 后面是否变更到第一个
+  final changeToFirst;
+
+  /// 是否是级联数据 (切换选中项后 动态变化)
+  final isLinkageData;
 
   ///数据源委托
   final PickerChildrenDelegate childDelegate;
@@ -56,6 +57,7 @@ class TDPickerController {
     this.header,
     this.footer,
     this.onConfirm,
+    this.looping = false,
     this.changeToFirst = false,
     this.isLinkageData = true,
     this.height = kTDPickerHeight,
@@ -79,13 +81,13 @@ class TDPickerController {
     this.header,
     this.footer,
     this.onConfirm,
+    this.looping = false,
     this.changeToFirst = false,
     this.height = kTDPickerHeight,
     this.diameterRatio = kTDPickerDiameterRatio,
     this.itemExtent = kTDPickerItemExtent,
     this.offAxisFraction = kTDPickerOffAxisFraction,
-  })  : childDelegate =
-            PickerChildrenDelegate.pickerData(pickerData: pickerData),
+  })  : childDelegate = PickerChildrenDelegate.pickerData(pickerData: pickerData),
         isLinkageData = !TDPickerRootItem.isArrayData(pickerData) {
     childDelegate.doInit(initSelects: initSelects);
   }
@@ -105,6 +107,7 @@ class TDPickerController {
     this.header,
     this.footer,
     this.onConfirm,
+    this.looping = false,
     this.changeToFirst = false,
     this.isLinkageData = true,
     this.height = kTDPickerHeight,
@@ -112,9 +115,7 @@ class TDPickerController {
     this.itemExtent = kTDPickerItemExtent,
     this.offAxisFraction = kTDPickerOffAxisFraction,
   }) : childDelegate = PickerChildrenDelegate.builder(
-            columnCount: columnCount,
-            itemBuilder: itemBuilder,
-            itemCountBuilder: itemCountBuilder) {
+            columnCount: columnCount, itemBuilder: itemBuilder, itemCountBuilder: itemCountBuilder) {
     childDelegate.doInit(initSelects: initSelects);
   }
 
@@ -122,19 +123,23 @@ class TDPickerController {
   List<int> get selects {
     var results = <int>[];
     for (int i = 0; i < childDelegate.columnCount; i++) {
-      results.add(getSelectedRow(i));
+      results.add(_getSelectedRow(i, preSelects: results));
     }
     return results;
   }
 
   ///获取选中的序号 column:哪一列
-  int getSelectedRow(int column) {
+  int _getSelectedRow(int column, {List<int>? preSelects}) {
     var row;
 
     if (column < childDelegate.columnControllerList.length) {
       var ctrl = childDelegate.columnControllerList[column];
       if (ctrl.hasClients == true) {
         row = ctrl.selectedItem;
+        if (row < 0 && preSelects != null) {
+          //loop
+          row = row % childDelegate.rowCount(preSelects);
+        }
       } else {
         row = 0;
       }
@@ -146,12 +151,12 @@ class TDPickerController {
   List<TDPickerItem> get selectPickerItems {
     var results = <TDPickerItem>[];
     for (int i = 0; i < childDelegate.columnCount; i++) {
-      results.add(getSelectPickerItem(i, selects: selects));
+      results.add(_getSelectPickerItem(i, selects: selects));
     }
     return results;
   }
 
-  TDPickerItem getSelectPickerItem(int column, {List<int>? selects}) {
+  TDPickerItem _getSelectPickerItem(int column, {List<int>? selects}) {
     selects ??= this.selects;
     var tmpSelects = selects.sublist(0, column + 1);
     return childDelegate.pickerItemAtSelects(tmpSelects);

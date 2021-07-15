@@ -32,9 +32,7 @@ class _TDPickersWidgetState extends State<TDPickersWidget> {
 
     return SizedBox(
         height: widget.controller.height,
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: columns));
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: columns));
   }
 
   ///动态数据
@@ -48,6 +46,7 @@ class _TDPickersWidgetState extends State<TDPickersWidget> {
     //   selects.add(controller.initialItem);
     // }
     for (var column = 0; column < childDelegate.columnCount; ++column) {
+      var childCount = childDelegate.rowCount(selects.sublist(0, column));
       var group = CupertinoPicker.builder(
           diameterRatio: widget.controller.diameterRatio,
           itemExtent: widget.controller.itemExtent,
@@ -67,10 +66,10 @@ class _TDPickersWidgetState extends State<TDPickersWidget> {
           onSelectedItemChanged: (rowIndex) {
             onSelectedItemChanged(column, rowIndex);
           },
-          childCount: childDelegate.rowCount(selects.sublist(0, column)),
+          childCount: widget.controller.looping ? null : childCount,
           itemBuilder: (context, row) {
             var tmpSelects = selects.sublist(0, column);
-            tmpSelects.add(row);
+            tmpSelects.add(row % childCount);
             return childDelegate.itemWidget(context, tmpSelects);
           });
       columns.add(Expanded(child: group));
@@ -81,8 +80,7 @@ class _TDPickersWidgetState extends State<TDPickersWidget> {
   ///选中回调
   void onSelectedItemChanged(int column, int row) {
     var childDelegate = widget.controller.childDelegate;
-    if (widget.controller.isLinkageData == true &&
-        column != childDelegate.columnCount - 1) {
+    if (widget.controller.isLinkageData == true && column != childDelegate.columnCount - 1) {
       setState(() {});
     }
 
@@ -90,8 +88,7 @@ class _TDPickersWidgetState extends State<TDPickersWidget> {
       for (var index = column + 1; index < childDelegate.columnCount; ++index) {
         var ctrl = childDelegate.columnControllerList[index];
         // ctrl.jumpToItem(0);
-        ctrl.animateToItem(0,
-            duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+        ctrl.animateToItem(0, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
       }
     }
   }

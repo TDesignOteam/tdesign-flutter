@@ -29,8 +29,7 @@ class TDButtonBase {
   EdgeInsetsGeometry get buttonSmallEdge => EdgeInsets.all(buttonSmallPadding);
   EdgeInsetsGeometry get buttonMidEdge => EdgeInsets.all(buttonMidPadding);
   EdgeInsetsGeometry get buttonLargeEdge => EdgeInsets.all(buttonLargePadding);
-  EdgeInsetsGeometry get buttonIconEdge =>
-      EdgeInsets.only(right: buttonIconPadding);
+  EdgeInsetsGeometry get buttonIconEdge => EdgeInsets.only(right: buttonIconPadding);
 
   ///按钮的dimen.
   double get buttonRadius => 4.0;
