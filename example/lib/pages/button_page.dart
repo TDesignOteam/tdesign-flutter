@@ -85,7 +85,19 @@ class _ButtonPageState extends State<ButtonPage> {
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
         child: OutlinedButton(
-            child: const Text('带图标按钮'),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.max, children: [
+              Icon(
+                Icons.fingerprint,
+                size: 22,
+                color: TDColors.blue,
+              ),
+              Flexible(
+                child: new Container(
+                  padding: new EdgeInsets.only(left: 8.0),
+                  child: const Text('带图标按钮'),
+                ),
+              ),
+            ]),
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
               foregroundColor: MaterialStateProperty.all<Color>(TDColors.blue),
@@ -290,7 +302,19 @@ class _ButtonPageState extends State<ButtonPage> {
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
         child: OutlinedButton(
-            child: const Text('带图标按钮'),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.max, children: [
+              Icon(
+                Icons.fingerprint,
+                size: 22,
+                color: TDColors.blue.shade3,
+              ),
+              Flexible(
+                child: new Container(
+                  padding: new EdgeInsets.only(left: 8.0),
+                  child: const Text('带图标按钮'),
+                ),
+              ),
+            ]),
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
               foregroundColor: MaterialStateProperty.all<Color>(TDColors.blue.shade3),
