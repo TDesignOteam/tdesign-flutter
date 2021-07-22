@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tdesign/tdesign.dart';
 
+import 'pages/button_page.dart';
 import 'pages/dialog_page.dart';
 import 'pages/icons_page.dart';
 import 'pages/message_page.dart';
