@@ -13,10 +13,17 @@ import 'button_base.dart';
 class TDButton extends StatelessWidget {
   /// 基本属性
 
-  ///点击   如果没有点击时间则是禁用状态
+  ///点击
+  ///如果没有点击时间则是禁用状态
+  ///
+  /// 暂时没处理 又没有点击事件  又是正常样式的场景。
+  ///
   final VoidCallback? onClick;
 
-  ///是否有左侧icon   传入最不带间距的Widget使用。间距统一内部处理。
+  ///是否有左侧icon
+  ///
+  /// 内部有最小间距 如果需要更大的艰巨则自己在传入的Widget进行设置。
+  ///
   final Widget? icon;
 
   ///按钮文字
@@ -25,13 +32,13 @@ class TDButton extends StatelessWidget {
   ///文字样式
   final TextStyle? textStyle;
 
-  ///文字大小
+  ///按钮尺寸
   final TDButtonSize size;
 
   ///是否有圆角
   final BorderRadiusGeometry radius;
 
-  /// style
+  ///文字样式
   final TDButtonStyle style;
 
   TDButton(
