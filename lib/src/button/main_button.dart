@@ -162,6 +162,7 @@ class TDButton extends StatelessWidget {
     return null;
   }
 
+  //如果不是实体按钮时候的描边框背景
   ShapeBorder? _getShapeBorder(BuildContext context) {
     if (style == TDButtonStyle.secondary) {
       Color shapeColor = TDTheme.of(context)?.themeColor.secondaryButtonStroke ?? TDColors.fontBlack;
