@@ -17,6 +17,12 @@ class TDTextStyle {
     return TextStyle(fontSize: 16, color: primaryColor);
   }
 
+  TextStyle r16PrimaryButtonDisable(BuildContext context) {
+    TDTheme? theme = TDTheme.of(context);
+    Color? primaryColor = theme?.themeColor.buttonDisablePrimary;
+    return TextStyle(fontSize: 16, color: primaryColor);
+  }
+
   TextStyle m16Primary(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
     Color? primaryColor = theme?.themeColor.primaryColor;
@@ -26,7 +32,13 @@ class TDTextStyle {
   TextStyle r14Primary(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
     Color? primaryColor = theme?.themeColor.primaryColor;
-    return TextStyle(fontSize: 16, color: primaryColor);
+    return TextStyle(fontSize: 14, color: primaryColor);
+  }
+
+  TextStyle r14PrimaryButtonDisable(BuildContext context) {
+    TDTheme? theme = TDTheme.of(context);
+    Color? primaryColor = theme?.themeColor.buttonDisablePrimary;
+    return TextStyle(fontSize: 14, color: primaryColor);
   }
 
   TextStyle r12Primary(BuildContext context) {
@@ -71,6 +83,20 @@ class TDTextStyle {
     return color ?? themeColor?.textColorL1;
   }
 
+  TextStyle r16AntiText(BuildContext context, {int textLevel = 1}) {
+    return TextStyle(fontSize: 16, color: _textAntiColor(context, textLevel));
+  }
+
+  TextStyle r14AntiText(BuildContext context, {int textLevel = 1}) {
+    return TextStyle(fontSize: 14, color: _textAntiColor(context, textLevel));
+  }
+
+  Color? _textAntiColor(BuildContext context, int textLevel) {
+    Color? color;
+    TDThemeColor? themeColor = TDTheme.of(context)?.themeColor;
+    return color ?? themeColor?.textAntiPrimaryColor;
+  }
+
   /// Error
   TextStyle r16Error(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
@@ -86,8 +112,14 @@ class TDTextStyle {
 
   TextStyle r14Error(BuildContext context) {
     TDTheme? theme = TDTheme.of(context);
-    Color? primaryColor = theme?.themeColor.primaryColor;
-    return TextStyle(fontSize: 16, color: primaryColor);
+    Color? errorColor = theme?.themeColor.errorColor;
+    return TextStyle(fontSize: 14, color: errorColor);
+  }
+
+  TextStyle r14ErrorDisable(BuildContext context) {
+    TDTheme? theme = TDTheme.of(context);
+    Color? errorColor = theme?.themeColor.errorColorDisabled;
+    return TextStyle(fontSize: 14, color: errorColor);
   }
 
   TextStyle r12Error(BuildContext context) {

@@ -4,9 +4,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tdesign/src/button/button_base.dart';
-import 'package:tdesign/src/button/text_button.dart';
-import 'package:tdesign/src/dialog/dialog_util.dart';
+import 'package:tdesign/src/button/dialog_text_button.dart';
 import 'package:tdesign/src/dialog/confirm_dialog.dart';
+import 'package:tdesign/src/dialog/dialog_util.dart';
 import 'package:tdesign/tdesign.dart';
 import 'package:tdesign/theme/td_text_style.dart';
 
@@ -57,8 +57,9 @@ class TDInputDialog extends StatelessWidget {
                       border: Border(
                           right: BorderSide(
                               color: tdDialogBase.divideColor(context), width: 1, style: BorderStyle.solid))),
-                  child: TDTextButton(
-                    size: TButtonSize.large,
+                  child: TDDialogTextButton(
+                    padding: tdButtonBase.getDialogEdgeBySize(),
+                    size: TDButtonSize.large,
                     onClick: () {
                       if (onWhetherClick != null) {
                         onWhetherClick!(false, _controller.text);
@@ -72,8 +73,9 @@ class TDInputDialog extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: TDTextButton(
-                    size: TButtonSize.large,
+                child: TDDialogTextButton(
+                    padding: tdButtonBase.getDialogEdgeBySize(),
+                    size: TDButtonSize.large,
                     onClick: () {
                       if (onWhetherClick != null) {
                         onWhetherClick!(true, _controller.text);

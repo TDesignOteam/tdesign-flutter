@@ -49,6 +49,17 @@ class ExamplePageState extends State<ExamplePage> with TickerProviderStateMixin 
 }
 
 class PageUtil {
+  static Widget buildTitle(String text, {double height = 60}) {
+    return Container(
+      height: height,
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: EdgeInsets.only(left: 15),
+        child: Text(text, style: TextStyle(fontSize: 17, color: Colors.black)),
+      ),
+    );
+  }
+
   static Widget buildSubTitle(String text, {double height = 60}) {
     return Container(
       height: height,

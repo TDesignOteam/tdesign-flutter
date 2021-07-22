@@ -4,7 +4,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tdesign/src/button/button_base.dart';
-import 'package:tdesign/src/button/text_button.dart';
+import 'package:tdesign/src/button/dialog_text_button.dart';
 
 import 'dialog_body.dart';
 
@@ -23,8 +23,9 @@ class TDAlertDialog extends StatelessWidget with WidgetsBindingObserver {
         mainAxisSize: MainAxisSize.min,
         children: [
           TDDialogBody(title: title, describe: describe),
-          TDTextButton(
-              size: TButtonSize.large,
+          TDDialogTextButton(
+              padding: tdButtonBase.getDialogEdgeBySize(),
+              size: TDButtonSize.large,
               onClick: () {
                 if (onConfirm != null) {
                   onConfirm!();

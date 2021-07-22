@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tdesign/src/button/text_button.dart';
+import 'package:tdesign/src/button/button_base.dart';
+import 'package:tdesign/src/button/dialog_text_button.dart';
 import 'package:tdesign/theme/td_text_style.dart';
 
 import '../../../tdesign.dart';
@@ -95,7 +96,12 @@ class PickerHeader extends StatelessWidget {
       widget = Container(
         // constraints: BoxConstraints(minWidth: 75, maxWidth: 150),
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: TDTextButton(text: text, textStyle: textStyle, onClick: onClick),
+        child: TDDialogTextButton(
+          text: text,
+          textStyle: textStyle,
+          onClick: onClick,
+          padding: tdButtonBase.getDialogEdgeBySize(),
+        ),
       );
     }
 
