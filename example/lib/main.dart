@@ -1,6 +1,7 @@
 import 'package:example/pages/badge_page.dart';
 import 'package:example/pages/button_page.dart';
 import 'package:example/pages/checkbox_page.dart';
+import 'package:example/pages/material_button_page.dart';
 import 'package:example/pages/picker_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -112,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Picker', (context) => _push(context, PickerPage())),
     ListItem('Switch', (context) => _push(context, SwitchPage())),
     ListItem('Button', (context) => _push(context, ButtonPage())),
+    ListItem('MaterialButton', (context) => _push(context, MaterialButtonPage())),
   ];
 
   Widget build(BuildContext context) {
