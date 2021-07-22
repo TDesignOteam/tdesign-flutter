@@ -32,8 +32,8 @@ class _ButtonPageState extends State<ButtonPage> {
         Container(
           color: Colors.white,
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-            PageUtil.buildTitle('01 类型'),
-            PageUtil.buildSubTitle('02 基础按钮'),
+            _buildTitle('01 类型'),
+            _buildSubTitle('基础按钮'),
             _buildContent(TDButton(
               onClick: () {},
               text: '强按钮',
@@ -105,7 +105,8 @@ class _ButtonPageState extends State<ButtonPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            PageUtil.buildSubTitle('02 状态'),
+            _buildTitle('02 状态'),
+            _buildSubTitle('按钮禁用态'),
             _buildContent(TDButton(
               text: '强按钮-禁用',
             )),
@@ -160,8 +161,8 @@ class _ButtonPageState extends State<ButtonPage> {
                 ),
               ],
             ),
-            PageUtil.buildSubTitle('03 规格'),
-            PageUtil.buildSubTitle('文字按钮尺寸'),
+            _buildTitle('03 规格'),
+            _buildSubTitle('文字按钮尺寸'),
             _buildContent(TDButton(
               size: TDButtonSize.large,
               onClick: () {},
@@ -189,6 +190,20 @@ class _ButtonPageState extends State<ButtonPage> {
   }
 
   Widget _buildContent(Widget child) {
-    return Padding(padding: EdgeInsets.all(10), child: child);
+    return Padding(padding: EdgeInsets.all(16), child: child);
+  }
+
+  Widget _buildTitle(String text) {
+    return Padding(
+      padding: EdgeInsets.only(left: 16, top: 8, bottom: 4),
+      child: Text(text, style: TextStyle(fontSize: 16, color: Colors.black)),
+    );
+  }
+
+  Widget _buildSubTitle(String text) {
+    return Padding(
+      padding: EdgeInsets.only(left: 16, top: 4, bottom: 4),
+      child: Text(text, style: TextStyle(fontSize: 12, color: Colors.grey)),
+    );
   }
 }
