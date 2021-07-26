@@ -101,10 +101,10 @@ class TDNoticeBar extends StatefulWidget {
   /// 当[mode]为`TDNoticeBarMode.text`时，将会只展示[text]这部分内容。
   ///
   /// 当[mode]为`TDNoticeBarMode.closeable`时，将会展示[leftIcon]、[text]和[rightIcon]三部分内容，
-  /// 并且[rightIcon]部分的图标为`Icon.close`，点击后会调用[onClose]方法
+  /// 并且[rightIcon]部分的图标为`Icons.close`，点击后会调用[onClose]方法
   ///
   /// 当[mode]为`TDNoticeBarMode.closeable`时，将会展示[leftIcon]、[text]和[rightIcon]三部分内容，
-  /// 并且[rightIcon]部分的图标为`Icon.keyboard_arrow_right`，点击后会调用[onLink]方法
+  /// 并且[rightIcon]部分的图标为`Icons.keyboard_arrow_right`，点击后会调用[onLink]方法
   final TDNoticeBarMode mode;
 
   /// NoticeBar左侧的Icon。
@@ -279,15 +279,20 @@ class _TDNoticeBarState extends State<TDNoticeBar> {
   }
 
   Widget _scrollableText(TextStyle defaultTextStyle) {
-    return SingleChildScrollView(
-      controller: _controller,
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          Text(widget.text, style: defaultTextStyle),
-          Container(width: spaceWidth),
-          Text(widget.text, style: defaultTextStyle),
-        ],
+    return Listener(
+      child: IgnorePointer(
+        ignoring: true,
+        child: SingleChildScrollView(
+          controller: _controller,
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              Text(widget.text, style: defaultTextStyle),
+              Container(width: spaceWidth),
+              Text(widget.text, style: defaultTextStyle),
+            ],
+          ),
+        ),
       ),
     );
   }
