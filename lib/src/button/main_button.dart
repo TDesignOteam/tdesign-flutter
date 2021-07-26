@@ -82,12 +82,13 @@ class TDButton extends StatelessWidget {
         highlightColor: tapColor,
         highlightShape: BoxShape.rectangle,
         child: Padding(
-            padding: tdButtonBase.getEdgeBySize(size),
-            child: Row(
-              mainAxisSize: midOrLarge ? MainAxisSize.max : MainAxisSize.min,
-              mainAxisAlignment: midOrLarge ? MainAxisAlignment.center : MainAxisAlignment.start,
-              children: contentWidget,
-            )),
+          padding: tdButtonBase.getEdgeBySize(size),
+          child: Row(
+            mainAxisSize: midOrLarge ? MainAxisSize.max : MainAxisSize.min,
+            mainAxisAlignment: midOrLarge ? MainAxisAlignment.center : MainAxisAlignment.start,
+            children: contentWidget,
+          ),
+        ),
       ),
     );
   }
