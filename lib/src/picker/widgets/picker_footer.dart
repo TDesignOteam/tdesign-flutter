@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tdesign/src/button/text_button.dart';
+import 'package:tdesign/src/button/button_base.dart';
+import 'package:tdesign/src/button/dialog_text_button.dart';
 import 'package:tdesign/theme/td_text_style.dart';
 
 import '../../../tdesign.dart';
@@ -71,7 +72,12 @@ class PickerFooter extends StatelessWidget {
 
     var text = isConfirm ? (confirmText ?? '确认') : (cancelText ?? '取消');
     return Expanded(
-      child: TDTextButton(text: text, textStyle: textStyle, onClick: onClick),
+      child: TDDialogTextButton(
+        text: text,
+        textStyle: textStyle,
+        onClick: onClick,
+        padding: tdButtonBase.getDialogEdgeBySize(),
+      ),
     );
   }
 }

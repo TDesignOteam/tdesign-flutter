@@ -185,7 +185,9 @@ class _TDNoticeBarState extends State<TDNoticeBar> {
   @override
   void initState() {
     // 设置滚动事件
-    if (widget.scrollable) _initScroll();
+    if (widget.scrollable){
+      _initScroll();
+    }
     super.initState();
   }
 
@@ -221,10 +223,11 @@ class _TDNoticeBarState extends State<TDNoticeBar> {
   @override
   void didUpdateWidget(TDNoticeBar oldWidget) {
     // 设置滚动事件，需要判断一下NoticeBar是否close
-    if (widget.scrollable && showNoticeBar)
+    if (widget.scrollable && showNoticeBar) {
       _initScroll();
-    else
+    } else {
       _timer?.cancel();
+    }
     super.didUpdateWidget(oldWidget);
   }
 
@@ -279,20 +282,16 @@ class _TDNoticeBarState extends State<TDNoticeBar> {
   }
 
   Widget _scrollableText(TextStyle defaultTextStyle) {
-    return Listener(
-      child: IgnorePointer(
-        ignoring: true,
-        child: SingleChildScrollView(
-          controller: _controller,
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              Text(widget.text, style: defaultTextStyle),
-              Container(width: spaceWidth),
-              Text(widget.text, style: defaultTextStyle),
-            ],
-          ),
-        ),
+    return SingleChildScrollView(
+      physics: NeverScrollableScrollPhysics(),
+      controller: _controller,
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          Text(widget.text, style: defaultTextStyle),
+          Container(width: spaceWidth),
+          Text(widget.text, style: defaultTextStyle),
+        ],
       ),
     );
   }
@@ -371,11 +370,15 @@ class _TDNoticeBarState extends State<TDNoticeBar> {
     if (widget.mode == TDNoticeBarMode.closeable) {
       setState(() {
         // 当NoticeBar隐藏不见的时候，将滚动播放的定时任务取消
-        if (widget.scrollable && _timer != null) _timer!.cancel();
+        if (widget.scrollable && _timer != null) {
+          _timer!.cancel();
+        }
         // 点击close图标，NoticeBar将会不在显示
         showNoticeBar = false;
       });
-      if (widget.onClose != null) widget.onClose!();
+      if (widget.onClose != null) {
+        widget.onClose!();
+      }
     }
     if (widget.mode == TDNoticeBarMode.link && widget.onLink != null) {
       widget.onLink!();

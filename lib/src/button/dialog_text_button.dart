@@ -10,7 +10,7 @@ import 'package:tdesign/theme/td_text_style.dart';
 import '../../tdesign.dart';
 import 'button_base.dart';
 
-class TDTextButton extends StatelessWidget {
+class TDDialogTextButton extends StatelessWidget {
   ///点击效果
   final VoidCallback onClick;
 
@@ -24,26 +24,36 @@ class TDTextButton extends StatelessWidget {
   final TextStyle? textStyle;
 
   ///文字大小
-  final TButtonSize size;
+  final TDButtonSize size;
 
-  TDTextButton({required this.onClick, Key? key, this.text, this.icon, this.textStyle, this.size = TButtonSize.mid})
+  //外部传入的padding需要定制化
+  final EdgeInsetsGeometry? padding;
+
+  TDDialogTextButton(
+      {required this.onClick,
+      Key? key,
+      this.text,
+      this.icon,
+      this.textStyle,
+      this.size = TDButtonSize.mid,
+      this.padding})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextStyle getTextStyle(TButtonSize size) {
-      if (size == TButtonSize.large) {
+    TextStyle getTextStyle(TDButtonSize size) {
+      if (size == TDButtonSize.large) {
         return tdTextStyle.r16Primary(context);
-      } else if (size == TButtonSize.mid) {
+      } else if (size == TDButtonSize.mid) {
         return tdTextStyle.r16Primary(context);
-      } else if (size == TButtonSize.small) {
+      } else if (size == TDButtonSize.small) {
         return tdTextStyle.r14Primary(context);
       }
       return tdTextStyle.r16Primary(context);
     }
 
     TDTheme? theme = TDTheme.of(context);
-    Color? primaryColor = theme?.themeColor.primaryColor;
+    Color? tapColor = theme?.themeColor.tapColor;
     var contentWidget = <Widget>[];
     if (icon != null) {
       //默认是最小2dp的间距，需要增加则自行在传入Widget处增加。
@@ -63,10 +73,10 @@ class TDTextButton extends StatelessWidget {
         //radius 0 关闭水波纹
         radius: 0.0,
         //加按压颜色
-        highlightColor: textStyle?.color?.withAlpha(40) ?? primaryColor!.withAlpha(40),
+        highlightColor: tapColor,
         highlightShape: BoxShape.rectangle,
         child: Padding(
-          padding: tdButtonBase.getEdgeBySize(size),
+          padding: padding ?? tdButtonBase.getEdgeBySize(size),
           child: Center(
             child: Row(
               mainAxisSize: MainAxisSize.min,

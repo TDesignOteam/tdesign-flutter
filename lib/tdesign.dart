@@ -3,10 +3,11 @@
 library tdesign;
 
 export 'src/badge.dart';
+export 'src/button.dart';
+export 'src/icons.dart';
 export 'src/picker.dart';
 export 'src/rate.dart';
 export 'src/tags.dart';
-export 'src/icons.dart';
 export 'src/toast.dart';
 export 'src/message.dart';
 export 'src/dialog.dart';
