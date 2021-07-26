@@ -295,6 +295,14 @@ class TDCheckGroupController {
     _ToggleListener check,
     _ToggleListener uncheck,
   ) {
+    assert(
+        _toggleAll == null &&
+            _checkAll == null &&
+            _uncheckAll == null &&
+            _toggle == null &&
+            _check == null &&
+            _uncheck == null,
+        "An TDCheckGroupController can only be attach to one CheckGroup");
     _toggleAll = toggleAll;
     _checkAll = checkAll;
     _uncheckAll = uncheckAll;
