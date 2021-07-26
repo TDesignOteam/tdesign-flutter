@@ -4,7 +4,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tdesign/src/button/button_base.dart';
-import 'package:tdesign/src/button/text_button.dart';
+import 'package:tdesign/src/button/dialog_text_button.dart';
 import 'package:tdesign/src/dialog/dialog_util.dart';
 import 'package:tdesign/tdesign.dart';
 
@@ -45,12 +45,13 @@ class TDActionDialog extends StatelessWidget {
       childList.add(Row(
         children: [
           Expanded(
-              child: TDTextButton(
-            size: TButtonSize.large,
+              child: TDDialogTextButton(
+            size: TDButtonSize.large,
             onClick: () {
               onItemClick(currentIndex);
             },
             text: element,
+            padding: tdButtonBase.getDialogEdgeBySize(),
           ))
         ],
       ));
@@ -61,8 +62,8 @@ class TDActionDialog extends StatelessWidget {
     childList.add(Row(
       children: [
         Expanded(
-            child: TDTextButton(
-          size: TButtonSize.large,
+            child: TDDialogTextButton(
+          size: TDButtonSize.large,
           onClick: () {
             if (onCancelClick != null) {
               onCancelClick!();
@@ -72,6 +73,7 @@ class TDActionDialog extends StatelessWidget {
           },
           text: cancel ?? '取消',
           textStyle: tdDialogBase.dialogTitle(context),
+          padding: tdButtonBase.getDialogEdgeBySize(),
         ))
       ],
     ));

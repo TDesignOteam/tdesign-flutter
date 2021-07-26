@@ -284,6 +284,15 @@ class TDThemeColor {
   //输入框背景色
   final Color editBackground;
 
+  ///按压透明度颜色
+  final Color tapColor;
+
+  ///按钮的的禁用背景， 不是主2 而是主3
+  final Color buttonDisablePrimary;
+
+  ///次按钮的描边色
+  final Color secondaryButtonStroke;
+
   factory TDThemeColor({
     Color? primaryColor,
     Color? errorColor,
@@ -316,6 +325,9 @@ class TDThemeColor {
     Color? borderColorL2,
     Color? divideColor,
     Color? editBackground,
+    Color? tapColor,
+    Color? buttonDisablePrimary,
+    Color? secondaryButtonStroke,
   }) {
     return TDThemeColor.raw(
       primaryColor: primaryColor ?? TDColors.blue,
@@ -349,6 +361,9 @@ class TDThemeColor {
       borderColorL2: borderColorL2 ?? Color(0xFFDDDDDD),
       divideColor: divideColor ?? Color(0xFFE7E7E7),
       editBackground: editBackground ?? Color(0xFFF5F5F5),
+      tapColor: tapColor ?? Color(0x26000000),
+      buttonDisablePrimary: buttonDisablePrimary ?? TDColors.blue.shade3,
+      secondaryButtonStroke: secondaryButtonStroke ?? Color(0xFFDCDCDC),
     );
   }
 
@@ -384,6 +399,9 @@ class TDThemeColor {
     Color? borderColorL2,
     Color? divideColor,
     Color? editBackground,
+    Color? tapColor,
+    Color? buttonDisablePrimary,
+    Color? secondaryButtonStroke,
   }) {
     return TDThemeColor.raw(
       primaryColor: primaryColor ?? TDColors.blue,
@@ -417,6 +435,9 @@ class TDThemeColor {
       borderColorL2: borderColorL2 ?? Color(0xFFDDDDDD),
       divideColor: divideColor ?? Color(0xFFE7E7E7),
       editBackground: editBackground ?? Color(0xFFF5F5F5),
+      tapColor: tapColor ?? Color(0x26000000),
+      buttonDisablePrimary: buttonDisablePrimary ?? TDColors.blue.shade3,
+      secondaryButtonStroke: secondaryButtonStroke ?? Color(0xFFDCDCDC),
     );
   }
 
@@ -452,5 +473,8 @@ class TDThemeColor {
     required this.borderColorL2,
     required this.divideColor,
     required this.editBackground,
+    required this.tapColor,
+    required this.buttonDisablePrimary,
+    required this.secondaryButtonStroke,
   });
 }
