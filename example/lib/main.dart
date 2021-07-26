@@ -17,6 +17,7 @@ import 'pages/rate_page.dart';
 import 'pages/switch_page.dart';
 import 'pages/tags_page.dart';
 import 'pages/toast_page.dart';
+import 'pages/noticebar_page.dart';
 import 'responsive_layout/responsive_layout.dart';
 
 void main() {
@@ -114,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ListItem('Switch', (context) => _push(context, SwitchPage())),
     ListItem('Button', (context) => _push(context, ButtonPage())),
     ListItem('MaterialButton', (context) => _push(context, MaterialButtonPage())),
+    ListItem('NoticeBar', (context) => _push(context, NoticeBarPage())),
   ];
 
   Widget build(BuildContext context) {
