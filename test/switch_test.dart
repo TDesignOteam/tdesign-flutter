@@ -17,6 +17,15 @@ void main() {
     expect(find.text('Normal'), findsOneWidget);
     await tester.tap(find.byType(CupertinoSwitch));
     expect(status, true);
+
+    await tester.pumpWidget(boilerplate(TDSwitch(
+      value: status,
+      text: 'Normal',
+      onChanged: (val) {
+        status = val;
+      },
+    )));
+    expect(find.text('Normal'), findsOneWidget);
     await tester.tap(find.byType(CupertinoSwitch));
     expect(status, false);
   });
@@ -31,9 +40,7 @@ void main() {
       },
     )));
     expect(find.text('Disable'), findsOneWidget);
-    await tester.tap(find.byType(CupertinoSwitch));
-    expect(status, false);
-    await tester.tap(find.byType(CupertinoSwitch));
+    await tester.tap(find.byType(CupertinoSwitch), warnIfMissed: false);
     expect(status, false);
   });
 
@@ -48,9 +55,7 @@ void main() {
     )));
     expect(find.text('Loading'), findsOneWidget);
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    await tester.tap(find.byType(CupertinoSwitch));
-    expect(status, false);
-    await tester.tap(find.byType(CupertinoSwitch));
+    await tester.tap(find.byType(CupertinoSwitch), warnIfMissed: false);
     expect(status, false);
   });
 }
