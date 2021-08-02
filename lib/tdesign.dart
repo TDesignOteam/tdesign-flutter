@@ -2,7 +2,7 @@
 
 library tdesign;
 
-export 'src/badge.dart';
+export 'src/badge/badge.dart';
 export 'src/button.dart';
 export 'src/icons.dart';
 export 'src/picker.dart';
