@@ -4,7 +4,7 @@ Badge - 徽标组件
 
 能力及接口参考：http://tdesign.woa.com/vue-mobile/components/
 
-#### 使用示例
+### 使用示例
 
 ```dart
 Badge(
@@ -18,7 +18,7 @@ Badge(
 )
 ```
 
-#### API
+### API
 
 **Properties**
 
@@ -38,7 +38,7 @@ Badge(
 
 
 
-#### Design config
+### Design config
 
 (下划线部分和TDTheme主题相关)
 
