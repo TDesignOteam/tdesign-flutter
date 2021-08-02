@@ -6,7 +6,7 @@
 
 ### 使用示例
 
-- TDCheckBox
+- TDCheckBox - 单个复选框
 
 ```dart
 TDCheckBox(
@@ -20,7 +20,7 @@ TDCheckBox(
 )
 ```
 
-- TDCheckGroup
+- TDCheckGroup - 复选框群组(多项选择)
 
 ```dart
 TDCheckGroup(
