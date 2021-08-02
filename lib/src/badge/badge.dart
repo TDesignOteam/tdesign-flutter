@@ -96,13 +96,13 @@ abstract class _Default {
 ///
 /// 使用示例：
 /// ```dart
-/// Badge(
+/// TDBadge(
 ///   dot: true,
 ///   child: Icon(TDIcons.refresh),
 /// )
 /// ```
 /// ```dart
-/// Badge(
+/// TDBadge(
 ///   content: 'NEW',
 ///   shape: BadgeShape.ribbon,
 ///   child: ListTile(title: Text('ListTile')),
