@@ -18,11 +18,11 @@ class _BadgeSizeSpecConfig {
   // Badge类型为`BadgeShape.rounded`时，Badge的圆角半径
   final double roundedBorderRadius;
 
-  // Badge上文字的字体大小
-  final double textSize;
+  // 文字左右的边距，用于略微加宽Badge
+  final double horizontalPadding;
 
-  // 文字两侧的边距，用于略微加宽Badge
-  final double sidePadding;
+  // 文字上下的边距，用于略微加高Badge
+  final double verticalPadding;
 
   // Badge为圆点时圆点大小
   final double dotSize;
@@ -38,8 +38,8 @@ class _BadgeSizeSpecConfig {
 
   const _BadgeSizeSpecConfig({
     required this.roundedBorderRadius,
-    required this.textSize,
-    required this.sidePadding,
+    required this.horizontalPadding,
+    required this.verticalPadding,
     required this.dotSize,
     required this.ribbonIn,
     required this.ribbonOut,
@@ -53,21 +53,21 @@ abstract class _Default {
   static const Map<TDBadgeSize, _BadgeSizeSpecConfig> sizeSpecConfig = {
     TDBadgeSize.medium: _BadgeSizeSpecConfig(
       roundedBorderRadius: 4,
-      textSize: 14,
-      sidePadding: 3,
-      dotSize: 8,
-      ribbonIn: 18,
-      ribbonOut: 45,
-      ribbonOffset: 9.5,
+      horizontalPadding: 4,
+      verticalPadding: 1.8,
+      dotSize: 10,
+      ribbonIn: 12,
+      ribbonOut: 32,
+      ribbonOffset: 7,
     ),
     TDBadgeSize.small: _BadgeSizeSpecConfig(
       roundedBorderRadius: 3,
-      textSize: 11,
-      sidePadding: 2,
-      dotSize: 6,
-      ribbonIn: 15,
-      ribbonOut: 35,
-      ribbonOffset: 7.5,
+      horizontalPadding: 3,
+      verticalPadding: 1.2,
+      dotSize: 8,
+      ribbonIn: 10,
+      ribbonOut: 27,
+      ribbonOffset: 5,
     ),
   };
 
@@ -96,13 +96,13 @@ abstract class _Default {
 ///
 /// 使用示例：
 /// ```dart
-/// Badge(
+/// TDBadge(
 ///   dot: true,
 ///   child: Icon(TDIcons.refresh),
 /// )
 /// ```
 /// ```dart
-/// Badge(
+/// TDBadge(
 ///   content: 'NEW',
 ///   shape: BadgeShape.ribbon,
 ///   child: ListTile(title: Text('ListTile')),
@@ -241,7 +241,7 @@ class _BadgeState extends State<TDBadge> {
   }
 
   Widget _buildBadge(_BadgeSizeSpecConfig _config) {
-    final size = _calculateTextSize(_getText(), TextStyle(fontSize: _config.textSize));
+    final size = _calculateTextSize(_getText(), TextStyle(fontSize: _getTextSize()));
     final textWidth = size.width;
     return Stack(
       alignment: Alignment.center,
@@ -256,15 +256,16 @@ class _BadgeState extends State<TDBadge> {
              * 偏移量应为：Bagde宽度/2，即：文字绘制宽度/2 + 两侧边距。
              * 但当此偏移量小于高度/2，即宽度小于高度时，会强制使宽度=高度，Badge展示为圆形或正方形，偏移量取高度/2
              */
-          end: -(widget.offset.dy + math.max(textWidth / 2 + _config.sidePadding, size.height / 2)),
+          end: -(widget.offset.dy + math.max(textWidth / 2 + _config.horizontalPadding, size.height / 2)),
         ),
       ],
     );
   }
 
   Widget _buildBadgeWithoutChild(_BadgeSizeSpecConfig _config) {
-    final size = _calculateTextSize(_getText(), TextStyle(fontSize: _config.textSize));
-    final width = math.max(size.width + _config.sidePadding * 2, size.height);
+    final size = _calculateTextSize(_getText(), TextStyle(fontSize: _getTextSize()));
+    final height = size.height + _config.verticalPadding * 2;
+    final width = math.max(size.width + _config.horizontalPadding * 2, height);
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Offstage(
         offstage: (widget.content == null && (widget.count ?? -1) < 0) || (!widget.showZero && widget.count == 0),
@@ -272,21 +273,21 @@ class _BadgeState extends State<TDBadge> {
           child: Container(
             alignment: Alignment.center,
             width: width,
-            height: size.height,
+            height: height,
             color: widget.color ?? theme?.themeColor.errorColor ?? TDColors.red,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: _config.sidePadding),
+              padding: EdgeInsets.symmetric(horizontal: _config.horizontalPadding),
               child: Text(
                 _getText(),
                 style: TextStyle(
                   color: widget.textColor ?? theme?.themeColor.textAntiPrimaryColor ?? TDColors.fontBlack,
-                  fontSize: _config.textSize,
+                  fontSize: _getTextSize(),
                 ),
               ),
             ),
           ),
           borderRadius: BorderRadius.all(
-            Radius.circular(widget.shape == TDBadgeShape.circle ? size.height / 2 : _config.roundedBorderRadius),
+            Radius.circular(widget.shape == TDBadgeShape.circle ? height / 2 : _config.roundedBorderRadius),
           ),
         ),
       ),
@@ -300,6 +301,7 @@ class _BadgeState extends State<TDBadge> {
         color: widget.color ?? theme?.themeColor.errorColor ?? TDColors.red,
         textColor: widget.textColor ?? theme?.themeColor.textAntiPrimaryColor ?? TDColors.fontWhite,
         config: _config,
+        textSize: _getTextSize(),
       ),
       child: widget.child,
     );
@@ -307,6 +309,12 @@ class _BadgeState extends State<TDBadge> {
 
   String _getText() {
     return widget.content ?? (widget.count! <= widget.maxCount ? '${widget.count}' : '${widget.maxCount}+');
+  }
+
+  double _getTextSize() {
+    final double sizeMedium = theme?.themeData.fontSizeXS ?? 10;
+    final double sizeSmall = sizeMedium - 2;
+    return widget.size == TDBadgeSize.medium ? sizeMedium : sizeSmall;
   }
 
   Size _calculateTextSize(String text, TextStyle textStyle) {
@@ -341,11 +349,15 @@ class _RibbonPainter extends CustomPainter {
   // 缎带Badge主体颜色
   final Color color;
 
+  // 文字大小
+  final double textSize;
+
   _RibbonPainter({
     required this.title,
     required this.color,
     required this.textColor,
     required this.config,
+    required this.textSize,
   })  : inLength = config.ribbonIn,
         outLength = config.ribbonOut;
   @override
@@ -353,7 +365,7 @@ class _RibbonPainter extends CustomPainter {
     final textPainter = TextPainter(
       text: TextSpan(
         text: title,
-        style: TextStyle(color: textColor, fontSize: config.textSize),
+        style: TextStyle(color: textColor, fontSize: textSize),
       ),
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,

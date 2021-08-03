@@ -29,7 +29,7 @@ abstract class _Default {
   static const double disabledOpacity = 0.4;
 
   // icon四周的padding宽度
-  static const double iconEdge = 7;
+  static const double iconEdge = 8;
 }
 
 typedef void OnChangeSingle(bool checked, String name);
@@ -44,7 +44,7 @@ typedef Widget IconBuilder(TDTheme? theme);
 ///
 /// 使用示例：
 /// ``` dart
-/// CheckBox(
+/// TDCheckBox(
 ///   name: '1.1',
 ///   title: '单行标题',
 ///   onChange: (selected, name) {
@@ -52,7 +52,7 @@ typedef Widget IconBuilder(TDTheme? theme);
 ///       this.selected = selected;
 ///     });
 ///   },
-/// )
+/// );
 /// ```
 class TDCheckBox extends StatefulWidget {
   /// 选项的值，即ID，必须传入。
@@ -339,21 +339,19 @@ class TDCheckGroupController {
 ///
 /// 使用示例：
 /// ``` dart
-/// CheckGroup(
+/// TDCheckGroup(
 ///   options: [
 ///     GroupOption(name: '选项一', title: '选项一'),
 ///     GroupOption(name: '选项二', title: '选项二'),
 ///     GroupOption(name: '选项三', title: '选项三'),
-///   ])
+///   ]);
 /// ```
 class TDCheckGroup extends StatefulWidget {
   /// 选项信息实例的列表，必须传入
   /// 选项的数量由列表长度决定，长度不可为0。
   final List<TDGroupOption> options;
 
-  /// 用一个布尔序列表示各选项默认的选中状态。默认为全`false`。
-  /// 超出`names`数组长度的部分无效。
-  /// 小于`names`数组长度，后续未设置的部分默认为不选中。
+  /// 默认选中的选项的id列表。
   final List<String> defaultSelected;
 
   /// 文本区域能否被点击。默认为`false`。
@@ -382,10 +380,9 @@ class TDCheckGroup extends StatefulWidget {
   final IconBuilder? unselectedIconBuilder;
 
   /// 选项选中状态变化的回调
-  /// 所有选项统一配置。
   final OnChangeGroup? onChange;
 
-  /// 控制器，用于从使用侧控制全选和全部取消。
+  /// 控制器，用于从使用侧控制选择或取消选项、反选、全选和全部取消。
   final TDCheckGroupController? controller;
 
   /// 可选的选项之间的分割widget。
