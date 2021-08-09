@@ -19,13 +19,13 @@ abstract class _Default {
   // NoticeBar 默认的显示模式为 TDNoticeBarMode.normal，显示模式将会影响icon的显示。
   static const mode = TDNoticeBarMode.normal;
 
-  // 文本信息是否需要滚动显示
+  // 文本信息是否需要滚动显示。
   static const scrollable = false;
 
-  // 文本信息滚动播放的速度
+  // 文本信息滚动播放的速度。
   static const speed = 50;
 
-  // 文本信息滚动播放动画的延迟（ms）
+  // 文本信息滚动播放动画的延迟（ms）。
   static const delay = 1000;
 }
 
@@ -58,7 +58,8 @@ class TDNoticeBar extends StatefulWidget {
     this.onClose,
     this.onDetail,
     this.onLink,
-  })  : assert(speed > 0, 'scroll speed must be a num great than 0 !'),
+  })  : assert(speed > 0, 'scroll speed must be a num greater than 0 !'),
+        assert(delay > 0, 'delay must be a num greater than 0 !'),
         super(key: key);
 
   /// NoticeBar所显示的文本信息。
@@ -185,7 +186,7 @@ class _TDNoticeBarState extends State<TDNoticeBar> {
   @override
   void initState() {
     // 设置滚动事件
-    if (widget.scrollable){
+    if (widget.scrollable) {
       _initScroll();
     }
     super.initState();
