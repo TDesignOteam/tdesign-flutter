@@ -162,14 +162,14 @@ class _TDStepperState extends State<TDStepper> {
         widget.label,
         textAlign: TextAlign.left,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontSize: 18),
+        style: TextStyle(fontSize: 17),
       ),
     );
   }
 
   Widget _buildInputText() {
     return Container(
-      constraints: BoxConstraints(maxWidth: 80),
+      constraints: BoxConstraints(maxWidth: widget.inputWidth.toDouble()),
       child: TextField(
         decoration: null,
         controller: _controller,

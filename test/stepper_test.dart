@@ -57,7 +57,6 @@ void main() {
       onChanged: (value) => print('value: $value'),
     )));
 
-
     expect(find.text('标题文字'), findsOneWidget);
     expect(find.text('10'), findsOneWidget);
 
