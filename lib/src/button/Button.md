@@ -86,7 +86,7 @@ tint
 以下相关颜色均和`主题`设置相关，数值为默认主题时的色值
 可以通过
 
-  | TDButtonStyle   | 文字颜色 <br> 主题参数|  禁用文字颜色 <br> 主题参数 |背景颜色 <br> 主题参数|禁用背景颜色 <br> 主题参数|备注|
+  | TDButtonStyle   | 文字颜色 <br> 主题参数|  禁用文字颜色 <br> 主题参数 |背景颜色 <br> 主题参数|禁用背景颜色 <br> 主题参数
   | ---- | ------ | ---- | ---- | ---- |---- |
   | normal     |  `0xFFFFFFFF` <br> `textAntiPrimaryColor` |  `0xFFFFFFFF` <br> `textAntiPrimaryColor`| `0xFF0052D9`  <br> `primaryColor`| `0xFFBBD3FB` <br> `buttonDisablePrimary`
   | stroke    |`0xFF0052D9`  <br> `primaryColor`  | `0xFFBBD3FB` <br> `buttonDisablePrimary` |  `0xFF0052D9`  <br> `primaryColor`  | `0xFFBBD3FB` <br> `buttonDisablePrimary` |
