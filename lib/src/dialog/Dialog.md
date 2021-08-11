@@ -64,9 +64,9 @@ showBottomSheet  方法为弹出一个底部适配高度的布局界面。
 
 | 属性      | 类型         | 默认值      | 必传 | 说明  |                                                         
 | --------- | ------------ | -------------- | -------- | ---------------- |
-| confirmText     | String?       |    确认     | N    | 按钮文字  |
+| confirmText     | String?       |    知道了     | N    | 按钮文字  |
 | title     | String |             | Y    | 弹窗的标题 |
-| describe   | String?       |                       | N    | 弹窗的描述文字       |
+| describe   | String?       |                       | N    | 弹窗的描述文字 ，没有则不现实内容      |
 | onConfirm  | VoidCallback?  |   |N    |点击确认按钮的回调。不传则默认点击关闭弹窗
 
 `TDActionDialog`列表式操作弹框
@@ -74,8 +74,8 @@ showBottomSheet  方法为弹出一个底部适配高度的布局界面。
 | 属性      | 类型         | 默认值      | 必传 | 说明  |                                                         
 | --------- | ------------ | -------------- | -------- | ---------------- |
 | list     | List<String>?       |         | Y    | 选择项文字数组  |
-| cancel     | String? |             | N    | 取消选项的文字 |
-| describe   | String?       |                       | N    | 弹窗的描述文字       |
+| cancel     | String? |       取消      | N    | 取消选项的文字 |
+| describe   | String?       |                       | N    | 弹窗的描述文字 ，不传则没有内容      |
 | onItemClick   | Function(int index)?       |        | Y    | 选中第几项的回调方法，不包括取消      |
 | onCancelClick   | Function()?       |        | N  | 选中取消的回调方法，不传的话则默认关闭弹窗      |
     
@@ -87,7 +87,7 @@ showBottomSheet  方法为弹出一个底部适配高度的布局界面。
 | confirm     | String?       |    确认     | N    | 按钮文字  |
 | title     | String |             | Y    | 弹窗的标题 |
 | describe   | String?       |                       | N    | 弹窗的描述文字       |
-| cancel  |  String?  |   |N    | 取消的文字按钮
+| cancel  |  String?  |  取消 |N    | 取消的文字按钮
 | onWhetherClick  | Function(bool, String?)      |      | N    | 点击事件的回调，如果为确认弹窗，则返回bool值为是否选中，如果不传递方法则默认点击关闭。传递了方法则外部控制关闭逻辑,返回String为输入参数 |
 | controller  | TextEditingController  |   |Y    | 文本编辑器的控制器
 
