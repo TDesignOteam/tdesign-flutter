@@ -35,10 +35,10 @@ tdDialogBase.showCenterDialog(
 ## API
 
 ### 弹出层API
-`tdDialogBase`作为弹窗辅助类，暂时提供了两种弹窗方式
-`showCenterDialog` 方法为弹出一个屏幕居中布局的界面，传入布局即可。
-`showBottomSheet` 方法为弹出一个底部适配高度的布局界面。
-**Properties** **
+tdDialogBase 作为弹窗辅助类，暂时提供了两种弹窗方式
+showCenterDialog  方法为弹出一个屏幕居中布局的界面，传入布局即可。
+showBottomSheet  方法为弹出一个底部适配高度的布局界面。
+**Properties**
 | 属性      | 类型         | 默认值      | 必传 | 说明                                                         
 | ------ | ----- | ----- | -------- | ------------ |
 | sheet | Widget |  | Y | 内部做了圆角为10的裁剪，不需要在布局外部做裁剪 |
@@ -47,7 +47,7 @@ tdDialogBase.showCenterDialog(
 | offset | double? | 0 | N | 高度为基础的向下便宜|
 
 ### 弹窗布局API
-`TDConfirmDialog`普通确认弹窗
+TDConfirmDialog普通确认弹窗
 | 属性      | 类型         | 默认值      | 必传 | 说明                                                         
 | --------- | ------------ | -------------- | -------- | ---------------- |
 | confirm     | String?       |    确认     | N    |   |
@@ -57,7 +57,7 @@ tdDialogBase.showCenterDialog(
 | onWhetherClick  | Function(bool, String?)      |      | N    | 点击事件的回调，如果为确认弹窗，则返回bool值为是否选中，第二个参数在此处不使用。，如果不传递方法则默认点击关闭。传递了方法则外部控制关闭逻辑 |
 | primary     | bool?       | true  | N    | 设置弹窗主题样式，true则会主题色，false则为告警色  | 
 
-`TDAlertDialog`普通告警弹窗
+TDAlertDialog普通告警弹窗
 | 属性      | 类型         | 默认值      | 必传 | 说明                                                         
 | --------- | ------------ | -------------- | -------- | ---------------- |
 | confirmText     | String?       |    确认     | N    | 按钮文字  |
@@ -65,7 +65,7 @@ tdDialogBase.showCenterDialog(
 | describe   | String?       |                       | N    | 弹窗的描述文字       |
 | onConfirm  | VoidCallback?  |   |N    |点击确认按钮的回调。不传则默认点击关闭弹窗
 
-`TDActionDialog`列表式操作弹框
+TDActionDialog列表式操作弹框
 | 属性      | 类型         | 默认值      | 必传 | 说明                                                         
 | --------- | ------------ | -------------- | -------- | ---------------- |
 | list     | List<String>?       |         | Y    | 选择项文字数组  |
@@ -75,7 +75,7 @@ tdDialogBase.showCenterDialog(
 | onCancelClick   | Function()?       |        | N  | 选中取消的回调方法，不传的话则默认关闭弹窗      |
     
 
-`TInputDialog` 输入确认类型弹窗
+TInputDialog 输入确认类型弹窗
 | 属性      | 类型         | 默认值      | 必传 | 说明                                                         
 | --------- | ------------ | -------------- | -------- | ---------------- |
 | confirm     | String?       |    确认     | N    | 按钮文字  |
@@ -93,7 +93,7 @@ tdDialogBase.showCenterDialog(
   | 属性                | 默认值                           | 设置主题色参数
   | ------------------- | ------------------------------ |
   | 高亮选择颜色    | `0xFF0052D9`     |    `primaryColor` |
-    | 告警高亮颜色    | `0xFFE34D59`     |    `errorColor` |
+  | 告警高亮颜色    | `0xFFE34D59`     |    `errorColor` |
     
     
 
