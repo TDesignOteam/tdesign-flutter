@@ -96,9 +96,7 @@ class _DialogPageState extends State<DialogPage> {
         tdDialogBase.showCenterDialog(
             dialog: TDActionDialog(
               list: ['按钮文案文字内容较长'],
-              onItemClick: (index) {
-                print('jam~~~$index');
-              },
+              onItemClick: (index) {},
               title: '对话框标题',
               describe: '告知当前状态、信息和解决方法，等内容。描述文案尽可能控制在三行内',
             ),
@@ -108,9 +106,7 @@ class _DialogPageState extends State<DialogPage> {
         tdDialogBase.showCenterDialog(
             dialog: TDActionDialog(
               list: ['按钮文案文字内容较长', '单行按钮最多十五个字符文案内容'],
-              onItemClick: (index) {
-                print('jam~~~$index');
-              },
+              onItemClick: (index) {},
               title: '对话框标题',
               describe: '告知当前状态、信息和解决方法，等内容。描述文案尽可能控制在三行内',
             ),
@@ -121,10 +117,9 @@ class _DialogPageState extends State<DialogPage> {
         tdDialogBase
             .showCenterDialog(
                 dialog: TDInputDialog(
+                  controller: TextEditingController(),
                   title: '带输入框对话框',
                   onWhetherClick: (yes, payload) {
-                    print('jam bool $yes');
-                    print('jam payload $payload');
                     Navigator.pop(context);
                   },
                 ),
@@ -135,11 +130,10 @@ class _DialogPageState extends State<DialogPage> {
         tdDialogBase
             .showCenterDialog(
                 dialog: TDInputDialog(
+                  controller: TextEditingController(),
                   title: '带输入框对话框',
                   describe: '告知当前状态、信息和解决方法，等内容。描述文案尽可能控制在三行内',
                   onWhetherClick: (yes, payload) {
-                    print('jam bool $yes');
-                    print('jam payload $payload');
                     Navigator.pop(context);
                   },
                 ),

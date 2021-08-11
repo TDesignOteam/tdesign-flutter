@@ -87,8 +87,7 @@ class TDButton extends StatelessWidget {
           padding: tdButtonBase.getEdgeBySize(size),
           child: Row(
             mainAxisSize: midOrLarge ? MainAxisSize.max : MainAxisSize.min,
-            mainAxisAlignment:
-                midOrLarge ? MainAxisAlignment.center : MainAxisAlignment.start,
+            mainAxisAlignment: midOrLarge ? MainAxisAlignment.center : MainAxisAlignment.start,
             children: contentWidget,
           ),
         ),
@@ -103,9 +102,7 @@ class TDButton extends StatelessWidget {
         return tdTextStyle.r16AntiText(context);
       }
       return tdTextStyle.r14AntiText(context);
-    } else if (style == TDButtonStyle.stroke ||
-        style == TDButtonStyle.ghost ||
-        style == TDButtonStyle.text) {
+    } else if (style == TDButtonStyle.stroke || style == TDButtonStyle.ghost || style == TDButtonStyle.text) {
       if (size == TDButtonSize.large) {
         if (onClick != null) {
           return tdTextStyle.r16Primary(context);
@@ -140,22 +137,19 @@ class TDButton extends StatelessWidget {
       if (onClick != null) {
         return TDTheme.of(context)?.themeColor.primaryColor ?? TDColors.blue;
       } else {
-        return TDTheme.of(context)?.themeColor.buttonDisablePrimary ??
-            TDColors.blue.shade3;
+        return TDTheme.of(context)?.themeColor.buttonDisablePrimary ?? TDColors.blue.shade3;
       }
     } else if (style == TDButtonStyle.warn) {
       if (onClick != null) {
         return TDTheme.of(context)?.themeColor.errorColor ?? TDColors.red;
       } else {
-        return TDTheme.of(context)?.themeColor.errorColorDisabled ??
-            TDColors.red.shade3;
+        return TDTheme.of(context)?.themeColor.errorColorDisabled ?? TDColors.red.shade3;
       }
     } else if (style == TDButtonStyle.warn) {
       if (onClick != null) {
         return TDTheme.of(context)?.themeColor.errorColor ?? TDColors.red;
       } else {
-        return TDTheme.of(context)?.themeColor.errorColorDisabled ??
-            TDColors.red.shade3;
+        return TDTheme.of(context)?.themeColor.errorColorDisabled ?? TDColors.red.shade3;
       }
     } else if (style == TDButtonStyle.ghost) {
       return Colors.transparent;
@@ -174,22 +168,14 @@ class TDButton extends StatelessWidget {
   //如果不是实体按钮时候的描边框背景
   ShapeBorder? _getShapeBorder(BuildContext context) {
     if (style == TDButtonStyle.secondary) {
-      Color shapeColor =
-          TDTheme.of(context)?.themeColor.secondaryButtonStroke ??
-              TDColors.fontBlack;
+      Color shapeColor = TDTheme.of(context)?.themeColor.secondaryButtonStroke ?? TDColors.fontBlack;
       return RoundedRectangleBorder(
         borderRadius: radius,
-        side: BorderSide(
-            color: shapeColor,
-            style: BorderStyle.solid,
-            width: tdButtonBase.buttonStrokeWidth),
+        side: BorderSide(color: shapeColor, style: BorderStyle.solid, width: tdButtonBase.buttonStrokeWidth),
       );
     } else if (style == TDButtonStyle.stroke || style == TDButtonStyle.ghost) {
-      Color disableColor =
-          TDTheme.of(context)?.themeColor.buttonDisablePrimary ??
-              TDColors.blue.shade3;
-      Color primaryColor =
-          TDTheme.of(context)?.themeColor.primaryColor ?? TDColors.blue;
+      Color disableColor = TDTheme.of(context)?.themeColor.buttonDisablePrimary ?? TDColors.blue.shade3;
+      Color primaryColor = TDTheme.of(context)?.themeColor.primaryColor ?? TDColors.blue;
       return RoundedRectangleBorder(
         borderRadius: radius,
         side: BorderSide(
@@ -198,10 +184,8 @@ class TDButton extends StatelessWidget {
             width: tdButtonBase.buttonStrokeWidth),
       );
     } else if (style == TDButtonStyle.warnStroke) {
-      Color disableColor = TDTheme.of(context)?.themeColor.errorColorDisabled ??
-          TDColors.red.shade3;
-      Color primaryColor =
-          TDTheme.of(context)?.themeColor.errorColor ?? TDColors.red;
+      Color disableColor = TDTheme.of(context)?.themeColor.errorColorDisabled ?? TDColors.red.shade3;
+      Color primaryColor = TDTheme.of(context)?.themeColor.errorColor ?? TDColors.red;
       return RoundedRectangleBorder(
         borderRadius: radius,
         side: BorderSide(

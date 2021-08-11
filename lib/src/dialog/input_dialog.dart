@@ -18,15 +18,22 @@ class TDInputDialog extends StatelessWidget {
   final String title;
   final String? describe;
   final OnWhetherClick? onWhetherClick;
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController controller;
 
-  TDInputDialog({this.confirm, required this.title, this.cancel, this.describe, this.onWhetherClick, Key? key})
+  TDInputDialog(
+      {this.confirm,
+      required this.title,
+      this.cancel,
+      required this.controller,
+      this.describe,
+      this.onWhetherClick,
+      Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     TDialogDefaultTextField textField = TDialogDefaultTextField(
-      controller: _controller,
+      controller: controller,
     );
     return Container(
       child: Column(
@@ -54,15 +61,16 @@ class TDInputDialog extends StatelessWidget {
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                      border: Border(
-                          right: BorderSide(
-                              color: tdDialogBase.divideColor(context), width: 1, style: BorderStyle.solid))),
+                    border: Border(
+                      right: BorderSide(color: tdDialogBase.divideColor(context), width: 1, style: BorderStyle.solid),
+                    ),
+                  ),
                   child: TDDialogTextButton(
                     padding: tdButtonBase.getDialogEdgeBySize(),
                     size: TDButtonSize.large,
                     onClick: () {
                       if (onWhetherClick != null) {
-                        onWhetherClick!(false, _controller.text);
+                        onWhetherClick!(false, controller.text);
                       } else {
                         Navigator.pop(context);
                       }
@@ -74,19 +82,19 @@ class TDInputDialog extends StatelessWidget {
               ),
               Expanded(
                 child: TDDialogTextButton(
-                    padding: tdButtonBase.getDialogEdgeBySize(),
-                    size: TDButtonSize.large,
-                    onClick: () {
-                      if (onWhetherClick != null) {
-                        onWhetherClick!(true, _controller.text);
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    },
-                    text: confirm ?? '确认',
-                    textStyle: tdTextStyle.m16Primary(context)),
+                  padding: tdButtonBase.getDialogEdgeBySize(),
+                  size: TDButtonSize.large,
+                  onClick: () {
+                    if (onWhetherClick != null) {
+                      onWhetherClick!(true, controller.text);
+                    } else {
+                      Navigator.pop(context);
+                    }
+                  },
+                  text: confirm ?? '确认',
+                  textStyle: tdTextStyle.m16Primary(context),
+                ),
               ),
-              //确认
             ],
           )
         ],
@@ -103,12 +111,14 @@ class TDialogDefaultTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-        controller: controller,
-        decoration: InputDecoration(
-            hintText: '输入文案',
-            border: InputBorder.none,
-            fillColor: tdDialogBase.editBackground(context),
-            filled: true,
-            hintStyle: tdDialogBase.dialogHint(context)));
+      controller: controller,
+      decoration: InputDecoration(
+        hintText: '输入文案',
+        border: InputBorder.none,
+        fillColor: tdDialogBase.editBackground(context),
+        filled: true,
+        hintStyle: tdDialogBase.dialogHint(context),
+      ),
+    );
   }
 }

@@ -57,10 +57,12 @@ class TDDialogTextButton extends StatelessWidget {
     var contentWidget = <Widget>[];
     if (icon != null) {
       //默认是最小2dp的间距，需要增加则自行在传入Widget处增加。
-      contentWidget.add(Padding(
-        padding: tdButtonBase.buttonIconEdge,
-        child: icon!,
-      ));
+      contentWidget.add(
+        Padding(
+          padding: tdButtonBase.buttonIconEdge,
+          child: icon!,
+        ),
+      );
     }
     contentWidget.add(Text(
       text ?? '确认',

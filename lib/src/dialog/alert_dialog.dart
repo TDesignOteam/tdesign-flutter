@@ -33,7 +33,7 @@ class TDAlertDialog extends StatelessWidget with WidgetsBindingObserver {
                   Navigator.pop(context);
                 }
               },
-              text: '知道了'),
+              text: confirmText ?? '知道了'),
         ],
       ),
     );
