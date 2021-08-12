@@ -16,5 +16,6 @@ export 'src/checkbox.dart';
 export 'src/radio.dart';
 export 'src/switch.dart';
 export 'src/noticebar.dart';
+export 'src/stepper.dart';
 export 'theme/td_colors.dart';
 export 'theme/td_theme.dart';

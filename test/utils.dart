@@ -9,6 +9,17 @@ Widget boilerplate(Widget child) {
   );
 }
 
+Widget boilerplatePlus(Widget child) {
+  return MaterialApp(
+    home: Directionality(
+      textDirection: TextDirection.ltr,
+      child: Material(
+        child: child,
+      ),
+    ),
+  );
+}
+
 extension WidgetTesterExt on WidgetTester {
   // 获取指定finder匹配到元素的个数
   int count(Finder finder) => widgetList(finder).length;
