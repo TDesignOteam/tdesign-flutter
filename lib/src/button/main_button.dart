@@ -27,7 +27,7 @@ class TDButton extends StatelessWidget {
   final Widget? icon;
 
   ///按钮文字
-  final String text;
+  final String? text;
 
   ///文字样式
   final TextStyle? textStyle;
@@ -44,7 +44,7 @@ class TDButton extends StatelessWidget {
   TDButton(
       {this.onClick,
       Key? key,
-      required this.text,
+      this.text,
       this.style = TDButtonStyle.normal,
       this.icon,
       this.textStyle,
@@ -62,12 +62,14 @@ class TDButton extends StatelessWidget {
     var contentWidget = <Widget>[];
     if (icon != null) {
       //默认是最小8dp的间距，需要增加则自行在传入Widget处增加。
-      contentWidget.add(Padding(
-        padding: tdButtonBase.buttonIconEdge,
-        child: icon!,
-      ));
+      contentWidget.add(
+        Padding(
+          padding: tdButtonBase.buttonIconEdge,
+          child: icon!,
+        ),
+      );
     }
-    contentWidget.add(Text(text, style: style));
+    contentWidget.add(Text(text ?? ' ', style: style));
     //如果是mid或者large的按钮 则直接充满全部，然后内容居中
     var midOrLarge = (size == TDButtonSize.large || size == TDButtonSize.mid);
     return Material(
@@ -168,26 +170,29 @@ class TDButton extends StatelessWidget {
     if (style == TDButtonStyle.secondary) {
       Color shapeColor = TDTheme.of(context)?.themeColor.secondaryButtonStroke ?? TDColors.fontBlack;
       return RoundedRectangleBorder(
-          borderRadius: radius,
-          side: BorderSide(color: shapeColor, style: BorderStyle.solid, width: tdButtonBase.buttonStrokeWidth));
+        borderRadius: radius,
+        side: BorderSide(color: shapeColor, style: BorderStyle.solid, width: tdButtonBase.buttonStrokeWidth),
+      );
     } else if (style == TDButtonStyle.stroke || style == TDButtonStyle.ghost) {
       Color disableColor = TDTheme.of(context)?.themeColor.buttonDisablePrimary ?? TDColors.blue.shade3;
       Color primaryColor = TDTheme.of(context)?.themeColor.primaryColor ?? TDColors.blue;
       return RoundedRectangleBorder(
-          borderRadius: radius,
-          side: BorderSide(
-              color: (onClick == null) ? disableColor : primaryColor,
-              style: BorderStyle.solid,
-              width: tdButtonBase.buttonStrokeWidth));
+        borderRadius: radius,
+        side: BorderSide(
+            color: (onClick == null) ? disableColor : primaryColor,
+            style: BorderStyle.solid,
+            width: tdButtonBase.buttonStrokeWidth),
+      );
     } else if (style == TDButtonStyle.warnStroke) {
       Color disableColor = TDTheme.of(context)?.themeColor.errorColorDisabled ?? TDColors.red.shade3;
       Color primaryColor = TDTheme.of(context)?.themeColor.errorColor ?? TDColors.red;
       return RoundedRectangleBorder(
-          borderRadius: radius,
-          side: BorderSide(
-              color: (onClick == null) ? disableColor : primaryColor,
-              style: BorderStyle.solid,
-              width: tdButtonBase.buttonStrokeWidth));
+        borderRadius: radius,
+        side: BorderSide(
+            color: (onClick == null) ? disableColor : primaryColor,
+            style: BorderStyle.solid,
+            width: tdButtonBase.buttonStrokeWidth),
+      );
     }
     return null;
   }
