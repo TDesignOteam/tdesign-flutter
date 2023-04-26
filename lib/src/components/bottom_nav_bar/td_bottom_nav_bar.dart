@@ -259,6 +259,12 @@ class _TDBottomNavBarState extends State<TDBottomNavBar> {
   Widget build(BuildContext context) {
     var isCapsuleOutlineType =
         widget.outlineType == TDBottomNavBarOutlineType.capsule;
+    var topBorderStyle =
+        widget.topBorder ?? BorderSide(color: TDTheme.of(context).grayColor3);
+    // 设置计算容器高度，不设置时会撑开父组件
+    var height =
+        (widget.barHeight ?? _kDefaultNavBarHeight) + topBorderStyle.width;
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         /// -2 是为了增加边框
@@ -272,6 +278,7 @@ class _TDBottomNavBarState extends State<TDBottomNavBar> {
         var itemWidth = maxWidth / widget.navigationTabs.length;
         return Container(
             alignment: Alignment.center,
+            height: height,
             margin: isCapsuleOutlineType
                 ? const EdgeInsets.symmetric(horizontal: 16)
                 : null,
@@ -280,7 +287,7 @@ class _TDBottomNavBarState extends State<TDBottomNavBar> {
                 borderRadius:
                     isCapsuleOutlineType ? BorderRadius.circular(56) : null,
                 border: widget.showTopBorder! && !isCapsuleOutlineType
-                    ?  Border(top: widget.topBorder ?? BorderSide(color: TDTheme.of(context).grayColor3))
+                    ? Border(top: topBorderStyle)
                     : null,
                 boxShadow: isCapsuleOutlineType
                     ? TDTheme.of(context).shadowsTop
@@ -310,7 +317,6 @@ class _TDBottomNavBarState extends State<TDBottomNavBar> {
   Widget _item(int index, double itemWidth) {
     var tabItemConfig = widget.navigationTabs[index];
     return Container(
-        height: widget.barHeight ?? _kDefaultNavBarHeight,
         width: itemWidth,
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(vertical: 7),
