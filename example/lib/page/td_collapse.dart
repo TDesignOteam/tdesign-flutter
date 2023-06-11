@@ -137,7 +137,7 @@ class TDCollapsePageState extends State<TDCollapsePage> {
   Widget _buildAccordionCollapseWithDefault(BuildContext context) {
     return TDCollapse.accordion(
       style: TDCollapseStyle.block,
-      defaultOpenPanelValue: '1',
+      initialOpenPanelValue: '1',
       expansionCallback: (int index, bool isExpanded) {
         setState(() {
           _accordionWithDefaultData[index].isExpanded = !isExpanded;

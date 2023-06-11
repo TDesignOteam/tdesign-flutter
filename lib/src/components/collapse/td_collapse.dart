@@ -29,7 +29,7 @@ class TDCollapse extends StatefulWidget {
     this.elevation = 0,
     Key? key,
   })  : _allowOnlyOnePanelOpen = false,
-        defaultOpenPanelValue = null,
+        initialOpenPanelValue = null,
         super(key: key);
 
   const TDCollapse.accordion({
@@ -38,7 +38,7 @@ class TDCollapse extends StatefulWidget {
     this.expansionCallback,
     this.animationDuration = kThemeAnimationDuration,
     this.elevation = 0,
-    this.defaultOpenPanelValue,
+    this.initialOpenPanelValue,
     Key? key,
   })  : _allowOnlyOnePanelOpen = true,
         super(key: key);
@@ -63,7 +63,7 @@ class TDCollapse extends StatefulWidget {
 
   /// 折叠面板列表的默认展开面板的值；
   /// 当使用 [TDCollapse.accordion] 时，此值生效
-  final Object? defaultOpenPanelValue;
+  final Object? initialOpenPanelValue;
 
   final bool _allowOnlyOnePanelOpen;
 
@@ -87,8 +87,8 @@ class _TDCollapseState extends State<TDCollapse> {
     assert(_allPanelsHaveDistinctValues(),
         'When allowing only one panel to be open, every panel must have a distinct value.');
 
-    if (widget.defaultOpenPanelValue != null) {
-      _currentOpenPanel = _searchPanelByValue(widget.defaultOpenPanelValue);
+    if (widget.initialOpenPanelValue != null) {
+      _currentOpenPanel = _searchPanelByValue(widget.initialOpenPanelValue);
     }
   }
 
@@ -109,7 +109,7 @@ class _TDCollapseState extends State<TDCollapse> {
     // when the widget is updated to accordion mode
     // we need to initialize the current open panel to defaultOpenPanelValue
     if (!oldWidget._allowOnlyOnePanelOpen) {
-      _currentOpenPanel = _searchPanelByValue(widget.defaultOpenPanelValue);
+      _currentOpenPanel = _searchPanelByValue(widget.initialOpenPanelValue);
     }
   }
 
