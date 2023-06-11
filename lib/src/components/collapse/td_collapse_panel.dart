@@ -34,5 +34,6 @@ class TDCollapsePanel extends ExpansionPanel {
         );
 
   final Object? value;
+
   final TDCollapseIconTextBuilder? expandIconTextBuilder;
 }

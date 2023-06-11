@@ -29,6 +29,7 @@ class TDCollapse extends StatefulWidget {
     this.elevation = 0,
     Key? key,
   })  : _allowOnlyOnePanelOpen = false,
+        defaultOpenPanelValue = null,
         super(key: key);
 
   const TDCollapse.accordion({
@@ -37,18 +38,20 @@ class TDCollapse extends StatefulWidget {
     this.expansionCallback,
     this.animationDuration = kThemeAnimationDuration,
     this.elevation = 0,
+    this.defaultOpenPanelValue,
     Key? key,
   })  : _allowOnlyOnePanelOpen = true,
         super(key: key);
 
   /// 折叠面板列表的样式
-  /// [TDCollapseStyle.block] 通栏风格，[TDCollapseStyle.card] 卡片风格
+  /// - [TDCollapseStyle.block] 通栏风格
+  /// - [TDCollapseStyle.card] 卡片风格
   final TDCollapseStyle style;
 
   /// 折叠面板列表的子组件
   final List<TDCollapsePanel> children;
 
-  /// 折叠面板列表的回调函数
+  /// 折叠面板列表的回调函数；
   /// 回调时，入参为当前点击的折叠面板的索引 index 和是否展开的状态 isExpanded
   final ExpansionPanelCallback? expansionCallback;
 
@@ -57,6 +60,10 @@ class TDCollapse extends StatefulWidget {
 
   /// 折叠面板列表的阴影
   final double elevation;
+
+  /// 折叠面板列表的默认展开面板的值；
+  /// 当使用 [TDCollapse.accordion] 时，此值生效
+  final Object? defaultOpenPanelValue;
 
   final bool _allowOnlyOnePanelOpen;
 
@@ -70,11 +77,18 @@ class _TDCollapseState extends State<TDCollapse> {
   @override
   void initState() {
     super.initState();
-    if (widget._allowOnlyOnePanelOpen) {
-      assert(_allPanelsHaveValue(),
-          'When allowing only one panel to be open, every panel must have a value.');
-      assert(_allPanelsHaveDistinctValues(),
-          'When allowing only one panel to be open, every panel must have a distinct value.');
+
+    if (!widget._allowOnlyOnePanelOpen) {
+      return;
+    }
+
+    assert(_allPanelsHaveValue(),
+        'When allowing only one panel to be open, every panel must have a value.');
+    assert(_allPanelsHaveDistinctValues(),
+        'When allowing only one panel to be open, every panel must have a distinct value.');
+
+    if (widget.defaultOpenPanelValue != null) {
+      _currentOpenPanel = _searchPanelByValue(widget.defaultOpenPanelValue);
     }
   }
 
@@ -91,6 +105,12 @@ class _TDCollapseState extends State<TDCollapse> {
         'When allowing only one panel to be open, every panel must have a value.');
     assert(_allPanelsHaveDistinctValues(),
         'When allowing only one panel to be open, every panel must have a distinct value.');
+
+    // when the widget is updated to accordion mode
+    // we need to initialize the current open panel to defaultOpenPanelValue
+    if (!oldWidget._allowOnlyOnePanelOpen) {
+      _currentOpenPanel = _searchPanelByValue(widget.defaultOpenPanelValue);
+    }
   }
 
   @override
@@ -240,5 +260,15 @@ class _TDCollapseState extends State<TDCollapse> {
       }
       return true;
     });
+  }
+
+  TDCollapsePanel? _searchPanelByValue(Object? value) {
+    for (var index = 0; index < widget.children.length; index += 1) {
+      final child = widget.children[index];
+      if (child.value == value) {
+        return child;
+      }
+    }
+    return null;
   }
 }
