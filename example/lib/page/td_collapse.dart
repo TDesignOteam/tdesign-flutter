@@ -18,7 +18,6 @@ class TDCollapsePageState extends State<TDCollapsePage> {
   final List<CollapseDataItem> _blockStyleData = generateItems(5);
   final List<CollapseDataItem> _cardStyleData = generateItems(5);
   final List<CollapseDataItem> _blockStyleWithOpText = generateItems(5);
-  final List<CollapseDataItem> _cardStyleWithOpText = generateItems(5);
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +27,11 @@ class TDCollapsePageState extends State<TDCollapsePage> {
         desc: '可以折叠/展开的内容区域。',
         children: [
           ExampleModule(title: '组件类型', children: [
-            ExampleItem(desc: '通栏样式', builder: _buildBlockCollapse),
-            ExampleItem(desc: '卡片样式', builder: _buildCardCollapse),
-          ])
+            ExampleItem(desc: '基础折叠面板的通栏样式', builder: _buildBlockCollapse),
+            ExampleItem(desc: '基础折叠面板的卡片样式', builder: _buildCardCollapse),
+            ExampleItem(
+                desc: '带操作说明', builder: _buildCollapseWithOperationText),
+          ]),
         ]);
   }
 
@@ -68,6 +69,33 @@ class TDCollapsePageState extends State<TDCollapsePage> {
         return TDCollapsePanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
             return Text(item.headerValue);
+          },
+          isExpanded: item.isExpanded,
+          body: const Text(randomString),
+        );
+      }).toList(),
+    );
+  }
+
+  @Demo(group: 'collapse')
+  Widget _buildCollapseWithOperationText(BuildContext context) {
+    final localizations = MaterialLocalizations.of(context);
+    return TDCollapse(
+      style: TDCollapseStyle.block,
+      expansionCallback: (int index, bool isExpanded) {
+        setState(() {
+          _blockStyleWithOpText[index].isExpanded = !isExpanded;
+        });
+      },
+      children: _blockStyleWithOpText.map((CollapseDataItem item) {
+        return TDCollapsePanel(
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return Text(item.headerValue);
+          },
+          expandIconTextBuilder: (BuildContext context, bool isExpanded) {
+            return isExpanded
+                ? localizations.expandedIconTapHint
+                : localizations.collapsedIconTapHint;
           },
           isExpanded: item.isExpanded,
           body: const Text(randomString),

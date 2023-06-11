@@ -3,6 +3,8 @@
  */
 import 'package:flutter/material.dart';
 
+import 'td_collapse_panel_header.dart';
+
 /// 折叠面板，需配合 [TDCollapse] 使用
 class TDCollapsePanel extends ExpansionPanel {
   TDCollapsePanel({
@@ -15,8 +17,8 @@ class TDCollapsePanel extends ExpansionPanel {
     /// 折叠面板的展开状态
     isExpanded = false,
 
-    /// 折叠面板的头部组件是否可点击
-    canTapOnHeader = true,
+    /// 折叠按钮操作说明文案的构造函数
+    this.expandIconTextBuilder,
 
     /// 折叠面板的背景色
     backgroundColor,
@@ -24,7 +26,9 @@ class TDCollapsePanel extends ExpansionPanel {
           headerBuilder: headerBuilder,
           body: body,
           isExpanded: isExpanded,
-          canTapOnHeader: canTapOnHeader,
+          canTapOnHeader: true,
           backgroundColor: backgroundColor,
         );
+
+  final TDCollapseIconTextBuilder? expandIconTextBuilder;
 }

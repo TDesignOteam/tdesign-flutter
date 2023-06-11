@@ -3,9 +3,12 @@
  */
 import 'package:flutter/material.dart';
 
+import '../../../td_export.dart';
 import 'td_collapse_salted_key.dart';
 
 typedef PressCallback = void Function(int panelIndex, bool isExpanded);
+typedef TDCollapseIconTextBuilder = String Function(
+    BuildContext context, bool isExpanded);
 
 class TDCollapsePanelHeader extends StatelessWidget {
   const TDCollapsePanelHeader({
@@ -14,8 +17,8 @@ class TDCollapsePanelHeader extends StatelessWidget {
     required this.borderRadius,
     required this.onPress,
     required this.isExpanded,
-    required this.canTapOnHeader,
     required this.headerBuilder,
+    this.expandIconTextBuilder,
     Key? key,
   }) : super(key: key);
 
@@ -24,8 +27,8 @@ class TDCollapsePanelHeader extends StatelessWidget {
   final BorderRadius borderRadius;
   final PressCallback onPress;
   final bool isExpanded;
-  final bool canTapOnHeader;
   final ExpansionPanelHeaderBuilder headerBuilder;
+  final TDCollapseIconTextBuilder? expandIconTextBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +53,13 @@ class TDCollapsePanelHeader extends StatelessWidget {
       expandIconWidget,
     ]);
 
-    if (canTapOnHeader) {
-      headerWidget = MergeSemantics(
-        child: InkWell(
-          borderRadius: borderRadius,
-          onTap: () => onPress(index, isExpanded),
-          child: headerWidget,
-        ),
-      );
-    }
+    headerWidget = MergeSemantics(
+      child: InkWell(
+        borderRadius: borderRadius,
+        child: headerWidget,
+        onTap: () => onPress(index, isExpanded),
+      ),
+    );
 
     return headerWidget;
   }
@@ -76,24 +77,28 @@ class TDCollapsePanelHeader extends StatelessWidget {
       margin: const EdgeInsetsDirectional.all(0.0),
       child: ExpandIcon(
         isExpanded: isExpanded,
-        padding: const EdgeInsets.all(16.0),
-        onPressed: !canTapOnHeader
-            ? (bool isExpanded) => onPress(index, isExpanded)
-            : null,
+        padding: expandIconTextBuilder != null
+            ? EdgeInsets.only(
+                right: TDTheme.of(context).spacer16,
+                top: TDTheme.of(context).spacer16,
+                bottom: TDTheme.of(context).spacer16,
+                left: 0,
+              )
+            : EdgeInsets.all(TDTheme.of(context).spacer16),
+        onPressed: null,
       ),
     );
 
-    if (!canTapOnHeader) {
-      final localizations = MaterialLocalizations.of(context);
-      expandedIcon = Semantics(
-        container: true,
-        child: expandedIcon,
-        label: isExpanded
-            ? localizations.expandedIconTapHint
-            : localizations.collapsedIconTapHint,
-      );
-    }
-
-    return expandedIcon;
+    return Row(
+      children: [
+        if (expandIconTextBuilder != null)
+          Text(expandIconTextBuilder!(context, isExpanded),
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                color: Colors.black.withOpacity(0.4),
+              )),
+        expandedIcon,
+      ],
+    );
   }
 }

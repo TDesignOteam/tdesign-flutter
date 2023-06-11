@@ -81,8 +81,8 @@ class _TDCollapseState extends State<TDCollapse> {
                 animationDuration: widget.animationDuration,
                 borderRadius: borderRadius,
                 headerBuilder: child.headerBuilder,
+                expandIconTextBuilder: child.expandIconTextBuilder,
                 isExpanded: _isChildExpanded(index),
-                canTapOnHeader: child.canTapOnHeader,
                 onPress: _handlePressed,
               ),
               TDCollapsePanelBody(
