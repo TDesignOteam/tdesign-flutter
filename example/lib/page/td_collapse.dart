@@ -18,6 +18,7 @@ class TDCollapsePageState extends State<TDCollapsePage> {
   final List<CollapseDataItem> _blockStyleData = generateItems(5);
   final List<CollapseDataItem> _cardStyleData = generateItems(5);
   final List<CollapseDataItem> _blockStyleWithOpText = generateItems(5);
+  final List<CollapseDataItem> _accordionData = generateItems(5);
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,8 @@ class TDCollapsePageState extends State<TDCollapsePage> {
             ExampleItem(desc: '基础折叠面板的卡片样式', builder: _buildCardCollapse),
             ExampleItem(
                 desc: '带操作说明', builder: _buildCollapseWithOperationText),
+            ExampleItem(
+                desc: '手风琴 Accordion', builder: _buildAccordionCollapse),
           ]),
         ]);
   }
@@ -99,6 +102,28 @@ class TDCollapsePageState extends State<TDCollapsePage> {
           },
           isExpanded: item.isExpanded,
           body: const Text(randomString),
+        );
+      }).toList(),
+    );
+  }
+
+  @Demo(group: 'collapse')
+  Widget _buildAccordionCollapse(BuildContext context) {
+    return TDCollapse.accordion(
+      style: TDCollapseStyle.block,
+      expansionCallback: (int index, bool isExpanded) {
+        setState(() {
+          _accordionData[index].isExpanded = !isExpanded;
+        });
+      },
+      children: _accordionData.map((CollapseDataItem item) {
+        return TDCollapsePanel(
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return Text(item.headerValue);
+          },
+          isExpanded: item.isExpanded,
+          body: const Text(randomString),
+          value: item.expandedValue,
         );
       }).toList(),
     );

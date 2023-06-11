@@ -28,7 +28,18 @@ class TDCollapse extends StatefulWidget {
     this.animationDuration = kThemeAnimationDuration,
     this.elevation = 0,
     Key? key,
-  }) : super(key: key);
+  })  : _allowOnlyOnePanelOpen = false,
+        super(key: key);
+
+  const TDCollapse.accordion({
+    required this.children,
+    this.style = TDCollapseStyle.block,
+    this.expansionCallback,
+    this.animationDuration = kThemeAnimationDuration,
+    this.elevation = 0,
+    Key? key,
+  })  : _allowOnlyOnePanelOpen = true,
+        super(key: key);
 
   /// 折叠面板列表的样式
   /// [TDCollapseStyle.block] 通栏风格，[TDCollapseStyle.card] 卡片风格
@@ -47,11 +58,41 @@ class TDCollapse extends StatefulWidget {
   /// 折叠面板列表的阴影
   final double elevation;
 
+  final bool _allowOnlyOnePanelOpen;
+
   @override
   State createState() => _TDCollapseState();
 }
 
 class _TDCollapseState extends State<TDCollapse> {
+  TDCollapsePanel? _currentOpenPanel;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget._allowOnlyOnePanelOpen) {
+      assert(_allPanelsHaveValue(),
+          'When allowing only one panel to be open, every panel must have a value.');
+      assert(_allPanelsHaveDistinctValues(),
+          'When allowing only one panel to be open, every panel must have a distinct value.');
+    }
+  }
+
+  @override
+  void didUpdateWidget(TDCollapse oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (!widget._allowOnlyOnePanelOpen) {
+      _currentOpenPanel = null;
+      return;
+    }
+
+    assert(_allPanelsHaveValue(),
+        'When allowing only one panel to be open, every panel must have a value.');
+    assert(_allPanelsHaveDistinctValues(),
+        'When allowing only one panel to be open, every panel must have a distinct value.');
+  }
+
   @override
   Widget build(BuildContext context) {
     final items = <MergeableMaterialItem>[];
@@ -152,10 +193,52 @@ class _TDCollapseState extends State<TDCollapse> {
   }
 
   bool _isChildExpanded(int index) {
-    return widget.children[index].isExpanded;
+    final child = widget.children[index];
+
+    if (widget._allowOnlyOnePanelOpen) {
+      return _currentOpenPanel?.value == child.value;
+    }
+
+    return child.isExpanded;
   }
 
   void _handlePressed(int index, bool isExpanded) {
     widget.expansionCallback?.call(index, isExpanded);
+
+    if (!widget._allowOnlyOnePanelOpen) {
+      return;
+    }
+
+    // collapse the current open panel by calling its expansion callback to false
+    for (var childIndex = 0;
+        childIndex < widget.children.length;
+        childIndex += 1) {
+      final curChild = widget.children[childIndex];
+      if (widget.expansionCallback != null &&
+          childIndex != index &&
+          curChild.value == _currentOpenPanel?.value) {
+        widget.expansionCallback!(childIndex, false);
+      }
+    }
+
+    setState(() {
+      _currentOpenPanel = isExpanded ? null : widget.children[index];
+    });
+  }
+
+  bool _allPanelsHaveValue() {
+    return widget.children.every((TDCollapsePanel child) {
+      return child.value != null;
+    });
+  }
+
+  bool _allPanelsHaveDistinctValues() {
+    final valueSet = <Object?>{};
+    return widget.children.every((TDCollapsePanel child) {
+      if (!valueSet.add(child.value)) {
+        return false;
+      }
+      return true;
+    });
   }
 }

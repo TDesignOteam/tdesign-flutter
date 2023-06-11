@@ -20,6 +20,9 @@ class TDCollapsePanel extends ExpansionPanel {
     /// 折叠按钮操作说明文案的构造函数
     this.expandIconTextBuilder,
 
+    /// 折叠面板的值，当使用 [TDCollapse.accordion] 时，必须传入此值
+    this.value,
+
     /// 折叠面板的背景色
     backgroundColor,
   }) : super(
@@ -30,5 +33,6 @@ class TDCollapsePanel extends ExpansionPanel {
           backgroundColor: backgroundColor,
         );
 
+  final Object? value;
   final TDCollapseIconTextBuilder? expandIconTextBuilder;
 }
