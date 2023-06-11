@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../td_export.dart';
-import 'td_collapse_body.dart';
-import 'td_collapse_header.dart';
+import 'td_collapse_panel_body.dart';
+import 'td_collapse_panel_header.dart';
 import 'td_collapse_salted_key.dart';
 import 'td_inset_divider.dart';
 
@@ -19,7 +19,7 @@ enum TDCollapseStyle {
   card
 }
 
-/// 折叠面板列表
+/// 折叠面板列表组件，需配合 [TDCollapsePanel] 使用
 class TDCollapse extends StatefulWidget {
   const TDCollapse({
     required this.children,
@@ -30,14 +30,21 @@ class TDCollapse extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
+  /// 折叠面板列表的样式
+  /// [TDCollapseStyle.block] 通栏风格，[TDCollapseStyle.card] 卡片风格
   final TDCollapseStyle style;
 
+  /// 折叠面板列表的子组件
   final List<TDCollapsePanel> children;
 
+  /// 折叠面板列表的回调函数
+  /// 回调时，入参为当前点击的折叠面板的索引 index 和是否展开的状态 isExpanded
   final ExpansionPanelCallback? expansionCallback;
 
+  /// 折叠面板列表的动画时长
   final Duration animationDuration;
 
+  /// 折叠面板列表的阴影
   final double elevation;
 
   @override
@@ -68,7 +75,7 @@ class _TDCollapseState extends State<TDCollapse> {
           color: child.backgroundColor,
           child: Column(
             children: [
-              TDCollapseHeader(
+              TDCollapsePanelHeader(
                 key: TDCollapseSaltedKey<BuildContext, int>(context, index * 2),
                 index: index,
                 animationDuration: widget.animationDuration,
@@ -78,7 +85,7 @@ class _TDCollapseState extends State<TDCollapse> {
                 canTapOnHeader: child.canTapOnHeader,
                 onPress: _handlePressed,
               ),
-              TDCollapseBody(
+              TDCollapsePanelBody(
                 key: TDCollapseSaltedKey<BuildContext, int>(
                     context, index * 2 + 1),
                 animationDuration: widget.animationDuration,

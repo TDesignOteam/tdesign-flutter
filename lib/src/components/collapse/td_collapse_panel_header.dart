@@ -7,8 +7,8 @@ import 'td_collapse_salted_key.dart';
 
 typedef PressCallback = void Function(int panelIndex, bool isExpanded);
 
-class TDCollapseHeader extends StatelessWidget {
-  const TDCollapseHeader({
+class TDCollapsePanelHeader extends StatelessWidget {
+  const TDCollapsePanelHeader({
     required this.index,
     required this.animationDuration,
     required this.borderRadius,

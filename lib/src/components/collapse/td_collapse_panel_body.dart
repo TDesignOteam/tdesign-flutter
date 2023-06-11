@@ -6,8 +6,8 @@ import 'package:flutter/cupertino.dart';
 import '../../../td_export.dart';
 import 'td_inset_divider.dart';
 
-class TDCollapseBody extends StatelessWidget {
-  const TDCollapseBody({
+class TDCollapsePanelBody extends StatelessWidget {
+  const TDCollapsePanelBody({
     required this.animationDuration,
     required this.body,
     required this.isExpanded,
