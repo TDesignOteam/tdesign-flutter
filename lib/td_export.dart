@@ -43,6 +43,7 @@ export 'src/components/tag/td_tag.dart';
 export 'src/components/tag/td_tag_styles.dart';
 export 'src/components/text/td_text.dart';
 export 'src/components/toast/td_toast.dart';
+export 'src/components/upload/td_upload.dart';
 export 'src/theme/basic.dart';
 export 'src/theme/td_colors.dart';
 export 'src/theme/td_font_family.dart';
