@@ -53,7 +53,7 @@ class ExamplePage extends StatefulWidget {
   final Color? backgroundColor;
 
   /// 示例代码路径
-  final String? exampleCodeGroup;
+  final String exampleCodeGroup;
 
   /// 测试组件列表
   final List<ExampleItem> test;
@@ -96,7 +96,7 @@ class _ExamplePageState extends State<ExamplePage> {
                 _buildNavBar(),
                 Expanded(
                     child: widget.showSingleChild && widget.singleChild != null
-                        ? widget.singleChild!
+                        ? _singleChild()
                         : ListView.builder(
                             shrinkWrap: true,
                             physics: const BouncingScrollPhysics(),
@@ -120,7 +120,9 @@ class _ExamplePageState extends State<ExamplePage> {
                                                   widget.exampleCodeGroup,
                                               exampleModuleList:
                                                   widget.children,
-                                              testList: widget.test),
+                                              testList: widget.test,
+                                            singleChild: widget.showSingleChild ? widget.singleChild : null
+                                          ),
                                         ),
                                       )
                                     : Container();
@@ -141,6 +143,36 @@ class _ExamplePageState extends State<ExamplePage> {
             )));
   }
 
+  Widget _singleChild(){
+    if(!WebMdTool.needGenerateWebMd){
+      return widget.singleChild!;
+    }
+    return ExampleItemInherited(
+     child:Stack(
+      children: [
+        widget.singleChild!,
+        Positioned(
+          left: 16,
+            right: 16,
+            bottom: 0,
+            child: TDButton(
+          text: '生成Web使用md',
+          type: TDButtonType.fill,
+          onTap: () => WebMdTool.generateWebMd(
+              model: model,
+              description: widget.desc,
+              exampleCodeGroup:
+              widget.exampleCodeGroup,
+              exampleModuleList:
+              widget.children,
+              testList: widget.test,
+              singleChild: widget.showSingleChild ? widget.singleChild : null),
+        )),
+      ],
+    ),
+    path: widget.exampleCodeGroup,);
+  }
+
   ExampleItem _buildTestExampleItem() =>
       ExampleItem(desc: '''未在示例稿中体现，但有必要验证的组件样式，请添加到'test'参数中。以下情景必须有测试：
   1.参数为数字。需测试数字为负数、0、较大数值的场景。
@@ -149,7 +181,11 @@ class _ExamplePageState extends State<ExamplePage> {
   Widget _buildNavBar() {
     var rightBarItems = <TDNavBarItem>[];
 
-    if (showAction) {
+    // web端示例页不展示标题栏
+    if(PlatformUtil.isWeb && !Navigator.canPop(context)){
+      return Container();
+    }
+    if (showAction && !PlatformUtil.isWeb) {
       rightBarItems.add(TDNavBarItem(
           icon: TDIcons.info_circle,
           action: () {
@@ -428,6 +464,7 @@ class _CodeWrapperState extends State<CodeWrapper> {
       list.add(codeString!);
       WebMdTool.manualExampleCode[modelTheme.path] = list;
     }
+
   }
 
   @override
@@ -526,7 +563,7 @@ ${codeString}
             child: Markdown(
               physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.zero,
-              selectable: true,
+              selectable: false,
               shrinkWrap: true,
               syntaxHighlighter: DartSyntaxHighlighter(),
               data: mdText,

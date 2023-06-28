@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tdesign_flutter/td_export.dart';
+
 import 'base/example_base.dart';
 import 'base/example_route.dart';
 import 'base/web_md_tool.dart';
+import 'page/sidebar/td_sidebar_page.dart';
+import 'page/sidebar/td_sidebar_page_anchor.dart';
+import 'page/sidebar/td_sidebar_page_custom.dart';
+import 'page/sidebar/td_sidebar_page_icon.dart';
+import 'page/sidebar/td_sidebar_page_outline.dart';
+import 'page/sidebar/td_sidebar_page_pagination.dart';
 import 'page/td_avatar_page.dart';
 import 'page/td_badge_page.dart';
-import 'page/td_bottom_nav_bar_page.dart';
+import 'page/td_bottom_tab_bar_page.dart';
 import 'page/td_button_page.dart';
 import 'page/td_checkbox_page.dart';
 import 'page/td_date_picker_page.dart';
@@ -25,16 +32,11 @@ import 'page/td_radio_page.dart';
 import 'page/td_radius_page.dart';
 import 'page/td_refresh_page.dart';
 import 'page/td_search_bar_page.dart';
-import 'page/td_sidebar_page.dart';
-import 'page/td_sidebar_page_anchor.dart';
-import 'page/td_sidebar_page_custom.dart';
-import 'page/td_sidebar_page_icon.dart';
-import 'page/td_sidebar_page_outline.dart';
-import 'page/td_sidebar_page_pagination.dart';
 import 'page/td_slider_page.dart';
+import 'page/td_stepper_page.dart';
 import 'page/td_swiper_page.dart';
 import 'page/td_switch_page.dart';
-import 'page/td_tabbar_page.dart';
+import 'page/td_tabs_page.dart';
 import 'page/td_tag_page.dart';
 import 'page/td_text_page.dart';
 import 'page/td_theme_page.dart';
@@ -52,7 +54,6 @@ PageBuilder _wrapInheritedTheme(WidgetBuilder builder) {
 /// 新增的示例页面，在此增加模型即可,会自动注册增加按钮。示例页面编写参考TDTextPage()
 List<ExamplePageModel> examplePageList = [];
 
-/// 是否显示TODO组件
 var _kShowTodoComponent = false;
 
 Map<String, List<ExamplePageModel>> exampleMap = {
@@ -106,8 +107,7 @@ Map<String, List<ExamplePageModel>> exampleMap = {
     ExamplePageModel(
         text: 'Sidebar 侧边栏',
         name: 'sidebar',
-        isTodo: true,
-        pageBuilder: _wrapInheritedTheme((context) => const TodoPage())),
+        pageBuilder: _wrapInheritedTheme((context) => const TDSideBarPage())),
     ExamplePageModel(
         text: 'Steps 步骤条',
         name: 'steps',
@@ -117,15 +117,11 @@ Map<String, List<ExamplePageModel>> exampleMap = {
         text: 'TabBar 标签栏',
         name: 'tabbar',
         pageBuilder:
-            _wrapInheritedTheme((context) => const TDBottomNavBarPage())),
+            _wrapInheritedTheme((context) => const TDBottomTabBarPage())),
     ExamplePageModel(
         text: 'Tabs 选项卡',
         name: 'tabs',
-        pageBuilder: _wrapInheritedTheme((context) => const TDTabBarPage())),
-    ExamplePageModel(
-        text: 'SideBar 侧边栏',
-        name: 'sidebar',
-        pageBuilder: _wrapInheritedTheme((context) => const TDSideBarPage())),
+        pageBuilder: _wrapInheritedTheme((context) => const TDTabsPage())),
   ],
   '输入': [
     ExamplePageModel(
@@ -175,8 +171,7 @@ Map<String, List<ExamplePageModel>> exampleMap = {
     ExamplePageModel(
         text: 'Stepper 步进器',
         name: 'stepper',
-        isTodo: true,
-        pageBuilder: _wrapInheritedTheme((context) => const TodoPage())),
+        pageBuilder: _wrapInheritedTheme((context) => const TDStepperPage())),
     ExamplePageModel(
         text: 'Switch 开关',
         name: 'switch',
@@ -212,7 +207,7 @@ Map<String, List<ExamplePageModel>> exampleMap = {
         pageBuilder: _wrapInheritedTheme((context) => const TodoPage())),
     ExamplePageModel(
         text: 'CountDown 倒计时',
-        name: 'countDown',
+        name: 'count_down',
         isTodo: true,
         pageBuilder: _wrapInheritedTheme((context) => const TodoPage())),
     ExamplePageModel(
@@ -240,7 +235,7 @@ Map<String, List<ExamplePageModel>> exampleMap = {
         pageBuilder: _wrapInheritedTheme((context) => const TDImagePage())),
     ExamplePageModel(
         text: 'ImageViewer 图片预览',
-        name: 'imageViewer',
+        name: 'image_viewer',
         isTodo: true,
         pageBuilder: _wrapInheritedTheme((context) => const TodoPage())),
     ExamplePageModel(
@@ -298,7 +293,7 @@ Map<String, List<ExamplePageModel>> exampleMap = {
         pageBuilder: _wrapInheritedTheme((context) => const TodoPage())),
     ExamplePageModel(
         text: 'NoticeBar 公告栏',
-        name: 'noticeBar',
+        name: 'notice_bar',
         isTodo: true,
         pageBuilder: _wrapInheritedTheme((context) => const TodoPage())),
     ExamplePageModel(
@@ -337,6 +332,38 @@ Map<String, List<ExamplePageModel>> exampleMap = {
   ],
 };
 
+List<ExamplePageModel> sideBarExamplePage = [
+  ExamplePageModel(
+      text: 'SideBar 切页',
+      name: 'SideBarPagination',
+      isTodo: false,
+      pageBuilder:
+          _wrapInheritedTheme((context) => const TDSideBarPaginationPage())),
+  ExamplePageModel(
+      text: 'SideBar 锚点',
+      name: 'SideBarAnchor',
+      isTodo: false,
+      pageBuilder:
+          _wrapInheritedTheme((context) => const TDSideBarAnchorPage())),
+  ExamplePageModel(
+      text: 'SideBar 带图标',
+      name: 'SideBarIcon',
+      isTodo: false,
+      pageBuilder: _wrapInheritedTheme((context) => const TDSideBarIconPage())),
+  ExamplePageModel(
+      text: 'SideBar 非通栏选项样式',
+      name: 'SideBarOutline',
+      isTodo: false,
+      pageBuilder:
+          _wrapInheritedTheme((context) => const TDSideBarOutlinePage())),
+  ExamplePageModel(
+      text: 'SideBar 自定义样式',
+      name: 'SideBarCustom',
+      isTodo: false,
+      pageBuilder:
+          _wrapInheritedTheme((context) => const TDSideBarCustomPage()))
+];
+
 void main() {
   runApp(const MyApp());
 
@@ -345,6 +372,13 @@ void main() {
     systemNavigationBarColor: Colors.transparent,
     systemNavigationBarDividerColor: Colors.transparent,
   ));
+
+  exampleMap.forEach((key, value) {
+    value.forEach((model) {
+      examplePageList.add(model);
+    });
+  });
+  sideBarExamplePage.forEach(examplePageList.add);
 }
 
 class MyApp extends StatelessWidget {
@@ -363,15 +397,23 @@ class MyApp extends StatelessWidget {
             // extensions: [TDThemeData.defaultData().copyWith(colorMap: {'brandNormalColor':Colors.yellow})],
             colorScheme: ColorScheme.light(
                 primary: TDTheme.of(context).brandNormalColor)),
-        home: const MyHomePage(title: 'TDesgin Flutter 组件库'),
+        home: PlatformUtil.isWeb ? null : const MyHomePage(title: 'TDesgin Flutter 组件库'),
         onGenerateRoute: TDExampleRoute.onGenerateRoute,
-        // // TODO:所有路径指向首页，需区分
-        // routes: {
-        //   for (var model in examplePageList)
-        //     model.name: (context) => model.pageBuilder.call(context, model)
-        // },
+        routes:  _getRoutes(),
       ),
     );
+  }
+
+  Map<String, WidgetBuilder> _getRoutes() {
+    if(PlatformUtil.isWeb) {
+      return {
+        for (var model in examplePageList)
+          model.name: (context) => model.pageBuilder.call(context, model)
+      }
+        ..putIfAbsent('/', () => (context) => const TDButtonPage());
+    } else {
+      return const {};
+    }
   }
 }
 
@@ -391,36 +433,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     TDExampleRoute.init();
-    TDExampleRoute.add(ExamplePageModel(
-        text: 'SideBar 切页',
-        name: 'SideBarPagination',
-        isTodo: false,
-        pageBuilder:
-            _wrapInheritedTheme((context) => const TDSideBarPaginationPage())));
-    TDExampleRoute.add(ExamplePageModel(
-        text: 'SideBar 锚点',
-        name: 'SideBarAnchor',
-        isTodo: false,
-        pageBuilder:
-            _wrapInheritedTheme((context) => const TDSideBarAnchorPage())));
-    TDExampleRoute.add(ExamplePageModel(
-        text: 'SideBar 带图标',
-        name: 'SideBarIcon',
-        isTodo: false,
-        pageBuilder:
-            _wrapInheritedTheme((context) => const TDSideBarIconPage())));
-    TDExampleRoute.add(ExamplePageModel(
-        text: 'SideBar 非通栏选项样式',
-        name: 'SideBarOutline',
-        isTodo: false,
-        pageBuilder:
-            _wrapInheritedTheme((context) => const TDSideBarOutlinePage())));
-    TDExampleRoute.add(ExamplePageModel(
-        text: 'SideBar 自定义样式',
-        name: 'SideBarCustom',
-        isTodo: false,
-        pageBuilder:
-            _wrapInheritedTheme((context) => const TDSideBarCustomPage())));
+    sideBarExamplePage.forEach(TDExampleRoute.add);
   }
 
   @override
