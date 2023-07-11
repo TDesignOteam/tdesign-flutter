@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../td_export.dart';
 import 'td_collapse_salted_key.dart';
+import 'td_nonanimated_expand_icon.dart';
 
 typedef PressCallback = void Function(int panelIndex, bool isExpanded);
 typedef TDCollapseIconTextBuilder = String Function(
@@ -75,7 +76,7 @@ class TDCollapsePanelHeader extends StatelessWidget {
     Widget expandedIcon = Container(
       key: TDCollapseSaltedKey<BuildContext, int>(context, index * 2),
       margin: const EdgeInsetsDirectional.all(0.0),
-      child: ExpandIcon(
+      child: TdNonAnimatedExpandIcon(
         isExpanded: isExpanded,
         padding: expandIconTextBuilder != null
             ? EdgeInsets.only(
@@ -85,7 +86,6 @@ class TDCollapsePanelHeader extends StatelessWidget {
                 left: 0,
               )
             : EdgeInsets.all(TDTheme.of(context).spacer16),
-        onPressed: null,
       ),
     );
 
