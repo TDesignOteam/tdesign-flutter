@@ -15,11 +15,11 @@ const String randomString =
     "In the heart of the bustling city, a small park offered a sanctuary of tranquility.Children's laughter echoed from the playground, mingling with the soft rustling of leaves in the gentle breeze.Joggers navigated winding paths, their steady breaths in rhythm with the chirping of the early morning birds.Nearby, an elderly man sat on a bench, engrossed in a book, oblivious to the world around him.The park was a microcosm of life, a testament to the city's vibrant spirit and the enduring allure of nature's simple pleasures.";
 
 class TDCollapsePageState extends State<TDCollapsePage> {
+  final List<CollapseDataItem> _basicData = generateItems(5);
   final List<CollapseDataItem> _blockStyleData = generateItems(5);
   final List<CollapseDataItem> _cardStyleData = generateItems(5);
   final List<CollapseDataItem> _blockStyleWithOpText = generateItems(5);
   final List<CollapseDataItem> _accordionData = generateItems(5);
-  final List<CollapseDataItem> _accordionWithDefaultData = generateItems(5);
 
   @override
   Widget build(BuildContext context) {
@@ -28,22 +28,56 @@ class TDCollapsePageState extends State<TDCollapsePage> {
         exampleCodeGroup: 'collapse',
         desc: '可以折叠/展开的内容区域。',
         children: [
-          ExampleModule(title: '组件类型', children: [
-            ExampleItem(desc: '基础折叠面板的通栏样式', builder: _buildBlockCollapse),
-            ExampleItem(desc: '基础折叠面板的卡片样式', builder: _buildCardCollapse),
+          ExampleModule(title: 'Type 组件类型', children: [
             ExampleItem(
-                desc: '带操作说明', builder: _buildCollapseWithOperationText),
+              desc: 'Basic 基础折叠面板',
+              builder: _buildBasicCollapse,
+            ),
             ExampleItem(
-                desc: '手风琴 Accordion', builder: _buildAccordionCollapse),
+              desc: 'with Operation Instructions 带操作说明',
+              builder: _buildCollapseWithOperationText,
+            ),
             ExampleItem(
-                desc: '手风琴 Accordion 带默认值',
-                builder: _buildAccordionCollapseWithDefault),
+              desc: 'Accordion 手风琴式',
+              builder: _buildAccordionCollapse,
+            ),
+          ]),
+          ExampleModule(title: 'Style 组件样式', children: [
+            ExampleItem(
+              desc: 'Block Style 通栏样式',
+              builder: _buildBlockStyleCollapse,
+            ),
+            ExampleItem(
+              desc: 'Card Style 卡片样式',
+              builder: _buildCardCollapse,
+            ),
           ]),
         ]);
   }
 
   @Demo(group: 'collapse')
-  Widget _buildBlockCollapse(BuildContext context) {
+  Widget _buildBasicCollapse(BuildContext context) {
+    return TDCollapse(
+      style: TDCollapseStyle.block,
+      expansionCallback: (int index, bool isExpanded) {
+        setState(() {
+          _basicData[index].isExpanded = !isExpanded;
+        });
+      },
+      children: _basicData.map((CollapseDataItem item) {
+        return TDCollapsePanel(
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return Text(item.headerValue);
+          },
+          isExpanded: item.isExpanded,
+          body: const Text(randomString),
+        );
+      }).toList(),
+    );
+  }
+
+  @Demo(group: 'collapse')
+  Widget _buildBlockStyleCollapse(BuildContext context) {
     return TDCollapse(
       style: TDCollapseStyle.block,
       expansionCallback: (int index, bool isExpanded) {
@@ -86,7 +120,6 @@ class TDCollapsePageState extends State<TDCollapsePage> {
 
   @Demo(group: 'collapse')
   Widget _buildCollapseWithOperationText(BuildContext context) {
-    final localizations = MaterialLocalizations.of(context);
     return TDCollapse(
       style: TDCollapseStyle.block,
       expansionCallback: (int index, bool isExpanded) {
@@ -100,9 +133,7 @@ class TDCollapsePageState extends State<TDCollapsePage> {
             return Text(item.headerValue);
           },
           expandIconTextBuilder: (BuildContext context, bool isExpanded) {
-            return isExpanded
-                ? localizations.expandedIconTapHint
-                : localizations.collapsedIconTapHint;
+            return isExpanded ? '收起' : '展开';
           },
           isExpanded: item.isExpanded,
           body: const Text(randomString),
@@ -121,29 +152,6 @@ class TDCollapsePageState extends State<TDCollapsePage> {
         });
       },
       children: _accordionData.map((CollapseDataItem item) {
-        return TDCollapsePanel(
-          headerBuilder: (BuildContext context, bool isExpanded) {
-            return Text(item.headerValue);
-          },
-          isExpanded: item.isExpanded,
-          body: const Text(randomString),
-          value: item.expandedValue,
-        );
-      }).toList(),
-    );
-  }
-
-  @Demo(group: 'collapse')
-  Widget _buildAccordionCollapseWithDefault(BuildContext context) {
-    return TDCollapse.accordion(
-      style: TDCollapseStyle.block,
-      initialOpenPanelValue: '1',
-      expansionCallback: (int index, bool isExpanded) {
-        setState(() {
-          _accordionWithDefaultData[index].isExpanded = !isExpanded;
-        });
-      },
-      children: _accordionWithDefaultData.map((CollapseDataItem item) {
         return TDCollapsePanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
             return Text(item.headerValue);
