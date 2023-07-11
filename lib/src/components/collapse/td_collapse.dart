@@ -130,14 +130,18 @@ class _TDCollapseState extends State<TDCollapse> {
       final borderRadius =
           _isCardStyle() ? _createRadius(index) : BorderRadius.zero;
 
+      final sliceKey =
+          TDCollapseSaltedKey<BuildContext, int>(context, index * 2);
+
       items.add(
         MaterialSlice(
-          key: TDCollapseSaltedKey<BuildContext, int>(context, index * 2),
+          key: sliceKey,
           color: child.backgroundColor,
           child: Column(
+            key:
+                sliceKey, // to prevent collapse state change when parent rebuild
             children: [
               TDCollapsePanelHeader(
-                key: TDCollapseSaltedKey<BuildContext, int>(context, index * 2),
                 index: index,
                 animationDuration: widget.animationDuration,
                 borderRadius: borderRadius,
@@ -147,8 +151,6 @@ class _TDCollapseState extends State<TDCollapse> {
                 onPress: _handlePressed,
               ),
               TDCollapsePanelBody(
-                key: TDCollapseSaltedKey<BuildContext, int>(
-                    context, index * 2 + 1),
                 animationDuration: widget.animationDuration,
                 body: child.body,
                 isExpanded: _isChildExpanded(index),
