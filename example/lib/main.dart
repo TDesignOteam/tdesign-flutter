@@ -41,6 +41,7 @@ import 'page/td_tag_page.dart';
 import 'page/td_text_page.dart';
 import 'page/td_theme_page.dart';
 import 'page/td_toast_page.dart';
+import 'page/td_tree_select_page.dart';
 import 'page/todo_page.dart';
 import 'web/web.dart' if (dart.library.io) 'web/web_replace.dart' as web;
 
@@ -183,8 +184,8 @@ Map<String, List<ExamplePageModel>> exampleMap = {
     ExamplePageModel(
         text: 'TreeSelect 树形选择器',
         name: 'tree_select',
-        isTodo: true,
-        pageBuilder: _wrapInheritedTheme((context) => const TodoPage())),
+        pageBuilder:
+            _wrapInheritedTheme((context) => const TDTreeSelectPage())),
     ExamplePageModel(
         text: 'Upload 上传',
         name: 'upload',
@@ -397,20 +398,21 @@ class MyApp extends StatelessWidget {
             // extensions: [TDThemeData.defaultData().copyWith(colorMap: {'brandNormalColor':Colors.yellow})],
             colorScheme: ColorScheme.light(
                 primary: TDTheme.of(context).brandNormalColor)),
-        home: PlatformUtil.isWeb ? null : const MyHomePage(title: 'TDesgin Flutter 组件库'),
+        home: PlatformUtil.isWeb
+            ? null
+            : const MyHomePage(title: 'TDesgin Flutter 组件库'),
         onGenerateRoute: TDExampleRoute.onGenerateRoute,
-        routes:  _getRoutes(),
+        routes: _getRoutes(),
       ),
     );
   }
 
   Map<String, WidgetBuilder> _getRoutes() {
-    if(PlatformUtil.isWeb) {
+    if (PlatformUtil.isWeb) {
       return {
         for (var model in examplePageList)
           model.name: (context) => model.pageBuilder.call(context, model)
-      }
-        ..putIfAbsent('/', () => (context) => const TDButtonPage());
+      }..putIfAbsent('/', () => (context) => const TDButtonPage());
     } else {
       return const {};
     }
