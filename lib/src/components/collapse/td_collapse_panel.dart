@@ -3,7 +3,8 @@
  */
 import 'package:flutter/material.dart';
 
-import 'td_collapse_panel_header.dart';
+typedef TDCollapseIconTextBuilder = String Function(
+    BuildContext context, bool isExpanded);
 
 /// 折叠面板，需配合 [TDCollapse] 使用
 class TDCollapsePanel extends ExpansionPanel {
