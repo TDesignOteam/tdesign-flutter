@@ -1,38 +1,4 @@
 
-  final List<TDUploadFile> files5 = [
-    TDUploadFile(
-        key: 1,
-        status: TDUploadFileStatus.error,
-        errorText: '上传失败',
-        remotePath:
-            'https://tdesign.gtimg.com/miniprogram/images/example4.png'),
-  ];
-
-  void onVaueChanged(List<TDUploadFile> fileList, List<TDUploadFile> value,
-      TDUploadType event) {
-    switch (event) {
-      case TDUploadType.add:
-        setState(() {
-          fileList.addAll(value);
-        });
-        break;
-      case TDUploadType.remove:
-        setState(() {
-          fileList.removeWhere((element) => element.key == value[0].key);
-        });
-        break;
-    }
-  }
-
-  void onClick(int key) {
-    print('点击 $key');
-  }
-
-  void onCancel() {
-    print('取消');
-  }
-
-  @Demo(group: 'upload')
   Widget _uploadError(BuildContext context) {
     return wrapDemoContainer('上传图片',
         child: TDUpload(
@@ -46,4 +12,3 @@
           onChange: ((files, type) => onVaueChanged(files5, files, type)),
         ));
   }
-  
