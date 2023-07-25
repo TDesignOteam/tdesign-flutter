@@ -43,6 +43,7 @@ import 'page/td_tag_page.dart';
 import 'page/td_text_page.dart';
 import 'page/td_theme_page.dart';
 import 'page/td_toast_page.dart';
+import 'page/td_tree_select_page.dart';
 import 'page/todo_page.dart';
 import 'web/web.dart' if (dart.library.io) 'web/web_replace.dart' as web;
 
@@ -184,8 +185,8 @@ Map<String, List<ExamplePageModel>> exampleMap = {
     ExamplePageModel(
         text: 'TreeSelect 树形选择器',
         name: 'tree_select',
-        isTodo: true,
-        pageBuilder: _wrapInheritedTheme((context) => const TodoPage())),
+        pageBuilder:
+            _wrapInheritedTheme((context) => const TDTreeSelectPage())),
     ExamplePageModel(
         text: 'Upload 上传',
         name: 'upload',
