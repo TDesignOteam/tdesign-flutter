@@ -21,6 +21,7 @@ import 'page/td_date_picker_page.dart';
 import 'page/td_dialog_page.dart';
 import 'page/td_divider_page.dart';
 import 'page/td_empty_page.dart';
+import 'page/td_fab_page.dart';
 import 'page/td_icon_page.dart';
 import 'page/td_image_page.dart';
 import 'page/td_input_page.dart';
@@ -69,8 +70,7 @@ Map<String, List<ExamplePageModel>> exampleMap = {
     ExamplePageModel(
         text: 'Fab 悬浮按钮',
         name: 'fab',
-        isTodo: true,
-        pageBuilder: _wrapInheritedTheme((context) => const TodoPage())),
+        pageBuilder: _wrapInheritedTheme((context) => const TDFabPage())),
     ExamplePageModel(
         text: 'Icon 图标',
         name: 'icon',
@@ -397,20 +397,21 @@ class MyApp extends StatelessWidget {
             // extensions: [TDThemeData.defaultData().copyWith(colorMap: {'brandNormalColor':Colors.yellow})],
             colorScheme: ColorScheme.light(
                 primary: TDTheme.of(context).brandNormalColor)),
-        home: PlatformUtil.isWeb ? null : const MyHomePage(title: 'TDesgin Flutter 组件库'),
+        home: PlatformUtil.isWeb
+            ? null
+            : const MyHomePage(title: 'TDesgin Flutter 组件库'),
         onGenerateRoute: TDExampleRoute.onGenerateRoute,
-        routes:  _getRoutes(),
+        routes: _getRoutes(),
       ),
     );
   }
 
   Map<String, WidgetBuilder> _getRoutes() {
-    if(PlatformUtil.isWeb) {
+    if (PlatformUtil.isWeb) {
       return {
         for (var model in examplePageList)
           model.name: (context) => model.pageBuilder.call(context, model)
-      }
-        ..putIfAbsent('/', () => (context) => const TDButtonPage());
+      }..putIfAbsent('/', () => (context) => const TDButtonPage());
     } else {
       return const {};
     }

@@ -9,6 +9,7 @@ export 'src/components/collapse/td_collapse_panel.dart';
 export 'src/components/dialog/td_dialog.dart';
 export 'src/components/divider/td_divider.dart';
 export 'src/components/empty/td_empty.dart';
+export 'src/components/fab/td_fab.dart';
 export 'src/components/icon/td_icons.dart';
 export 'src/components/image/image_widget.dart';
 export 'src/components/image/td_image.dart';
