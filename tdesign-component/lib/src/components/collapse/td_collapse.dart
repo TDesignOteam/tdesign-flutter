@@ -140,23 +140,18 @@ class _TDCollapseState extends State<TDCollapse> {
               // to prevent collapse state change when parent rebuild
               key: TDCollapseSaltedKey<BuildContext, int>(context, index * 2),
               children: [
+                // FIXME: 移除了动效
                 MergeSemantics(
-                  child: InkWell(
-                    borderRadius: borderRadius,
+                  child: GestureDetector(
                     onTap: () => _handlePressed(index, _isChildExpanded(index)),
                     child: Row(
                       children: [
                         Expanded(
-                          child: AnimatedContainer(
-                            duration: widget.animationDuration,
-                            curve: Curves.fastOutSlowIn,
-                            margin: EdgeInsets.zero,
-                            child: ConstrainedBox(
-                              constraints: const BoxConstraints(
-                                minHeight: kMinInteractiveDimension,
-                              ),
-                              child: titleWidget,
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(
+                              minHeight: kMinInteractiveDimension,
                             ),
+                            child: titleWidget,
                           ),
                         ),
                         expandIconWidget,
@@ -164,27 +159,18 @@ class _TDCollapseState extends State<TDCollapse> {
                     ),
                   ),
                 ),
-                AnimatedCrossFade(
-                  firstChild: Container(height: 0.0),
-                  secondChild: Column(
-                    children: [
-                      const TDInsetDivider(),
-                      Container(
-                        padding: EdgeInsets.all(TDTheme.of(context).spacer16),
-                        child: child.body,
-                      ),
-                    ],
-                  ),
-                  firstCurve:
-                      const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
-                  secondCurve:
-                      const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
-                  sizeCurve: Curves.fastOutSlowIn,
-                  crossFadeState: _isChildExpanded(index)
-                      ? CrossFadeState.showSecond
-                      : CrossFadeState.showFirst,
-                  duration: widget.animationDuration,
-                ),
+                _isChildExpanded(index)
+                    ? Column(
+                        children: [
+                          const TDInsetDivider(),
+                          Container(
+                            padding:
+                                EdgeInsets.all(TDTheme.of(context).spacer16),
+                            child: child.body,
+                          ),
+                        ],
+                      )
+                    : Container(height: 0.0),
                 if (!isLastChild) const TDInsetDivider()
               ],
             )),
