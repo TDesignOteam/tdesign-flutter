@@ -9,6 +9,8 @@
 .history
 .svn/
 
+tdesign-site/node_modules/
+
 # IntelliJ related
 *.iml
 *.ipr
@@ -72,5 +74,6 @@ build/
 !**/ios/**/default.mode2v3
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
+/.fvm/
 
 node_modules
