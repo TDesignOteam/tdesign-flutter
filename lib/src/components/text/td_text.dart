@@ -38,7 +38,7 @@ class TDText extends StatelessWidget {
         this.fontWeight = FontWeight.w400,
         this.fontFamily,
         this.textColor = Colors.black,
-        this.backgroundColor,
+        this.backgroundColor = Colors.blue,
         this.isTextThrough = false,
         this.lineThroughColor = Colors.white,
         this.package,
