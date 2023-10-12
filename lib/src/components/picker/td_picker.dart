@@ -17,6 +17,9 @@ class TDPicker {
       List<int> dateStart = const [1970, 1, 1],
       List<int>? dateEnd,
       List<int>? initialDate,
+      bool useWeekDay = false,
+      String rightText = '确定',
+      String leftText = '取消',
       Duration duration = const Duration(milliseconds: 100),
       double pickerHeight = 270,
       int pickerItemCount = 7}) {
@@ -34,6 +37,8 @@ class TDPicker {
               title: title,
               onConfirm: onConfirm,
               onCancel: onCancel,
+              rightText: rightText,
+              leftText: leftText,
               model: DatePickerModel(
                 useYear: useYear,
                 useMonth: useMonth,
@@ -43,7 +48,8 @@ class TDPicker {
                 useSecond: useSecond,
                 dateStart: dateStart,
                 dateEnd: dateEnd!,
-                dateInitial: initialDate
+                dateInitial: initialDate,
+                useWeekDay: useWeekDay,
               ),
               pickerHeight: pickerHeight,
               pickerItemCount: pickerItemCount);
