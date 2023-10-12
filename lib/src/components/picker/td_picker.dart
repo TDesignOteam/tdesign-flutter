@@ -18,7 +18,7 @@ class TDPicker {
       List<int>? dateEnd,
       List<int>? initialDate,
       bool useWeekDay = false,
-      String rightText = '确定',
+      String rightText = '确认',
       String leftText = '取消',
       Duration duration = const Duration(milliseconds: 100),
       double pickerHeight = 270,
