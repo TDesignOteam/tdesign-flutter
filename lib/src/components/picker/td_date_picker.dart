@@ -13,7 +13,7 @@ class TDDatePicker extends StatefulWidget {
   const TDDatePicker(
       {required this.title,
         required this.onConfirm,
-        this.rightText = '确定',
+        this.rightText = '确认',
         this.leftText = '取消',
         this.onCancel,
         this.backgroundColor,
