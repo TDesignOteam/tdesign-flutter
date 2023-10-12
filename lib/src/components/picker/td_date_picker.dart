@@ -575,4 +575,13 @@ class DatePickerModel {
         data[1][monthFixedExtentScrollController.selectedItem], data[2][dayFixedExtentScrollController.selectedItem]);
     weekDayFixedExtentScrollController.jumpToItem(date.weekday - 1);
   }
+
+  Map<String, int> getSelectedMap() {
+    var map = <String, int>{
+      'year': yearIndex + data[0][0],
+      'month': monthIndex + data[1][0],
+      'day' : dayIndex + data[2][0],
+    };
+    return map;
+  }
 }
