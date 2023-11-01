@@ -37,7 +37,7 @@ class TDText extends StatelessWidget {
         this.fontWeight,
         this.fontFamily,
         this.textColor = Colors.black,
-        this.backgroundColor,
+        this.backgroundColor = Colors.blue,
         this.isTextThrough = false,
         this.lineThroughColor = Colors.white,
         this.package,
@@ -182,6 +182,11 @@ class TDText extends StatelessWidget {
         TDTheme.of(context).fontBodyLarge ??
         Font(size: 16, lineHeight: 24);
 
+
+  TextStyle? getTextStyle(BuildContext? context,{ double? height, Color? backgroundColor}) {
+    var textFont =
+        font ?? TDTheme.of(context).fontM ?? Font(size: 16, lineHeight: 24);
+
     var stylePackage = package;
     var styleFontFamily = style?.fontFamily ?? fontFamily?.fontFamily;
     var realFontWeight = style?.fontWeight ?? fontWeight;
@@ -191,7 +196,7 @@ class TDText extends StatelessWidget {
         realFontWeight != null &&
         realFontWeight.index <= FontWeight.w500.index) {
       stylePackage = null;
-      styleFontFamily = 'PingFang SC';
+      styleFontFamily =  "PingFang SC";
     }
     return TextStyle(
       inherit: style?.inherit ?? true,
