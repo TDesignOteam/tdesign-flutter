@@ -161,6 +161,7 @@ class TDSliderThemeData extends SliderThemeData {
     double? min,
     double? max,
     ScaleFormatter? scaleFormatter,
+    SliderInteraction? allowedInteraction,
   }) {
     return TDSliderThemeData(
         trackHeight: trackHeight ?? this.trackHeight,
